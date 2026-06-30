@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pour Study — Modo Estudio VR</title>
+<title>Pour Decisions — Modo Estudio VR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -94,7 +94,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .mc-feedback{font-size:13px;font-family:'Pixelify Sans',monospace;margin-top:10px;padding:8px 14px;border-radius:8px;text-align:center}
 .mc-feedback.ok{background:rgba(47,181,122,.15);color:var(--green)}
 .mc-feedback.ko{background:rgba(212,60,158,.15);color:var(--pink)}
-/* CONCEPT PANEL (modo estudio estilo carpincho) */
+/* CONCEPT PANEL (modo estudio: contenido + multiple choice) */
 .concept-panel{max-width:720px;margin:0 auto;background:linear-gradient(180deg,var(--panel),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:var(--r);padding:26px 28px;box-shadow:var(--shadow);animation:fade .3s ease}
 .concept-tag{font-family:'Pixelify Sans',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--blue)}
 .concept-title{font-family:'Pixelify Sans',monospace;font-size:23px;line-height:1.1;margin:6px 0 16px}
@@ -196,7 +196,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .exam-submit{font-family:'Pixelify Sans',monospace;font-size:16px;background:var(--gold);color:#0F0F1A;border:none;padding:16px 32px;border-radius:var(--r);cursor:pointer;transition:.15s;margin:24px auto 0;display:block}
 .exam-submit:hover{filter:brightness(1.1);transform:translateY(-2px)}
 .exam-warn{text-align:center;color:var(--pink);font-size:13px;margin-top:12px;min-height:18px}
-/* SEQUENCE (order) — ported de carpincho */
+/* SEQUENCE (order) — armar flujos por click-to-sequence */
 .seq-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;font-family:'Pixelify Sans',monospace}
 .seq{display:grid;gap:6px;margin-bottom:8px;min-height:42px}
 .seq-item{display:flex;align-items:center;gap:10px;background:rgba(122,51,181,.12);border:1px solid var(--purple);border-radius:10px;padding:9px 12px;font-size:13px;line-height:1.35}
@@ -242,7 +242,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 
 <!-- HUD -->
 <div class="hud">
-  <div class="hud-brand pixel">Pour Study<small>TECNOLOGÍAS DISRUPTIVAS</small></div>
+  <div class="hud-brand pixel">Pour Decisions<small>TECNOLOGÍAS DISRUPTIVAS</small></div>
   <div class="hud-stat"><b id="hud-rev" style="color:var(--blue)">0/0</b><span>Revisados</span></div>
   <div class="hud-stat"><b id="hud-zones" style="color:var(--green)">0/9</b><span>Zonas</span></div>
   <div class="hud-stat"><b id="hud-exams" style="color:var(--purple)">0</b><span>Exámenes</span></div>
