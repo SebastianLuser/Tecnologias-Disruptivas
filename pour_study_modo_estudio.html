@@ -94,6 +94,19 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .mc-feedback{font-size:13px;font-family:'Pixelify Sans',monospace;margin-top:10px;padding:8px 14px;border-radius:8px;text-align:center}
 .mc-feedback.ok{background:rgba(47,181,122,.15);color:var(--green)}
 .mc-feedback.ko{background:rgba(212,60,158,.15);color:var(--pink)}
+/* CONCEPT PANEL (modo estudio estilo carpincho) */
+.concept-panel{max-width:720px;margin:0 auto;background:linear-gradient(180deg,var(--panel),rgba(255,255,255,.015));border:1px solid var(--border);border-radius:var(--r);padding:26px 28px;box-shadow:var(--shadow);animation:fade .3s ease}
+.concept-tag{font-family:'Pixelify Sans',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--blue)}
+.concept-title{font-family:'Pixelify Sans',monospace;font-size:23px;line-height:1.1;margin:6px 0 16px}
+.concept-body{font-size:14.5px;line-height:1.8;color:var(--text)}
+.concept-body strong{color:var(--text)}
+.concept-body em{color:var(--muted)}
+.concept-body code{font-family:monospace;background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;font-size:13px;color:var(--orange)}
+.concept-body pre{font-family:monospace;font-size:12px;background:rgba(0,0,0,.35);padding:14px;border-radius:10px;overflow-x:auto;line-height:1.7;border-left:3px solid var(--orange);margin:12px 0;color:var(--text)}
+.concept-ej{margin-top:16px;border-left:3px solid var(--gold);background:rgba(235,210,60,.07);border-radius:0 12px 12px 0;padding:12px 16px;font-size:13.5px;line-height:1.7;color:var(--text)}
+.concept-ej b{display:block;font-family:'Pixelify Sans',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.concept-quiz{font-family:'Pixelify Sans',monospace;font-size:16px;line-height:1.45;margin:24px 0 14px;padding-top:20px;border-top:1px solid var(--border)}
+.concept-quiz .quiz-label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:8px;font-family:'Pixelify Sans',monospace}
 /* CARD NAV */
 .card-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;max-width:680px;margin-inline:auto}
 .nav-btn{font-family:'Pixelify Sans',monospace;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:99px;cursor:pointer;transition:.15s}
@@ -152,8 +165,76 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 /* MARK DONE */
 .mark-done-btn{font-family:'Pixelify Sans',monospace;font-size:15px;background:var(--purple);color:#fff;border:none;padding:14px 28px;border-radius:var(--r);cursor:pointer;transition:.15s;margin:28px auto;display:block}
 .mark-done-btn:hover{filter:brightness(1.15);transform:translateY(-2px)}
+/* SIM CARDS (home) */
+.sim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.sim-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:18px;border-left:3px solid var(--purple);display:flex;flex-direction:column;gap:8px;transition:.15s}
+.sim-card:hover{background:var(--panel-h);transform:translateY(-2px)}
+.sim-card .sim-n{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);font-family:'Pixelify Sans',monospace}
+.sim-card h3{font-family:'Pixelify Sans',monospace;font-size:16px;line-height:1.2}
+.sim-card p{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
+.sim-card .sim-foot{display:flex;align-items:center;gap:10px;margin-top:6px}
+.sim-start{font-family:'Pixelify Sans',monospace;font-size:13px;background:var(--purple);color:#fff;border:none;padding:9px 18px;border-radius:99px;cursor:pointer;transition:.15s}
+.sim-start:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.sim-done{font-size:11px;color:var(--green);font-family:'Pixelify Sans',monospace}
+/* EXAM */
+.exam-q{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:14px}
+.exam-q.warn{border-color:var(--pink);box-shadow:0 0 0 1px rgba(212,60,158,.25)}
+.exam-qhead{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.exam-qnum{font-family:'Pixelify Sans',monospace;font-size:12px;background:var(--purple);color:#fff;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.exam-qtype{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'Pixelify Sans',monospace}
+.exam-qtext{font-size:15px;line-height:1.6;margin-bottom:14px}
+.exam-qtext code{font-family:monospace;background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;font-size:13px;color:var(--orange)}
+.exam-qtext pre{font-family:monospace;font-size:12px;background:rgba(0,0,0,.35);padding:14px;border-radius:10px;overflow-x:auto;line-height:1.7;border-left:3px solid var(--orange);margin:12px 0;color:var(--text)}
+.exam-qtext ol,.exam-qtext ul{margin:10px 0 0 20px;line-height:2.1}
+.exam-ta{width:100%;min-height:108px;background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:system-ui;font-size:14px;line-height:1.6;resize:vertical}
+.exam-ta:focus{outline:none;border-color:var(--border-h)}
+.exam-opt{display:flex;align-items:center;gap:12px;width:100%;padding:11px 14px;background:var(--panel);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;font-size:14px;color:var(--text);text-align:left;margin-bottom:8px}
+.exam-opt:hover{background:var(--panel-h);border-color:var(--border-h)}
+.exam-opt.sel{background:rgba(122,51,181,.18);border-color:var(--purple)}
+.exam-opt .mc-letter{font-family:'Pixelify Sans',monospace;font-size:11px;background:rgba(255,255,255,.1);border-radius:50%;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+.vf-btn.sel{background:rgba(122,51,181,.25);border-color:var(--purple);color:var(--text)}
+.exam-submit{font-family:'Pixelify Sans',monospace;font-size:16px;background:var(--gold);color:#0F0F1A;border:none;padding:16px 32px;border-radius:var(--r);cursor:pointer;transition:.15s;margin:24px auto 0;display:block}
+.exam-submit:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.exam-warn{text-align:center;color:var(--pink);font-size:13px;margin-top:12px;min-height:18px}
+/* SEQUENCE (order) — ported de carpincho */
+.seq-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;font-family:'Pixelify Sans',monospace}
+.seq{display:grid;gap:6px;margin-bottom:8px;min-height:42px}
+.seq-item{display:flex;align-items:center;gap:10px;background:rgba(122,51,181,.12);border:1px solid var(--purple);border-radius:10px;padding:9px 12px;font-size:13px;line-height:1.35}
+.seq-item span{font-family:'Pixelify Sans',monospace;font-size:12px;color:var(--purple);min-width:18px;flex-shrink:0}
+.seq-item.seq-ok{background:rgba(47,181,122,.12);border-color:var(--green)}
+.seq-item.seq-ok span{color:var(--green)}
+.seq-item.seq-bad{background:rgba(212,60,158,.12);border-color:var(--pink)}
+.seq-item.seq-bad span{color:var(--pink)}
+.seq-empty{color:var(--muted);font-size:13px;font-style:italic;padding:10px 12px;border:1px dashed var(--border-h);border-radius:10px}
+.seq-pool{display:flex;flex-wrap:wrap;gap:8px}
+.seq-pool button{font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:10px;cursor:pointer;transition:.15s;text-align:left;max-width:100%}
+.seq-pool button:hover{background:var(--panel-h);border-color:var(--border-h)}
+.seq-reset{font-size:12px;background:none;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:99px;cursor:pointer;margin-top:4px}
+.seq-reset:hover{color:var(--text)}
+/* RESULTS */
+.res-hero{text-align:center;padding:24px 0 10px}
+.res-score{font-family:'Pixelify Sans',monospace;font-size:clamp(48px,14vw,84px);line-height:1;color:var(--gold)}
+.res-rank{font-family:'Pixelify Sans',monospace;font-size:22px;margin-top:6px}
+.res-sub{color:var(--muted);font-size:13px;margin-top:8px}
+.res-item{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.res-head{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer}
+.res-head:hover{background:var(--panel-h)}
+.res-badge{font-family:'Pixelify Sans',monospace;font-size:12px;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.res-badge.ok{background:rgba(47,181,122,.18);color:var(--green)}
+.res-badge.half{background:rgba(235,210,60,.18);color:var(--gold)}
+.res-badge.no{background:rgba(212,60,158,.18);color:var(--pink)}
+.res-qlabel{flex:1;font-size:14px}
+.res-pts{font-family:'Pixelify Sans',monospace;font-size:13px;color:var(--muted)}
+.res-body{display:none;padding:0 18px 18px;font-size:14px;line-height:1.7}
+.res-body.show{display:block}
+.res-body .lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'Pixelify Sans',monospace;margin:12px 0 4px}
+.res-body .ans-correct{color:var(--green)}
+.res-body code{font-family:monospace;background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;font-size:13px;color:var(--orange)}
+.res-body pre{font-family:monospace;font-size:12px;background:rgba(0,0,0,.35);padding:14px;border-radius:10px;overflow-x:auto;line-height:1.7;border-left:3px solid var(--green);margin:8px 0;color:var(--text)}
+.res-body .flow{font-family:monospace;font-size:13px;background:rgba(0,0,0,.3);padding:12px 16px;border-radius:10px;line-height:1.9;border-left:3px solid var(--purple);margin-top:6px}
+.res-body .your-ans{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px 14px;white-space:pre-wrap;font-size:13px;color:var(--text)}
 /* RESPONSIVE */
-@media(max-width:600px){.stats-bar{grid-template-columns:repeat(2,1fr)}.zones-grid{grid-template-columns:1fr}.hud-stat:nth-child(n+4){display:none}}
+@media(max-width:600px){.stats-bar{grid-template-columns:repeat(2,1fr)}.zones-grid,.sim-grid{grid-template-columns:1fr}.hud-stat:nth-child(n+4){display:none}}
 </style>
 </head>
 <body>
@@ -184,10 +265,9 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     </div>
     <div class="sec-head"><h2>Zonas de Estudio</h2></div>
     <div class="zones-grid" id="zones-grid"></div>
-    <div class="mode-btns">
-      <button class="mode-btn secondary" onclick="showScreen('screen-simulacro')">🎯 Simulacro de Parcial</button>
-      <button class="mode-btn accent" onclick="showScreen('screen-applied')">⚡ Modo Aplicado</button>
-    </div>
+    <div class="sec-head" style="margin-top:34px"><h2>Simulacros de Examen</h2></div>
+    <p class="home-lead" style="margin-bottom:18px">Exámenes completos de 10 preguntas con el formato del parcial. No ves ninguna respuesta hasta entregar: al final obtenés tu nota y la corrección completa.</p>
+    <div class="sim-grid" id="sim-grid"></div>
   </div>
 </div>
 
@@ -198,21 +278,14 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     <div id="study-zone-name" class="study-zone-name"></div>
     <div id="study-prog" class="study-prog"></div>
   </div>
-  <div class="flashcard-wrap">
-    <div class="flashcard" id="flashcard" onclick="onCardClick()">
-      <div class="card-face front" id="card-front">
-        <div class="card-q" id="card-q"></div>
-        <div class="card-hint" id="card-hint"></div>
-        <div id="mc-area"></div>
-        <div class="card-tap" id="card-tap">↑ Tap para ver respuesta</div>
-      </div>
-      <div class="card-face back">
-        <div class="card-label">Respuesta</div>
-        <div class="card-a" id="card-a"></div>
-      </div>
-    </div>
+  <div class="concept-panel">
+    <div class="concept-tag" id="concept-tag"></div>
+    <h2 class="concept-title" id="concept-title"></h2>
+    <div class="concept-body" id="concept-body"></div>
+    <div class="concept-quiz" id="concept-quiz"></div>
+    <div class="mc-wrap" id="mc-area"></div>
+    <div id="mc-feedback-area"></div>
   </div>
-  <div id="mc-feedback-area"></div>
   <div class="card-nav">
     <button class="nav-btn" id="btn-prev" onclick="prevCard()">← Anterior</button>
     <div class="card-counter" id="card-counter"></div>
@@ -220,26 +293,33 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
   </div>
 </div>
 
-<!-- APPLIED -->
-<div id="screen-applied" class="screen">
+<!-- EXAM -->
+<div id="screen-exam" class="screen">
   <div class="study-header">
-    <button class="back-btn" onclick="showScreen('screen-home')">← Volver</button>
-    <div class="study-zone-name">Modo Aplicado</div>
+    <button class="back-btn" onclick="confirmExitExam()">← Salir</button>
+    <div id="exam-title" class="study-zone-name"></div>
+    <div id="exam-prog" class="study-prog"></div>
   </div>
-  <span class="mode-badge badge-aplicado">Práctica de desarrollo</span>
-  <p class="mode-desc">Situaciones reales que te podés encontrar desarrollando. Leés el problema y describís cómo lo resolvés. Después revelás la respuesta para comparar.</p>
-  <div id="applied-content"></div>
+  <span class="mode-badge badge-simulacro">Examen · sin respuestas hasta entregar</span>
+  <p class="mode-desc" id="exam-desc"></p>
+  <div id="exam-content"></div>
+  <button class="exam-submit" onclick="submitExam()">Entregar examen</button>
+  <div class="exam-warn" id="exam-warn"></div>
 </div>
 
-<!-- SIMULACRO -->
-<div id="screen-simulacro" class="screen">
+<!-- RESULTS -->
+<div id="screen-results" class="screen">
   <div class="study-header">
-    <button class="back-btn" onclick="showScreen('screen-home')">← Volver</button>
-    <div class="study-zone-name">Simulacro de Parcial</div>
+    <button class="back-btn" onclick="showScreen('screen-home')">← Volver al inicio</button>
+    <div id="res-title" class="study-zone-name"></div>
   </div>
-  <span class="mode-badge badge-simulacro">Estructura real del examen</span>
-  <p class="mode-desc">10 puntos con el mismo formato que usa el profe en el parcial. El punto 2 es interactivo (V/F). En el resto, pensá la respuesta antes de revelarla.</p>
-  <div id="simulacro-content"></div>
+  <div class="res-hero">
+    <div class="res-score" id="res-score">0 / 10</div>
+    <div class="res-rank" id="res-rank"></div>
+    <div class="res-sub" id="res-sub"></div>
+  </div>
+  <div id="res-content"></div>
+  <button class="mark-done-btn" onclick="showScreen('screen-home')">Elegir otro simulacro</button>
 </div>
 
 </div>
@@ -247,147 +327,402 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 // ── DATA ──────────────────────────────────────────────────────────────────────
 
 const ZONES=[
-{id:'fundamentos',name:'Fundamentos VR',icon:'🥽',color:'#1F66F2',desc:'Presencia, Embodiment, Affordance, UI diegética',qs:[
- {q:'¿Qué es el affordance?',
+{id:'fundamentos',name:'Fundamentos VR',icon:'🥽',color:'#1F66F2',desc:'Presencia, embodiment, affordance, mareo y UI diegética/espacial',qs:[
+ {tag:'Affordance',title:'Affordance',
+  body:`Es la capacidad de un objeto de <strong>comunicar visualmente cómo debe usarse</strong>. Una palanca invita a accionarse, un botón a presionarse. En VR es crítico porque no hay teclado ni mouse: el usuario entiende qué hacer solo con lo que ve. Concepto de <strong>Don Norman</strong>. Un buen affordance reduce la fricción cognitiva — el jugador no tiene que pensar, actúa.`,
+  ej:`Una manija sobresalida "pide" ser agarrada; una superficie plana "pide" ser empujada. Si un objeto agarrable no se ve agarrable, el usuario nunca lo intenta.`,
+  q:'¿Qué es el affordance?',
   mc:['Capacidad de un objeto de comunicar visualmente cómo debe usarse','La sensación de estar físicamente en el mundo virtual','El cuerpo del jugador como herramienta de interacción','La calidad de respuesta de cada acción del juego'],correct:0,
-  a:'Capacidad de un objeto de <strong>comunicar visualmente cómo debe usarse</strong>. Una palanca invita a accionarse, un botón a presionarse. En VR es crítico porque no hay teclado ni mouse: el usuario entiende qué hacer solo con lo que ve. (Don Norman)'},
- {q:'¿Qué es la presencia en VR?',
+  why:'Affordance (Don Norman) = el objeto comunica visualmente su uso. Clave en VR porque no hay periféricos: el usuario actúa por lo que ve.'},
+ {tag:'Presencia',title:'Presencia',
+  body:`Es la sensación de <strong>"estar ahí"</strong>. No depende de gráficos hiperrealistas sino de <strong>coherencia</strong>: buena escala, sonido consistente, física creíble. Un error chico —atravesar una pared— se siente enorme y rompe la ilusión. La presencia es frágil: se construye con muchos detalles coherentes y se destruye con uno solo incoherente.`,
+  q:'¿Qué es la presencia en VR?',
   mc:['Alta resolución gráfica y realismo fotorrealista','Ausencia total de latencia en el headset','Sensación de "estar ahí" gracias a la coherencia del entorno','Sincronía perfecta entre movimiento y sonido'],correct:2,
-  a:'La sensación de <strong>"estar ahí"</strong>. No depende de gráficos hiperrealistas sino de <strong>coherencia</strong>: buena escala, sonido consistente, física creíble. Un error chico —atravesar una pared— se siente enorme y rompe la ilusión.'},
- {q:'¿Qué es el embodiment?',a:'La sensación de que <strong>el cuerpo virtual pertenece al usuario</strong>. Las manos deben responder a los movimientos sin delay raro. Si el jugador siente que "maneja un personaje" en vez de ser él, se perdió el embodiment. Lone Echo lo logra: te movés literalmente con tus brazos.'},
- {q:'¿Cómo se encadenan affordance, presencia y embodiment?',a:'Es un <strong>efecto dominó</strong>: el affordance correcto → el jugador entiende sin pensar → mejora la interacción → refuerza la presencia → aparece el embodiment. El jugador deja de analizar y empieza a <em>habitar</em> el mundo.'},
- {q:'¿Qué es la UI diegética y por qué es el estándar en VR?',a:'UI integrada <strong>dentro del mundo del juego</strong> (un reloj, el arma, el entorno) en vez de HUD flotante. Reduce la fricción cognitiva: cuanto menos tengas que "interpretar", más fluido se siente. Half-Life: Alyx casi no tiene HUD y siempre sabés lo que pasa.'},
- {q:'¿Por qué la escala es crítica en VR?',a:'Si una puerta es demasiado chica o un objeto parece de juguete, <strong>el cerebro lo detecta al instante</strong> y se rompe la inmersión. VR es implacable con esto: la incoherencia de escala genera incomodidad difícil de explicar pero muy fácil de sentir.'},
- {q:'¿Qué genera el mareo en VR y cómo se mitiga?',
-  mc:['Conflicto entre lo que ves y lo que siente tu cuerpo (sensoriomotor)','Baja resolución de la pantalla del visor','Ausencia de sonido ambiental envolvente','Campo de visión (FOV) demasiado amplio'],correct:0,
-  a:'Aparece cuando <strong>lo que ves no coincide con lo que siente tu cuerpo</strong> (conflicto sensoriomotor). Mitigación: teletransporte, snap turning, viñeta al moverse, y siempre dar al jugador <strong>control de su cámara</strong>. Mantener 72–90 FPS estables es la base del diseño.'},
- {q:'¿Qué es la UI espacial en VR?',a:'Ubicar elementos UI en el espacio 3D de forma coherente: a distancia cómoda, tamaño legible, sin forzar el cuello. Las tipografías simples, buen contraste y tamaños generosos son obligatorios. En VR leer mal no es una molestia, es <strong>fatiga física</strong>.'}
+  why:'La presencia es sentir que "estás ahí", y nace de la coherencia (escala, sonido, física), no de los gráficos.'},
+ {tag:'Embodiment',title:'Embodiment',
+  body:`Es la sensación de que <strong>el cuerpo virtual pertenece al usuario</strong>. Las manos deben responder a los movimientos sin delay raro. Si el jugador siente que "maneja un personaje" en vez de ser él, se perdió el embodiment. <strong>Lone Echo</strong> lo logra: te movés literalmente con tus brazos.`,
+  q:'¿Qué describe mejor el embodiment?',
+  mc:['Que el objeto comunica cómo se usa','Que el cuerpo virtual se siente como propio del usuario','Que la escena tiene física realista','Que el usuario repite movimientos hasta automatizarlos'],correct:1,
+  why:'Embodiment = sentir que el cuerpo virtual es tuyo. Se rompe si hay delay o si sentís que manejás un personaje externo.'},
+ {tag:'Encadenamiento',title:'Cómo se encadenan affordance → presencia → embodiment',
+  body:`Es un <strong>efecto dominó</strong>: el affordance correcto → el jugador entiende sin pensar → mejora la interacción → refuerza la presencia → aparece el embodiment. El jugador deja de analizar y empieza a <em>habitar</em> el mundo.`,
+  q:'¿Cuál es el orden correcto del "efecto dominó"?',
+  mc:['Embodiment → presencia → affordance','Presencia → affordance → embodiment','Affordance → presencia → embodiment','Affordance → embodiment → presencia'],correct:2,
+  why:'El affordance habilita la interacción fluida, esa coherencia genera presencia, y de la presencia sostenida surge el embodiment.'},
+ {tag:'UI diegética',title:'UI diegética',
+  body:`Es la UI integrada <strong>dentro del mundo del juego</strong> (un reloj, el arma, el entorno) en vez de un HUD flotante. Reduce la fricción cognitiva: cuanto menos tengas que "interpretar", más fluido se siente. <strong>Half-Life: Alyx</strong> casi no tiene HUD y siempre sabés lo que pasa. Es el estándar en VR porque un HUD pegado a la cara rompe la inmersión y cansa la vista.`,
+  ej:`En vez de una barra de vida flotante, un reloj en la muñeca o luces en el traje. La info vive en el mundo, no encima de él.`,
+  q:'¿Por qué la UI diegética es el estándar en VR?',
+  mc:['Porque integra la info en el mundo y reduce la fricción cognitiva','Porque permite más resolución de texto','Porque ocupa menos memoria que un HUD','Porque es más fácil de programar'],correct:0,
+  why:'La UI diegética vive dentro del mundo (reloj, arma) y evita el HUD flotante que rompe inmersión y fatiga la vista.'},
+ {tag:'Escala',title:'Por qué la escala es crítica',
+  body:`Si una puerta es demasiado chica o un objeto parece de juguete, <strong>el cerebro lo detecta al instante</strong> y se rompe la inmersión. VR es implacable con esto: la incoherencia de escala genera incomodidad difícil de explicar pero muy fácil de sentir. Diseñar a escala real (1 unidad = 1 metro) y testear con el visor puesto es obligatorio.`,
+  q:'¿Qué pasa si la escala de un objeto está mal en VR?',
+  mc:['No se nota salvo que el jugador mida con precisión','El cerebro lo detecta al instante y se rompe la inmersión','Solo afecta el rendimiento, no la sensación','Mejora la sensación de profundidad'],correct:1,
+  why:'En VR el cerebro detecta la incoherencia de escala al instante: genera incomodidad y rompe la presencia.'},
+ {tag:'Mareo / confort',title:'Mareo (motion sickness) y cómo se mitiga',
+  body:`Aparece cuando <strong>lo que ves no coincide con lo que siente tu cuerpo</strong> (conflicto sensoriomotor). Mitigación: <strong>teletransporte</strong>, <strong>snap turning</strong> (giro por pasos), <strong>viñeta</strong> al moverse, y siempre dar al jugador <strong>control de su cámara</strong>. Mantener <strong>72–90 FPS estables</strong> es la base: cualquier caída de frames se siente como malestar físico.`,
+  q:'¿Qué genera el mareo en VR y cómo se mitiga?',
+  mc:['Conflicto entre lo que ves y lo que siente tu cuerpo (sensoriomotor); con teletransporte, snap turning y viñeta','Baja resolución de la pantalla del visor','Ausencia de sonido ambiental envolvente','Campo de visión (FOV) demasiado amplio'],correct:0,
+  why:'Mareo = conflicto sensoriomotor (ves movimiento que tu cuerpo no siente). Se mitiga con teletransporte/snap turning/viñeta y 72–90 FPS estables.'},
+ {tag:'UI espacial',title:'UI espacial',
+  body:`Es ubicar los elementos de UI en el espacio 3D de forma coherente: a <strong>distancia cómoda</strong>, tamaño legible, sin forzar el cuello. Tipografías simples, buen contraste y tamaños generosos son obligatorios. En VR leer mal no es una molestia: es <strong>fatiga física</strong>.`,
+  q:'¿Qué caracteriza a una buena UI espacial en VR?',
+  mc:['Texto chico para no tapar la escena','Distancia cómoda, buen contraste y tamaños legibles sin forzar el cuello','Ubicarla siempre pegada a la cámara','Máximo detalle gráfico posible'],correct:1,
+  why:'La UI espacial va a distancia cómoda, legible y sin forzar el cuello: leer mal en VR es fatiga física, no solo molestia.'}
 ]},
-{id:'corporalidad',name:'Corporalidad y Memoria Muscular',icon:'🤲',color:'#2FB57A',desc:'El cuerpo como interfaz principal en VR',qs:[
- {q:'¿Qué es la corporalidad en VR?',
+{id:'corporalidad',name:'Corporalidad y Memoria Muscular',icon:'🤲',color:'#2FB57A',desc:'El cuerpo como interfaz principal y la automatización por repetición',qs:[
+ {tag:'Corporalidad',title:'Corporalidad',
+  body:`Es la <strong>utilización del propio cuerpo como herramienta principal de interacción</strong>. En VR los jugadores giran la cabeza, estiran los brazos, manipulan objetos y se desplazan físicamente. El diseño debe contemplar capacidades y limitaciones reales: alcance de los brazos, espacio disponible, fatiga.`,
+  q:'¿Qué es la corporalidad en VR?',
   mc:['Sentir que el cuerpo virtual pertenece al usuario','Utilización del propio cuerpo como herramienta principal de interacción','Automatización de movimientos por repetición','Acciones que producen consecuencias visibles en el mundo'],correct:1,
-  a:'La <strong>utilización del propio cuerpo como herramienta principal de interacción</strong>. En VR los jugadores giran la cabeza, estiran los brazos, manipulan objetos y se desplazan físicamente. El diseño debe contemplar capacidades y limitaciones reales (alcance de brazos, espacio disponible).'},
- {q:'¿Cómo se diferencia corporalidad de embodiment?',a:'<strong>Corporalidad</strong>: usar el cuerpo como interfaz (diseño de las acciones físicas). <strong>Embodiment</strong>: sentir que el cuerpo virtual es propio (sensación de pertenencia). La corporalidad bien diseñada <em>genera</em> embodiment.'},
- {q:'¿Qué es la memoria muscular en VR?',
-  mc:['Sentir que el cuerpo virtual pertenece al usuario','El diseño de acciones físicas para el jugador en el espacio','Automatización de movimientos por repetición hasta hacerlos reflejos','La calidad de sensaciones durante la interacción'],correct:2,
-  a:'A medida que el jugador <strong>repite movimientos</strong>, desarrolla hábitos motores que le permiten interactuar de forma más eficiente y casi <strong>automática</strong> —sin pensar en cómo ejecutar la acción—. Es el mismo principio que aprender a escribir en teclado o recargar un arma.'},
- {q:'¿Cómo deben diseñarse los tutoriales para aprovechar la memoria muscular?',a:'Introduciendo mecánicas de forma <strong>gradual</strong>: primero el jugador domina agarrar/soltar, luego encadena esas acciones en tareas más complejas. Tras repeticiones el gesto se vuelve <strong>reflejo</strong>. Ejemplos: recargar un arma, gestos de corte en Beat Saber.'},
- {q:'¿Qué pasa si la corporalidad falla en VR?',a:'No se percibe como un bug técnico: se siente como <strong>incomodidad o mareo</strong>. Si los movimientos son forzados o la escala está mal calibrada, el cerebro rechaza la experiencia físicamente.'},
- {q:'¿Qué juego lleva al extremo "el cuerpo como UI"?',a:'<strong>Lone Echo</strong>: te movés literalmente con tus brazos en gravedad cero, sin ninguna UI tradicional. La interacción es completamente física. Llevado al extremo, <em>el cuerpo entero es la UI</em>.'}
+  why:'Corporalidad = usar el cuerpo real como interfaz principal. Hay que diseñar contemplando alcance, espacio y fatiga.'},
+ {tag:'Corporalidad vs Embodiment',title:'Corporalidad vs Embodiment',
+  body:`<strong>Corporalidad</strong>: usar el cuerpo como interfaz (diseño de las acciones físicas). <strong>Embodiment</strong>: sentir que el cuerpo virtual es propio (sensación de pertenencia). La corporalidad bien diseñada <em>genera</em> embodiment.`,
+  q:'¿Cuál es la diferencia entre corporalidad y embodiment?',
+  mc:['Son lo mismo','Corporalidad = usar el cuerpo como interfaz; embodiment = sentir el cuerpo virtual como propio','Corporalidad es visual; embodiment es de audio','Embodiment se diseña; corporalidad se siente'],correct:1,
+  why:'Corporalidad = el diseño de las acciones físicas (interfaz cuerpo). Embodiment = la sensación de pertenencia. La primera genera la segunda.'},
+ {tag:'Memoria muscular',title:'Memoria muscular',
+  body:`A medida que el jugador <strong>repite movimientos</strong>, desarrolla hábitos motores que le permiten interactuar de forma más eficiente y casi <strong>automática</strong>, sin pensar en cómo ejecutar la acción. Es el mismo principio que aprender a escribir en teclado o recargar un arma.`,
+  q:'¿Qué es la memoria muscular en VR?',
+  mc:['Sentir que el cuerpo virtual pertenece al usuario','El diseño de acciones físicas para el jugador','Automatización de movimientos por repetición hasta hacerlos reflejos','La calidad de sensaciones durante la interacción'],correct:2,
+  why:'Memoria muscular = repetir un movimiento hasta volverlo reflejo y automático (como recargar un arma o escribir).'},
+ {tag:'Tutoriales',title:'Tutoriales y memoria muscular',
+  body:`Se diseñan introduciendo mecánicas de forma <strong>gradual</strong>: primero el jugador domina agarrar/soltar, luego encadena esas acciones en tareas más complejas. Tras repeticiones el gesto se vuelve <strong>reflejo</strong>. Ejemplos: recargar un arma, los gestos de corte en <strong>Beat Saber</strong>.`,
+  q:'¿Cómo deben diseñarse los tutoriales para aprovechar la memoria muscular?',
+  mc:['Mostrando todo de golpe al inicio','Introduciendo mecánicas de forma gradual hasta que el gesto se vuelve reflejo','Sin tutorial: el jugador descubre solo','Solo con texto explicativo'],correct:1,
+  why:'Tutoriales graduales: primero lo básico, después se encadena. La repetición convierte el gesto en reflejo.'},
+ {tag:'Falla de corporalidad',title:'Qué pasa si la corporalidad falla',
+  body:`No se percibe como un bug técnico: se siente como <strong>incomodidad o mareo</strong>. Si los movimientos son forzados o la escala está mal calibrada, el cerebro rechaza la experiencia físicamente.`,
+  q:'Si la corporalidad está mal diseñada, ¿cómo lo percibe el jugador?',
+  mc:['Como un error de software claro','Como incomodidad o mareo físico, no como un bug','No lo percibe','Como una caída de FPS'],correct:1,
+  why:'Una corporalidad fallida no se lee como bug: se siente como incomodidad/mareo. El cuerpo rechaza la experiencia.'},
+ {tag:'Caso límite',title:'Lone Echo: el cuerpo entero como UI',
+  body:`<strong>Lone Echo</strong> lleva al extremo "el cuerpo como UI": te movés literalmente con tus brazos en gravedad cero, sin ninguna UI tradicional. La interacción es completamente física. Llevado al extremo, <em>el cuerpo entero es la interfaz</em>.`,
+  q:'¿Qué juego lleva al extremo "el cuerpo como UI"?',
+  mc:['Beat Saber','Half-Life: Alyx','Lone Echo','Superhot VR'],correct:2,
+  why:'Lone Echo: te desplazás empujándote con los brazos en gravedad cero, sin UI tradicional. El cuerpo entero es la interfaz.'}
 ]},
-{id:'interacciones',name:'Interacciones Meta SDK',icon:'🤜',color:'#E8822E',desc:'Grab, Snap, Event Wrappers, Hand Poses, Gizmos',qs:[
- {q:'¿Qué diferencia hay entre un Interactor y un Interactable?',
+{id:'interacciones',name:'Interacciones Meta SDK',icon:'🤜',color:'#E8822E',desc:'Interactor/Interactable, Grab, Snap completo, Event Wrappers completos, poses y gizmos',qs:[
+ {tag:'Interactor / Interactable',title:'Interactor vs Interactable',
+  body:`<strong>Interactor</strong>: el elemento que <em>realiza</em> la acción (mano, control, rayo). <strong>Interactable</strong>: el objeto que <em>recibe</em> la acción (objeto agarrable, botón, zona de snap). Son los dos lados de cada interacción en el SDK de Meta: por cada agarre hay un interactor que agarra y un interactable que es agarrado.`,
+  q:'¿Qué diferencia hay entre un Interactor y un Interactable?',
   mc:['Interactor: realiza la acción (mano/control). Interactable: recibe la acción (objeto)','Interactor: el objeto agarrado. Interactable: la mano que agarra','Ambos son sinónimos en el SDK de Meta','Interactor: la UI. Interactable: el control'],correct:0,
-  a:'<strong>Interactor</strong>: el elemento que realiza la acción (mano, control, rayo). <strong>Interactable</strong>: el objeto que recibe la acción (objeto agarrable, botón, zona de snap). Son los dos lados de cada interacción en el SDK de Meta.'},
- {q:'¿Qué es el Grab Wizard?',a:'La ventana que se abre al hacer clic derecho sobre un objeto → <code>Interaction SDK &gt; Add Grab Interaction</code>. Define tipo de interactor (manos/controles/ambos), tipo de gesto, si genera collider. Botón <strong>Fix</strong> para agregar Rigidbody si falta. Clic en <strong>Create</strong> → agrega todos los componentes automáticamente.'},
- {q:'Bug del Snap: el objeto orbita al intentar agarrarlo de nuevo. ¿Solución?',
-  mc:['Agregar un segundo Rigidbody al Snap Interactable','Is Trigger en el Collider del Snap Interactor + Is Kinematic en el Rigidbody del Snap Interactable','Desactivar el Snap Interactor cuando el objeto está snapeado','Usar Force Kinematic en el Grabbable mientras está snapeado'],correct:1,
-  a:'Dos pasos: 1) En el <strong>Collider del Snap Interactor</strong>: activar <strong>Is Trigger</strong> (no genera colisiones físicas). 2) En el <strong>Rigidbody del Snap Interactable</strong>: desactivar <strong>Use Gravity</strong> + activar <strong>Is Kinematic</strong> (no interactúa con la física mientras está snapeado).'},
- {q:'¿Para qué sirve el Pointable Unity Event Wrapper?',
-  mc:['Expone los eventos del Grabbable (objeto) en el Inspector: When Select, When Release, When Hover...','Expone los eventos de la mano/control en el Inspector','Envuelve el Hand Grab Interactable para manejar poses','Configura el Rigidbody del objeto automáticamente al agarrar'],correct:0,
-  a:'Expone los eventos del <strong>Grabbable (Interactable)</strong> en el Inspector: <code>When Select</code> (agarrar), <code>When Release</code> (soltar), <code>When Hover</code>, <code>When Unhover</code>, <code>When Move</code>. Se referencia el Grabbable y desde ahí se conectan acciones sin código (audio, partículas, etc.).'},
- {q:'Interactable vs Interactor Unity Event Wrapper: ¿cuál para feedback al agarrar un objeto?',
-  mc:['Pointable Unity Event Wrapper referenciando el Grabbable del objeto','Interactor Unity Event Wrapper colocado en el objeto','Grab Interactable Event Wrapper en la mano','Cualquiera funciona: ambos responden al mismo evento'],correct:0,
-  a:'El <strong>Interactable</strong> (o Pointable) wrapper: responde a eventos del <em>objeto</em> (Grabbable). El <strong>Interactor</strong> wrapper responde a eventos de <em>la mano/control</em>. Para feedback al agarrar un objeto específico → siempre el Pointable Unity Event Wrapper referenciando el Grabbable.'},
- {q:'¿Qué es HandGrabPose? ¿Qué es Fingers Freedom?',a:'<strong>HandGrabPose</strong>: objeto child del Hand Grab Interactable que define la pose de agarre (posición, rotación de la mano + configuración de cada dedo). <strong>Fingers Freedom</strong>: estado de cada dedo: <strong>Locked</strong> (fijo), <strong>Constrained</strong> (rango restringido) o <strong>Free</strong> (sin restricción).'},
- {q:'¿Cuándo usar OnDrawGizmos() y cómo cambiar el color?',
-  mc:['Es un método que corre en runtime y permite debug visual en escena y en juego','Callback que corre solo en el editor; se usa Gizmos.color antes del draw call','Es un método público que se llama manualmente desde el Inspector','Pertenece al sistema de shaders para colorear objetos en juego'],correct:1,
-  a:'<strong>OnDrawGizmos()</strong> es un callback de MonoBehaviour que Unity ejecuta <em>solo en el editor</em> (no en runtime). Para cambiar el color: <code>Gizmos.color = Color.red;</code> antes del draw call. Envolver en <code>#if UNITY_EDITOR / #endif</code> para no incluirlo en el build.',hint:'CustomerSeatPoint.cs: rojo si ocupado, verde si libre'},
- {q:'Nombrar al menos 3 Event Wrappers del SDK de Meta',a:'1. <strong>Pointable Unity Event Wrapper</strong>: eventos del interactable (When Select/Release/Hover). 2. <strong>Interactable Unity Event Wrapper</strong>: variante para interactables específicos. 3. <strong>Interactor Unity Event Wrapper</strong>: eventos de la mano/control. También: <strong>Snap Interactable Unity Event Wrapper</strong>.'},
- {q:'¿Qué parámetros clave tiene Hand Grab Interactable?',a:'Max interactores, referencia al Grabbable y Rigidbody, <strong>Grab Type</strong> (Pinch / Palm / ambos), <strong>Finger Rules</strong> (Ignored / Optional / Required por dedo), <strong>Select Mode</strong> (All Released / Any Released).'}
+  why:'Interactor = quien actúa (mano/control/rayo). Interactable = quien recibe (objeto/botón/snap). Dos lados de cada interacción.'},
+ {tag:'Grab Wizard',title:'Grab Wizard (Add Grab Interaction)',
+  body:`Es la ventana que se abre con clic derecho sobre un objeto → <code>Interaction SDK &gt; Add Grab Interaction</code>. Define el tipo de interactor (manos/controles/ambos), el tipo de gesto y si genera collider. Tiene un botón <strong>Fix</strong> para agregar el <strong>Rigidbody</strong> si falta. Clic en <strong>Create</strong> → agrega todos los componentes automáticamente (Grabbable, Hand Grab Interactable, etc.).`,
+  q:'¿Qué hace el botón "Fix" del Grab Wizard?',
+  mc:['Corrige errores de compilación','Agrega los componentes faltantes (como el Rigidbody) antes de crear la interacción','Optimiza el modelo 3D','Repara las UV del objeto'],correct:1,
+  why:'El Grab Wizard configura el agarre; Fix agrega lo que falte (p. ej. Rigidbody) y Create inserta todos los componentes.'},
+ {tag:'Snap',title:'Snap Interaction (completo)',
+  body:`El <strong>Positional Snap</strong> coloca un objeto en una <strong>ubicación predefinida</strong> de forma precisa, y puede hacer que <strong>regrese</strong> a una posición por defecto al terminar la interacción (rompecabezas, ensamblaje, inventarios). Tiene dos piezas:<br>
+  • <strong>Snap Interactor</strong> (en el objeto que se mueve): se referencia el <strong>Pointable Element</strong> (el Grabbable / ISDK Hand Grab Interaction) y el <strong>Rigidbody</strong>.<br>
+  • <strong>Snap Interactable</strong> (el destino donde encaja): lleva un <strong>Collider</strong> (caja/esfera/cápsula) que define la <strong>zona de activación</strong>, un <strong>Rigidbody</strong> y el componente Snap Interactable.<br>
+  <strong>Fix de físicas (bug del orbitado):</strong> en el Collider del Snap Interactor activar <strong>Is Trigger</strong>; en el Rigidbody del Snap Interactable <strong>desactivar Use Gravity</strong> y <strong>activar Is Kinematic</strong>.<br>
+  <strong>Options del Snap Interactor:</strong> <strong>Snap Pose Transform</strong> (pivote del objeto al encajar), <strong>Default Interactable</strong> (snap inicial donde arranca), <strong>Time Out Interactable</strong> (snap al que regresa solo) y <strong>Time Out</strong> (segundos para volver, ej. 3).<br>
+  <strong>Filtros por Tags:</strong> en los Snaps se agrega <strong>Tag Set</strong> con etiquetas; en el interactor un <strong>Tag Set Filter</strong> con <strong>Required Tags</strong> y <strong>Excluded Tags</strong> para limitar con qué Snaps puede encajar.`,
+  ej:`Un cubo verde transparente marca la zona; con un Interactable Unity Event Wrapper, al hacer Snap (When Select) se oculta el visual y al sacarlo (When Unselect) reaparece.`,
+  q:'En el bug del Snap (el objeto orbita al reagarrarlo), ¿cuál es la solución?',
+  mc:['Agregar un segundo Rigidbody al Snap Interactable','Is Trigger en el Collider del Snap Interactor + Is Kinematic (y Use Gravity off) en el Rigidbody del Snap Interactable','Desactivar el Snap Interactor cuando el objeto está snapeado','Usar Force Kinematic en el Grabbable'],correct:1,
+  why:'Is Trigger en el collider del interactor (detecta sin física) + Is Kinematic y Use Gravity off en el rigidbody del interactable (no pelea con la física).'},
+ {tag:'Pointable Event Wrapper',title:'Pointable Unity Event Wrapper',
+  body:`Expone los eventos del <strong>Grabbable (Interactable)</strong> en el Inspector: <code>When Select</code> (agarrar), <code>When Release</code> (soltar), <code>When Hover</code>, <code>When Unhover</code>, <code>When Move</code>. Se referencia el Grabbable y desde ahí se conectan acciones <strong>sin código</strong> (audio, partículas, etc.).`,
+  q:'¿Para qué sirve el Pointable Unity Event Wrapper?',
+  mc:['Expone los eventos del Grabbable (objeto) en el Inspector: When Select, When Release, When Hover...','Expone los eventos de la mano/control en el Inspector','Envuelve el Hand Grab Interactable para manejar poses','Configura el Rigidbody del objeto automáticamente'],correct:0,
+  why:'Expone los eventos del objeto agarrable (Select/Release/Hover...) en el Inspector para enlazar acciones sin escribir código.'},
+ {tag:'Interactable vs Interactor wrapper',title:'¿Qué wrapper para feedback al agarrar un objeto?',
+  body:`El <strong>Interactable</strong> (o Pointable) wrapper responde a eventos del <em>objeto</em> (Grabbable). El <strong>Interactor</strong> wrapper responde a eventos de <em>la mano/control</em>. Para feedback al agarrar un objeto específico → siempre el <strong>Pointable Unity Event Wrapper referenciando el Grabbable</strong>. El error típico es poner un Interactor wrapper en el objeto y que "no pase nada".`,
+  q:'¿Qué wrapper usás para reproducir un sonido al agarrar un objeto específico?',
+  mc:['Pointable Unity Event Wrapper referenciando el Grabbable del objeto','Interactor Unity Event Wrapper colocado en el objeto','Grab Interactable Event Wrapper en la mano','Cualquiera: ambos responden al mismo evento'],correct:0,
+  why:'Feedback en el objeto → Pointable/Interactable wrapper referenciando el Grabbable. El Interactor wrapper responde a la mano, no al objeto.'},
+ {tag:'Hand Grab Pose',title:'HandGrabPose y Fingers Freedom',
+  body:`<strong>HandGrabPose</strong>: objeto hijo del Hand Grab Interactable que define la pose de agarre (posición y rotación de la mano + configuración de cada dedo). <strong>Fingers Freedom</strong>: el estado de cada dedo: <strong>Locked</strong> (fijo en la pose), <strong>Constrained</strong> (rango restringido) o <strong>Free</strong> (sin restricción).`,
+  q:'En Fingers Freedom, ¿qué significa "Locked"?',
+  mc:['El dedo queda fijo en la pose definida','El dedo se mueve libre','El dedo tiene un rango restringido','El dedo se ignora'],correct:0,
+  why:'Fingers Freedom por dedo: Locked (fijo), Constrained (rango limitado), Free (libre). La pose vive en un HandGrabPose hijo.'},
+ {tag:'Gizmos',title:'OnDrawGizmos() y color',
+  body:`<strong>OnDrawGizmos()</strong> es un callback de MonoBehaviour que Unity ejecuta <em>solo en el editor</em> (no en runtime). Para cambiar el color: <code>Gizmos.color = Color.red;</code> antes del draw call. Conviene envolverlo en <code>#if UNITY_EDITOR / #endif</code> para que no se incluya en el build. Patrón de <em>CustomerSeatPoint.cs</em>: rojo si ocupado, verde si libre.`,
+  q:'¿Cuándo se ejecuta OnDrawGizmos() y cómo se cambia el color?',
+  mc:['En runtime y en juego; con un shader','Solo en el editor; con Gizmos.color antes del draw call','Se llama manualmente desde el Inspector','Pertenece al sistema de partículas'],correct:1,
+  why:'OnDrawGizmos() corre solo en el editor (debug visual). Gizmos.color define el color; envolver en #if UNITY_EDITOR para no compilarlo en build.'},
+ {tag:'Event Wrappers (todos)',title:'Event Wrappers: tipos y eventos completos',
+  body:`Los <strong>Event Wrappers</strong> exponen eventos de una interacción en el Inspector para enlazar acciones <strong>sin código</strong> (sonidos, animaciones, partículas, variables, cargar escenas, etc.).<br>
+  <strong>Tipos:</strong><br>
+  • <strong>Pointable Unity Event Wrapper</strong>: eventos del objeto interactable a través del <em>Grabbable</em> (el más usado para feedback en objetos agarrables).<br>
+  • <strong>Interactable Unity Event Wrapper</strong>: variante que se referencia a un interactable específico (p. ej. el Snap Interactable, un botón).<br>
+  • <strong>Interactor Unity Event Wrapper</strong>: responde a eventos de la <em>mano/control</em> (el interactor), no del objeto.<br>
+  <strong>Eventos disponibles:</strong> <code>When Select</code> (agarrar), <code>When Unselect</code> (des-seleccionar), <code>When Release</code> (soltar), <code>When Hover</code> (pasar por encima), <code>When Unhover</code> (salir), <code>When Move</code> (mover) y <code>When Cancel</code> (cancelar).`,
+  ej:`Sonido al agarrar: Pointable wrapper → referenciar Grabbable → When Select → AudioSource.Play(). Al soltar, lo mismo con When Release. Mostrar/ocultar un visual de Snap: Interactable wrapper → When Select/When Unselect → SetActive.`,
+  q:'¿Cuál de estos NO es un evento de un Event Wrapper del SDK de Meta?',
+  mc:['When Select','When Hover','When Compile','When Release'],correct:2,
+  why:'Eventos reales: When Select, Unselect, Release, Hover, Unhover, Move, Cancel. "When Compile" no existe. Tipos: Pointable, Interactable e Interactor wrapper.'},
+ {tag:'Hand Grab Interactable',title:'Parámetros del Hand Grab Interactable',
+  body:`Sus parámetros clave: <strong>Max Interactors / Max Selecting Interactors</strong>, referencia al <strong>Grabbable</strong> y al <strong>Rigidbody</strong>, <strong>Grab Type</strong> (Pinch / Palm / ambos), <strong>Finger Rules</strong> (Ignored / Optional / Required por dedo) y <strong>Select Mode</strong> (All Released / Any Released).`,
+  q:'¿Qué define el "Grab Type" de un Hand Grab Interactable?',
+  mc:['La cantidad de objetos en la escena','Si el agarre es por Pinch (pellizco), Palm (palma) o ambos','El color del gizmo','La velocidad de lanzamiento'],correct:1,
+  why:'Grab Type = tipo de agarre (Pinch/Palm/ambos). Otros parámetros: Max Interactors, Finger Rules por dedo y Select Mode.'}
 ]},
-{id:'iluminacion',name:'Iluminación y Optimización',icon:'💡',color:'#EBD23C',desc:'Lightmaps, draw calls, batching, shadow maps, LOD, pooling',qs:[
- {q:'¿Qué es una draw call?',a:'Una <strong>orden de la CPU a la GPU</strong> para dibujar un lote de geometría. Cada una tiene costo de CPU; demasiadas se vuelven un cuello de botella. En VR/mobile reducir draw calls es crítico para mantener FPS estables.'},
- {q:'¿Qué es el batching? ¿Cuántas variantes existen?',
-  mc:['Comprimir texturas para ahorrar VRAM en runtime','Agrupar objetos con el mismo material en una sola draw call; variantes: Static, Dynamic, GPU Instancing','Distribuir la carga de renderizado entre CPU y GPU','Técnica para reducir el fillrate en objetos transparentes'],correct:1,
-  a:'<strong>Agrupar objetos con el mismo material en una sola draw call</strong> para reducir overhead. Variantes en Unity: 1) <strong>Static Batching</strong>: objetos marcados como Static. 2) <strong>Dynamic Batching</strong>: objetos pequeños dinámicos. 3) <strong>GPU Instancing</strong>: múltiples instancias del mismo mesh/material.'},
- {q:'¿Qué es un lightmap?',a:'Una <strong>textura que almacena iluminación pre-calculada</strong> (luces y sombras) de la escena. Se aplica sobre superficies estáticas usando el canal <strong>UV2</strong>. No se actualiza en runtime → muy barata de ejecutar. Ideal para VR/mobile.'},
- {q:'¿Por qué UV2 no puede tener overlaps?',a:'El lightmap guarda la iluminación por cada punto de superficie <strong>de forma única</strong>. Si dos caras comparten espacio UV, la luz de una se pisa con la de la otra → iluminación incorrecta. Cada cara necesita su <strong>propio espacio sin solapamiento</strong>.'},
- {q:'¿Qué son los Light Probes?',
-  mc:['Luces puntuales ubicadas estratégicamente para iluminar toda la escena','Puntos que capturan luz bakeada para iluminar objetos dinámicos interpolando entre probes cercanos','Texturas de iluminación aplicadas a objetos dinámicos en runtime','Sistema de sombras suaves para objetos en movimiento'],correct:1,
-  a:'<strong>Puntos que capturan iluminación bakeada en distintas posiciones del espacio.</strong> Sirven para iluminar <em>objetos dinámicos</em> (que no reciben lightmap) con la luz pre-calculada, interpolando entre probes cercanos. Son baratos: solo leen valores ya horneados, sin recalcular cada frame.'},
- {q:'¿Qué es un shadow map?',a:'Textura que guarda la <strong>profundidad de la escena vista desde la luz</strong>. Comparando esa profundidad se decide qué puntos quedan en sombra. Es el método estándar de sombras realtime. En VR/mobile las sombras dinámicas son lo más caro: generan un shadow map por frame por cada luz.'},
- {q:'¿Qué es el Object Pooling y por qué usarlo?',
-  mc:['Comprimir datos de objetos en un pool de memoria compartida','Cargar objetos en background para evitar stutters al cargarlos','Reutilizar objetos pre-creados activándolos/desactivándolos en vez de Instantiate/Destroy','Combinar meshes en uno solo para reducir draw calls'],correct:2,
-  a:'Patrón que <strong>reutiliza un conjunto de objetos pre-creados</strong> activándolos/desactivándolos en vez de hacer Instantiate/Destroy en runtime. Instantiate/Destroy genera picos de CPU y dispara el Garbage Collector. Con pooling: FPS más estables. Aplica a balas, partículas, enemigos, ítems.'},
- {q:'¿Qué diferencia hay entre iluminación realtime y baked?',a:'<strong>Realtime</strong>: calculada en cada frame, responde a cambios, pero es cara. <strong>Baked</strong>: pre-calculada una sola vez, guardada en lightmaps, no se actualiza pero es muy barata. En VR siempre preferir baked para objetos estáticos.'},
- {q:'¿Qué es el LOD (Level of Detail)?',
-  mc:['Versiones del mismo objeto en distintos niveles de polígonos según la distancia al jugador','Sistema de iluminación adaptativa por distancia','Técnica de compresión de texturas según el mip level activo','Oclusión dinámica de objetos que no están en el frustum'],correct:0,
-  a:'Sistema con <strong>versiones del mismo objeto en diferentes polígonos según la distancia</strong>. Cerca → modelo detallado. Lejos → modelo simplificado. En Unity: componente <strong>LOD Group</strong>. El jugador no ve el detalle lejano, pero la GPU lo paga sin LOD.'},
- {q:'¿Por qué las transparencias generan overdraw?',a:'Los objetos transparentes <strong>no descartan píxeles de atrás</strong>: se dibujan encima de otros y el mismo píxel se pinta varias veces (<strong>overdraw</strong>). Consume fillrate, especialmente crítico en VR/mobile donde el fillrate es limitado.'}
+{id:'iluminacion',name:'Iluminación y Optimización',icon:'💡',color:'#EBD23C',desc:'Draw calls, batching, lightmaps, UV2, shadow maps, LOD, pooling, overdraw',qs:[
+ {tag:'Draw call',title:'Draw call',
+  body:`Una <strong>orden de la CPU a la GPU</strong> para dibujar un lote de geometría. Cada una tiene costo de CPU; demasiadas se vuelven un cuello de botella. En VR/mobile reducir draw calls es crítico para mantener FPS estables.`,
+  q:'¿Qué es una draw call?',
+  mc:['Una orden de la CPU a la GPU para dibujar un lote de geometría','Una textura de iluminación pre-calculada','Un punto de luz dinámica','Un nivel de detalle del modelo'],correct:0,
+  why:'Draw call = orden CPU→GPU para dibujar geometría. Muchas draw calls saturan la CPU; en VR/mobile hay que reducirlas.'},
+ {tag:'Batching',title:'Batching (Static / Dynamic / GPU Instancing)',
+  body:`<strong>Agrupar objetos con el mismo material en una sola draw call</strong> para reducir el overhead. Variantes en Unity: <strong>Static Batching</strong> (objetos marcados como Static), <strong>Dynamic Batching</strong> (objetos pequeños dinámicos) y <strong>GPU Instancing</strong> (muchas instancias del mismo mesh/material).`,
+  q:'¿Qué es el batching y qué variantes hay?',
+  mc:['Comprimir texturas para ahorrar VRAM','Agrupar objetos con el mismo material en una draw call; Static, Dynamic y GPU Instancing','Distribuir la carga entre CPU y GPU','Reducir el fillrate en transparentes'],correct:1,
+  why:'Batching = agrupar objetos del mismo material en una draw call. Variantes: Static, Dynamic y GPU Instancing.'},
+ {tag:'Lightmap',title:'Lightmap',
+  body:`Una <strong>textura que almacena iluminación pre-calculada</strong> (luces y sombras) de la escena. Se aplica sobre superficies <strong>estáticas</strong> usando el canal <strong>UV2</strong>. No se actualiza en runtime → muy barata de ejecutar. Ideal para VR/mobile.`,
+  q:'¿Qué es un lightmap?',
+  mc:['Una luz dinámica de alta calidad','Una textura con iluminación pre-calculada aplicada a superficies estáticas vía UV2','Un mapa de profundidad de la cámara','Una sombra en tiempo real'],correct:1,
+  why:'Lightmap = textura de iluminación pre-calculada sobre estáticos (canal UV2). No se recalcula en runtime: barata, ideal para VR.'},
+ {tag:'UV2 sin overlaps',title:'Por qué UV2 no puede tener overlaps',
+  body:`El lightmap guarda la iluminación de cada punto de superficie <strong>de forma única</strong>. Si dos caras comparten espacio UV, la luz de una se pisa con la de la otra → iluminación incorrecta. Cada cara necesita su <strong>propio espacio sin solapamiento</strong> en el canal UV2.`,
+  q:'¿Por qué el UV2 no puede tener overlaps?',
+  mc:['Porque consume más memoria','Porque cada cara necesita espacio único o la luz de una pisa a la otra','Porque Unity no soporta UV2','Porque rompe el batching'],correct:1,
+  why:'El lightmap guarda luz por punto único: si dos caras comparten UV2, una pisa a la otra y la iluminación queda mal.'},
+ {tag:'Light Probes',title:'Light Probes',
+  body:`<strong>Puntos que capturan iluminación bakeada en distintas posiciones del espacio.</strong> Sirven para iluminar <em>objetos dinámicos</em> (que no reciben lightmap) con la luz pre-calculada, interpolando entre los probes cercanos. Son baratos: solo leen valores ya horneados, sin recalcular cada frame.`,
+  q:'¿Qué son los Light Probes?',
+  mc:['Luces puntuales ubicadas en la escena','Puntos que capturan luz bakeada para iluminar objetos dinámicos interpolando entre probes','Texturas aplicadas a dinámicos en runtime','Sombras suaves para objetos en movimiento'],correct:1,
+  why:'Light Probes = puntos con luz bakeada que iluminan objetos dinámicos interpolando entre los probes cercanos. Baratos.'},
+ {tag:'Shadow map',title:'Shadow map',
+  body:`Textura que guarda la <strong>profundidad de la escena vista desde la luz</strong>. Comparando esa profundidad se decide qué puntos quedan en sombra. Es el método estándar de sombras realtime. En VR/mobile las sombras dinámicas son lo más caro: generan un shadow map <strong>por frame por cada luz</strong>.`,
+  q:'¿Qué es un shadow map?',
+  mc:['Una textura con la profundidad vista desde la luz, para decidir las sombras','Un lightmap de baja resolución','Un mapa de normales','Una variante de batching'],correct:0,
+  why:'Shadow map = profundidad de la escena desde la luz para decidir sombras. Caro en VR: uno por frame por cada luz.'},
+ {tag:'Object Pooling',title:'Object Pooling',
+  body:`Patrón que <strong>reutiliza un conjunto de objetos pre-creados</strong> activándolos/desactivándolos en vez de hacer Instantiate/Destroy en runtime. Instantiate/Destroy genera picos de CPU y dispara el Garbage Collector. Con pooling: FPS más estables. Aplica a balas, partículas, enemigos, ítems.`,
+  q:'¿Qué hace el Object Pooling y por qué conviene?',
+  mc:['Comprime objetos en memoria compartida','Carga objetos en background','Reutiliza objetos pre-creados (activar/desactivar) en vez de Instantiate/Destroy, evitando picos de CPU y GC','Combina meshes en uno'],correct:2,
+  why:'Object Pooling reutiliza objetos pre-creados en vez de crear/destruir, evitando picos de CPU y del Garbage Collector.'},
+ {tag:'Realtime vs Baked',title:'Iluminación realtime vs baked',
+  body:`<strong>Realtime</strong>: calculada en cada frame, responde a cambios, pero es cara. <strong>Baked</strong>: pre-calculada una sola vez, guardada en lightmaps, no se actualiza pero es muy barata. En VR siempre preferir <strong>baked</strong> para objetos estáticos.`,
+  q:'Para objetos estáticos en VR, ¿qué tipo de iluminación conviene?',
+  mc:['Realtime, porque responde a cambios','Baked, porque es pre-calculada y muy barata','Da igual','Ninguna'],correct:1,
+  why:'Estáticos en VR → baked: se pre-calcula una vez y es muy barata. Realtime se recalcula cada frame y es cara.'},
+ {tag:'LOD',title:'LOD (Level of Detail)',
+  body:`Sistema con <strong>versiones del mismo objeto en diferentes cantidades de polígonos según la distancia</strong>. Cerca → modelo detallado. Lejos → modelo simplificado. En Unity: componente <strong>LOD Group</strong>. El jugador no nota el detalle lejano, pero la GPU lo pagaría sin LOD.`,
+  q:'¿Qué es el LOD (Level of Detail)?',
+  mc:['Versiones del mismo objeto con distintos polígonos según la distancia al jugador','Un sistema de iluminación adaptativa','Compresión de texturas por mip level','Oclusión de objetos fuera del frustum'],correct:0,
+  why:'LOD = versiones con más/menos polígonos según distancia (LOD Group). Cerca detallado, lejos simplificado.'},
+ {tag:'Overdraw',title:'Por qué las transparencias generan overdraw',
+  body:`Los objetos transparentes <strong>no descartan los píxeles de atrás</strong>: se dibujan encima de otros y el mismo píxel se pinta varias veces (<strong>overdraw</strong>). Consume fillrate, especialmente crítico en VR/mobile donde el fillrate es limitado.`,
+  q:'¿Por qué las transparencias generan overdraw?',
+  mc:['Porque usan más memoria','Porque no descartan los píxeles de atrás y el mismo píxel se pinta varias veces','Porque rompen el batching','Porque necesitan shadow maps'],correct:1,
+  why:'Transparencias no descartan lo de atrás: el píxel se pinta varias veces (overdraw), gastando fillrate, escaso en VR/mobile.'}
 ]},
-{id:'gamefeel',name:'Game Feeling y Feedback',icon:'🎮',color:'#D43C9E',desc:'Game feeling, feedback +/−, reticles, tangibilidad, planificación VR',qs:[
- {q:'¿Qué es el Game Feeling?',
-  mc:['La cantidad de polígonos y shaders de alta calidad visibles','El nivel de dificultad ajustado al jugador en cada momento','La calidad de sensaciones transmitidas durante la interacción','Los FPS sostenidos por encima de 90 Hz'],correct:2,
-  a:'La <strong>calidad de las sensaciones transmitidas durante la interacción</strong>. Cada acción debe producir respuesta clara y coherente: animaciones, sonidos, vibraciones (hápticos), cambios visuales o reacciones físicas. Cuanto más <strong>inmediata y consistente</strong>, más satisfactoria.'},
- {q:'¿Por qué hay que tener más cuidado con el feedback negativo que con el positivo?',
-  mc:['En VR el jugador habita el juego con su cuerpo y lo negativo se vive de forma física e intensa','El feedback negativo consume más recursos de GPU','Los sonidos negativos son más difíciles de implementar correctamente','El jugador presta siempre más atención a las penalizaciones'],correct:0,
-  a:'En VR el jugador <strong>habita el juego con su cuerpo</strong>, así que lo negativo (errores, castigos) se vive de forma <strong>física e intensa</strong>: frustración, incomodidad, mareo. Mal calibrado puede <strong>romper la presencia</strong> o hacer que el jugador quiera sacarse el visor.'},
- {q:'¿Por qué el feedback solo de audio no alcanza?',a:'El jugador puede jugar sin sonido. <strong>Las señales deben entenderse también de forma visual.</strong> Tutorial y marcas clave deben funcionar aunque el audio esté apagado. Es un criterio explícito del profe.'},
- {q:'¿Qué es la Tangibilidad del Trabajo?',a:'Las acciones deben producir <strong>consecuencias visibles y comprensibles</strong>: el usuario debe percibir que realmente hizo algo y que su esfuerzo tuvo impacto. Ejemplos: armar un mecanismo pieza por pieza, recargar un arma manualmente, colocar objetos en posiciones específicas.'},
- {q:'¿Por qué los simuladores siempre cumplen la tangibilidad del trabajo?',a:'Porque <strong>replican tareas reales paso a paso</strong> con acciones físicas concretas y resultado observable y verificable. El usuario ejecuta el procedimiento real con su cuerpo y ve el efecto directo de cada acción.'},
- {q:'¿Para qué sirven los Reticles?',a:'<strong>Indicadores visuales que comunican cuándo una superficie u objetivo es válido para una acción.</strong> Importantes en: teletransporte (destino válido/inválido), interacción a distancia (objeto al que apuntás), realidad mixta (planos detectados para anclar contenido). Componente: <strong>Reticle Data Teleport</strong>.'},
- {q:'¿Qué criterios de planificación exige el profe?',a:'1. Diseñar para el <strong>sistema sensorial completo</strong>, no solo los ojos. 2. Pensar en un usuario que "no entiende nada" (el profe evalúa siendo ese usuario). 3. El usuario <strong>no debe adivinar</strong>: indicaciones completas, concisas y breves. 4. Documento de desarrollo con justificación técnica.'}
+{id:'gamefeel',name:'Game Feeling y Feedback',icon:'🎮',color:'#D43C9E',desc:'Game feeling, feedback +/−, reticles, tangibilidad y planificación VR',qs:[
+ {tag:'Game Feeling',title:'Game Feeling',
+  body:`La <strong>calidad de las sensaciones transmitidas durante la interacción</strong>. Cada acción debe producir respuesta clara y coherente: animaciones, sonidos, vibraciones (hápticos), cambios visuales o reacciones físicas. Cuanto más <strong>inmediata y consistente</strong>, más satisfactoria.`,
+  q:'¿Qué es el Game Feeling?',
+  mc:['La cantidad de polígonos y shaders de alta calidad','El nivel de dificultad ajustado al jugador','La calidad de las sensaciones transmitidas durante la interacción','Los FPS sostenidos por encima de 90 Hz'],correct:2,
+  why:'Game Feeling = calidad de las sensaciones al interactuar. Respuesta clara, inmediata y coherente (audio, hápticos, visual).'},
+ {tag:'Feedback negativo',title:'Cuidado con el feedback negativo',
+  body:`En VR el jugador <strong>habita el juego con su cuerpo</strong>, así que lo negativo (errores, castigos) se vive de forma <strong>física e intensa</strong>: frustración, incomodidad, mareo. Mal calibrado puede <strong>romper la presencia</strong> o hacer que el jugador quiera sacarse el visor. Por eso hay que dosificarlo más que en una pantalla plana.`,
+  q:'¿Por qué hay que tener más cuidado con el feedback negativo en VR?',
+  mc:['Porque el jugador habita el juego con su cuerpo y lo negativo se vive físico e intenso','Porque consume más GPU','Porque los sonidos negativos son difíciles de hacer','Porque el jugador presta más atención a las penalizaciones'],correct:0,
+  why:'En VR el cuerpo habita el juego: lo negativo se vive físico e intenso y puede romper la presencia. Hay que dosificarlo.'},
+ {tag:'Audio no alcanza',title:'Por qué el feedback solo de audio no alcanza',
+  body:`El jugador puede jugar sin sonido. <strong>Las señales deben entenderse también de forma visual.</strong> El tutorial y las marcas clave deben funcionar aunque el audio esté apagado. Es un criterio explícito del profe.`,
+  q:'¿Por qué el feedback solo de audio no alcanza?',
+  mc:['Porque el audio consume mucha CPU','Porque el jugador puede jugar sin sonido: las señales deben entenderse también visualmente','Porque el audio espacial no existe en VR','Porque rompe la inmersión'],correct:1,
+  why:'El jugador puede tener el sonido apagado: el feedback debe funcionar también de forma visual (criterio del profe).'},
+ {tag:'Tangibilidad',title:'Tangibilidad del Trabajo',
+  body:`Las acciones deben producir <strong>consecuencias visibles y comprensibles</strong>: el usuario debe percibir que realmente hizo algo y que su esfuerzo tuvo impacto. Ejemplos: armar un mecanismo pieza por pieza, recargar un arma manualmente, colocar objetos en posiciones específicas.`,
+  q:'¿Qué es la Tangibilidad del Trabajo?',
+  mc:['Que el juego tenga objetos físicos reales','Que las acciones produzcan consecuencias visibles y comprensibles, con impacto percibido','Que haya muchas físicas en pantalla','Que el jugador no pueda equivocarse'],correct:1,
+  why:'Tangibilidad = las acciones producen consecuencias visibles; el usuario siente que hizo algo y tuvo impacto.'},
+ {tag:'Simuladores',title:'Por qué los simuladores cumplen la tangibilidad',
+  body:`Porque <strong>replican tareas reales paso a paso</strong> con acciones físicas concretas y un resultado observable y verificable. El usuario ejecuta el procedimiento real con su cuerpo y ve el efecto directo de cada acción.`,
+  q:'¿Por qué los simuladores cumplen siempre la tangibilidad del trabajo?',
+  mc:['Porque tienen buenos gráficos','Porque replican tareas reales paso a paso con resultado observable','Porque son fáciles de programar','Porque no tienen UI'],correct:1,
+  why:'Los simuladores replican tareas reales paso a paso con resultado observable: cada acción física tiene efecto directo.'},
+ {tag:'Reticles',title:'Reticles',
+  body:`<strong>Indicadores visuales que comunican cuándo una superficie u objetivo es válido para una acción.</strong> Importantes en: teletransporte (destino válido/inválido), interacción a distancia (objeto al que apuntás) y realidad mixta (planos detectados para anclar contenido). Componente: <strong>Reticle Data Teleport</strong>.`,
+  q:'¿Para qué sirven los Reticles?',
+  mc:['Para mejorar la resolución','Para comunicar visualmente si una superficie/objetivo es válido para una acción','Para reducir draw calls','Para bakear luz'],correct:1,
+  why:'Reticles = indicadores visuales de validez (destino de teletransporte, objeto apuntado, plano de AR). Ej: Reticle Data Teleport.'},
+ {tag:'Planificación',title:'Criterios de planificación del profe',
+  body:`1. Diseñar para el <strong>sistema sensorial completo</strong>, no solo los ojos. 2. Pensar en un usuario que "no entiende nada" (el profe evalúa siendo ese usuario). 3. El usuario <strong>no debe adivinar</strong>: indicaciones completas, concisas y breves. 4. Documento de desarrollo con justificación técnica.`,
+  q:'¿Cuál es uno de los criterios de planificación que exige el profe?',
+  mc:['Maximizar la cantidad de mecánicas','Diseñar para el sistema sensorial completo y que el usuario no tenga que adivinar','Usar siempre el Meta XR SDK','Priorizar los gráficos sobre todo'],correct:1,
+  why:'Criterios: diseñar para todos los sentidos, pensar en un usuario que no entiende nada, que no adivine, y documentar con justificación técnica.'}
 ]},
 {id:'sdk',name:'Comparativa SDK',icon:'⚖️',color:'#7A33B5',desc:'★ MÁS IMPORTANTE ★  Meta XR SDK vs OpenXR vs SteamVR',qs:[
- {q:'¿Cuál es la ventaja principal del Meta XR SDK?',
-  mc:['Acceso directo a funcionalidades exclusivas del hardware Meta Quest','Compatibilidad nativa con todos los visores del mercado','Código abierto mantenido por el grupo Khronos','Curva de aprendizaje más baja que cualquier otro SDK'],correct:0,
-  a:'Acceso directo a las <strong>funcionalidades exclusivas del hardware Meta Quest</strong>: seguimiento de manos, passthrough para realidad mixta, tracking espacial avanzado, optimizaciones específicas y herramientas de rendimiento de Meta. También tiene excelente documentación y gran comunidad.'},
- {q:'¿Cuál es la desventaja principal del Meta XR SDK?',
-  mc:['No soporta hand tracking, solo controles físicos','Requiere suscripción de pago para proyectos comerciales','Dependencia del ecosistema Meta: reduce portabilidad a otras plataformas','No funciona con versiones de Unity anteriores a 2022'],correct:2,
-  a:'<strong>Dependencia del ecosistema Meta</strong>. Muchas funcionalidades avanzadas son propietarias y requieren modificaciones si el proyecto se migra a otros visores. Reduce la <strong>portabilidad</strong> a otras plataformas.'},
- {q:'¿Qué es OpenXR?',
-  mc:['SDK propietario de Meta para Quest 2 y Quest 3 exclusivamente','Estándar abierto del grupo Khronos para unificar el desarrollo VR/AR multiplataforma','Plataforma de distribución de aplicaciones VR de Steam','Plugin de Unity para desarrollo VR sin necesitar un headset físico'],correct:1,
-  a:'Un <strong>estándar abierto</strong> desarrollado por el grupo Khronos para unificar el desarrollo de VR/AR. Una aplicación correctamente construida sobre OpenXR puede ejecutarse en dispositivos de distintos fabricantes con mínimos cambios de código (<strong>interoperabilidad</strong>).'},
- {q:'¿Qué ventaja académica y profesional tiene OpenXR?',a:'Enseña conceptos <strong>más generales y menos dependientes de una empresa</strong>. Los estudiantes aprenden estándares de la industria. Es la opción más recomendable para <strong>compatibilidad multiplataforma</strong> y sostenibilidad a largo plazo.'},
- {q:'¿Cuál es la desventaja de OpenXR?',a:'Solo ofrece acceso a las <strong>características estandarizadas</strong> entre fabricantes. Para funciones muy específicas de un visor concreto hay que recurrir a extensiones particulares o complementar con SDKs propietarios, aumentando la complejidad.'},
- {q:'¿Cuándo sigue siendo relevante SteamVR?',a:'Para <strong>experiencias de PC VR</strong> de alta fidelidad y compatibilidad con múltiples visores de PC. También para distribución en Steam. Sin embargo, <strong>la industria migra progresivamente a OpenXR</strong> como estándar y SteamVR es menos adecuado para dispositivos autónomos como Quest.'},
- {q:'¿Cuándo usar cada SDK? Resumen de la comparativa',a:'<strong>Meta XR SDK</strong>: objetivo Quest 2/3 específico, aprovechar capacidades exclusivas del hardware. <strong>OpenXR</strong>: compatibilidad multiplataforma, formación en estándares abiertos, proyecto a largo plazo. <strong>SteamVR</strong>: PC VR con múltiples headsets, distribución Steam. La industria actual apunta a OpenXR.'},
- {q:'¿Qué SDK usar para un proyecto que debe correr en Quest 3, HTC Vive y PSVR?',
-  mc:['Meta XR SDK con capas de abstracción adicionales','SteamVR + plugin de compatibilidad externo','OpenXR, diseñado exactamente para interoperabilidad entre dispositivos','Cualquiera, todos los SDKs son compatibles entre sí'],correct:2,
-  a:'<strong>OpenXR</strong>. Es el estándar diseñado exactamente para interoperabilidad entre dispositivos de distintos fabricantes. Meta XR SDK o SteamVR atan el proyecto a un ecosistema particular.'}
+ {tag:'Meta XR — ventaja',title:'Ventaja del Meta XR SDK',
+  body:`Acceso directo a las <strong>funcionalidades exclusivas del hardware Meta Quest</strong>: seguimiento de manos, passthrough para realidad mixta, tracking espacial avanzado, optimizaciones específicas y herramientas de rendimiento de Meta. También tiene excelente documentación y gran comunidad.`,
+  q:'¿Cuál es la ventaja principal del Meta XR SDK?',
+  mc:['Acceso directo a funcionalidades exclusivas del hardware Meta Quest','Compatibilidad nativa con todos los visores','Ser código abierto de Khronos','La curva de aprendizaje más baja'],correct:0,
+  why:'Meta XR SDK da acceso directo al hardware Quest (hand tracking, passthrough, tracking avanzado) + buena documentación.'},
+ {tag:'Meta XR — desventaja',title:'Desventaja del Meta XR SDK',
+  body:`<strong>Dependencia del ecosistema Meta</strong>. Muchas funcionalidades avanzadas son propietarias y requieren modificaciones si el proyecto se migra a otros visores. Reduce la <strong>portabilidad</strong> a otras plataformas.`,
+  q:'¿Cuál es la desventaja principal del Meta XR SDK?',
+  mc:['No soporta hand tracking','Requiere suscripción de pago','Dependencia del ecosistema Meta: reduce la portabilidad a otras plataformas','No funciona en Unity 2022'],correct:2,
+  why:'Su gran desventaja es la dependencia del ecosistema Meta: funciones propietarias que reducen la portabilidad.'},
+ {tag:'OpenXR',title:'Qué es OpenXR',
+  body:`Un <strong>estándar abierto</strong> desarrollado por el <strong>grupo Khronos</strong> para unificar el desarrollo de VR/AR. Una aplicación bien construida sobre OpenXR puede ejecutarse en dispositivos de distintos fabricantes con mínimos cambios de código (<strong>interoperabilidad</strong>).`,
+  q:'¿Qué es OpenXR?',
+  mc:['Un SDK propietario de Meta','Un estándar abierto del grupo Khronos para VR/AR multiplataforma','La tienda de apps de Steam','Un plugin para desarrollar sin headset'],correct:1,
+  why:'OpenXR = estándar abierto de Khronos para VR/AR; permite correr en distintos fabricantes con mínimos cambios (interoperabilidad).'},
+ {tag:'OpenXR — ventaja',title:'Ventaja académica y profesional de OpenXR',
+  body:`Enseña conceptos <strong>más generales y menos dependientes de una empresa</strong>. Los estudiantes aprenden estándares de la industria. Es la opción más recomendable para <strong>compatibilidad multiplataforma</strong> y sostenibilidad a largo plazo.`,
+  q:'¿Qué ventaja académica/profesional tiene OpenXR?',
+  mc:['Da acceso a funciones exclusivas del Quest','Enseña estándares de la industria, multiplataforma y sostenibles a largo plazo','Es el más fácil de todos','Solo sirve para PC'],correct:1,
+  why:'OpenXR enseña estándares de la industria (no atados a una empresa): multiplataforma y sostenible a largo plazo.'},
+ {tag:'OpenXR — desventaja',title:'Desventaja de OpenXR',
+  body:`Solo ofrece acceso a las <strong>características estandarizadas</strong> entre fabricantes. Para funciones muy específicas de un visor concreto hay que recurrir a extensiones particulares o complementar con SDKs propietarios, aumentando la complejidad.`,
+  q:'¿Cuál es la desventaja de OpenXR?',
+  mc:['No es multiplataforma','Solo da acceso a lo estandarizado; las funciones exclusivas de un visor requieren extensiones o SDKs propietarios','Es de pago','No tiene documentación'],correct:1,
+  why:'OpenXR solo cubre lo estandarizado: para funciones exclusivas de un visor hay que usar extensiones o SDKs propietarios.'},
+ {tag:'SteamVR',title:'Cuándo sigue siendo relevante SteamVR',
+  body:`Para <strong>experiencias de PC VR</strong> de alta fidelidad y compatibilidad con múltiples visores de PC, y para distribución en <strong>Steam</strong>. Sin embargo, la industria migra progresivamente a <strong>OpenXR</strong> como estándar, y SteamVR es menos adecuado para dispositivos autónomos como el Quest.`,
+  q:'¿Cuándo sigue siendo relevante SteamVR?',
+  mc:['Para dispositivos autónomos como el Quest','Para PC VR de alta fidelidad y distribución en Steam','Para multiplataforma móvil','Para realidad aumentada en celulares'],correct:1,
+  why:'SteamVR sirve para PC VR de alta fidelidad y distribución en Steam; no es ideal para standalone como el Quest.'},
+ {tag:'Resumen',title:'Cuándo usar cada SDK',
+  body:`<strong>Meta XR SDK</strong>: objetivo Quest 2/3 específico, aprovechar capacidades exclusivas del hardware. <strong>OpenXR</strong>: compatibilidad multiplataforma, formación en estándares abiertos, proyecto a largo plazo. <strong>SteamVR</strong>: PC VR con múltiples headsets y distribución Steam. La industria actual apunta a OpenXR.`,
+  q:'¿Qué SDK conviene si querés máxima portabilidad y estándares abiertos?',
+  mc:['Meta XR SDK','OpenXR','SteamVR','Vuforia'],correct:1,
+  why:'Portabilidad + estándares abiertos → OpenXR. Meta XR para Quest específico; SteamVR para PC VR.'},
+ {tag:'Caso multiplataforma',title:'SDK para Quest 3 + HTC Vive + PSVR',
+  body:`Para un proyecto que debe correr en varios visores de distintos fabricantes conviene <strong>OpenXR</strong>, el estándar diseñado exactamente para interoperabilidad. Meta XR SDK o SteamVR atarían el proyecto a un ecosistema particular.`,
+  q:'Un proyecto debe correr en Quest 3, HTC Vive y PSVR. ¿Qué SDK conviene?',
+  mc:['Meta XR SDK con capas de abstracción','SteamVR + plugin externo','OpenXR, diseñado para interoperabilidad entre dispositivos','Cualquiera, todos son compatibles'],correct:2,
+  why:'Varios fabricantes → OpenXR, hecho para interoperabilidad. Los demás atan el proyecto a un ecosistema.'}
 ]},
-{id:'historia',name:'Historia VR / AR / XR',icon:'📜',color:'#1F66F2',desc:'Línea de tiempo: Wheatstone (1838) → Quest (2019)',qs:[
- {q:'1838 — ¿Quién inventó el estereoscopio y qué demostró?',a:'<strong>Charles Wheatstone</strong> explicó la <strong>estereopsis</strong> e inventó el estereoscopio: usa dos imágenes ligeramente distintas para crear ilusión 3D. Demostró que el cerebro fusiona dos perspectivas para percibir profundidad. Es el mismo principio de los headsets VR modernos.'},
- {q:'1929 — ¿Qué fue el Link Trainer?',a:'Inventado por Edwin Link: <strong>primer simulador de vuelo mecánico</strong> del mundo. Cabina cerrada sobre una base móvil que imitaba los movimientos de vuelo. Sentó las bases para simulaciones basadas en VR (aviación, ejército, viajes espaciales).'},
- {q:'1956 — ¿Qué fue el Sensorama?',a:'Creado por <strong>Morton Heilig</strong>: una de las primeras máquinas de experiencia inmersiva. Cabina con pantalla estereoscópica, sonido envolvente, vibración en el asiento e incluso olores. No tuvo éxito comercial pero influyó en la VR moderna.'},
- {q:'1968 — ¿Qué fue el Sword of Damocles?',
-  mc:['Morton Heilig con el Sensorama, primera experiencia multisensorial','Ivan Sutherland con el primer HMD conectado a una computadora','Palmer Luckey con el primer prototipo de Oculus Rift','Jaron Lanier fundando VPL Research con guantes de VR'],correct:1,
-  a:'Creado por <strong>Ivan Sutherland</strong>: el <strong>primer HMD conectado a una computadora</strong>. Mostraba gráficos 3D que se actualizaban según el movimiento de la cabeza → introdujo el <strong>motion tracking</strong> en VR.'},
- {q:'1987 — ¿Qué hizo Jaron Lanier?',
-  mc:['Inventó el Sensorama y demostró la importancia del sonido en VR','Acuñó el término "Virtual Reality" y fundó VPL Research','Creó el primer simulador de vuelo y sentó bases de VR','Lanzó el Kickstarter de Oculus Rift recaudando millones'],correct:1,
-  a:'Acuñó el término <strong>"Virtual Reality"</strong> y fundó <strong>VPL Research</strong>, pionera en dispositivos como guantes de realidad virtual, llevando la interacción física al mundo virtual.'},
- {q:'1995 — ¿Por qué fracasó el Virtual Boy de Nintendo?',a:'Por <strong>precio alto, falta de motion tracking, gráficos monocromos</strong> (solo rojo) y problemas de <strong>malestar visual</strong>. Fue un fracaso comercial importante que retrasó la adopción de VR.'},
- {q:'2012 — ¿Qué significó el Kickstarter de Oculus Rift?',a:'Palmer Luckey recaudó <strong>$2.4 millones</strong>, demostrando el interés global por la VR moderna. Llevó a la <strong>compra de Oculus por Facebook (2014)</strong> y al renacimiento de la VR de consumo.'},
- {q:'2016 — ¿Qué innovación introdujo el HTC Vive?',a:'Junto con Valve, introdujo el <strong>room-scale VR</strong>: moverse físicamente por un espacio real dentro de la experiencia virtual. Ese año también llegaron Oculus Rift y PlayStation VR, estandarizando la VR moderna de consumo.'},
- {q:'2019 — ¿Qué significó el Meta Quest (Oculus Quest)?',
-  mc:['Primer visor con room-scale VR y controllers con tracking','Primer HMD conectado a una PC con gráficos realistas','Primer visor standalone de consumo masivo sin necesidad de PC','Primer headset con passthrough de realidad mixta integrado'],correct:2,
-  a:'Primer visor VR autónomo (standalone) de consumo masivo: <strong>sin necesidad de PC</strong>, con tracking inside-out. Democratizó el acceso a la VR. La VR se bifurcó en <em>standalone</em> (Quest, Pico) y <em>alta fidelidad</em> (Valve Index, Apple Vision Pro).'}
+{id:'interfaces',name:'Interfaces UI en VR',icon:'🖥️',color:'#2FB57A',desc:'Canvas World Space, Add Ray/Poke, wizard del SDK, reticle y layout',qs:[
+ {tag:'Canvas World Space',title:'Por qué el Canvas va en World Space',
+  body:`En VR no hay "pantalla 2D" fija: el Canvas debe existir <strong>dentro del mundo 3D</strong> para ser visible desde la cámara del headset y para que los rayos del SDK puedan detectarlo. En modo Screen Space no funciona con las interacciones de Meta.`,
+  q:'¿Por qué el Canvas debe estar en World Space en VR?',
+  mc:['Para que se vea desde la cámara del headset y los rayos del SDK lo detecten','Para mejorar la resolución','Porque Screen Space consume más','Para reducir draw calls'],correct:0,
+  why:'En VR el Canvas va en World Space para ser visible desde el headset y detectable por los rayos del SDK. Screen Space no funciona con Meta.'},
+ {tag:'Add Ray Interaction',title:'Add Ray Interaction sobre un Canvas',
+  body:`Clic derecho en el Canvas → <code>Interaction SDK &gt; Add Ray Interaction</code>. Abre una ventana con botones <strong>Fix</strong>: 1) convierte el Canvas a World Space, 2) agrega el módulo de interacciones a la escena, 3) crea un Game Object con todos los componentes para interactuar con ese Canvas desde lejos con el rayo del control. Luego <strong>Create</strong>.`,
+  q:'¿Qué hace "Add Ray Interaction" sobre un Canvas?',
+  mc:['Solo cambia el color del Canvas','Configura (vía Fix + Create) todo lo necesario para interactuar con el Canvas desde lejos con el rayo','Borra el Canvas','Agrega físicas al Canvas'],correct:1,
+  why:'Add Ray Interaction (wizard) hace Fix (World Space + módulo) y Create: deja el Canvas operable con el rayo del control desde lejos.'},
+ {tag:'Poke vs Ray',title:'Canvas responde al dedo pero no al rayo',
+  body:`Porque solo se corrió <strong>Add Poke Interaction</strong> y no Add Ray Interaction. <strong>Poke</strong> (toque de dedo) y <strong>Ray</strong> (rayo del control) son interactables <em>separados</em>. Solución: clic derecho en el Canvas → <code>Interaction SDK &gt; Add Ray Interaction</code> → Fix → Create.`,
+  q:'El Canvas responde al dedo pero no al rayo del control. ¿Por qué?',
+  mc:['El Canvas no está en World Space','Solo se corrió Add Poke Interaction; falta Add Ray Interaction','El Ray Interactor no está referenciado','La versión del SDK es menor a 50'],correct:1,
+  why:'Poke (dedo) y Ray (rayo) son interactables separados: si solo corriste Add Poke, falta Add Ray Interaction.'},
+ {tag:'Versión 62',title:'Quick actions de Canvas (versión del SDK)',
+  body:`Desde la <strong>versión 62</strong> del paquete de interacciones de Meta hay <em>quick actions</em> (<strong>Add Ray</strong> y <strong>Add Poke</strong>) que configuran el Canvas automáticamente con el wizard. Antes había que configurar manualmente todos los componentes. (Es la misma versión que habilita usar manos y controles simultáneamente.)`,
+  q:'¿Desde qué versión del SDK hay quick actions (Add Ray/Add Poke) para Canvas?',
+  mc:['Versión 50','Versión 55','Versión 62 del paquete de interacciones','Cualquier Unity 2022+'],correct:2,
+  why:'Desde la versión 62 del paquete de interacciones aparecen las quick actions Add Ray/Add Poke (y manos+controles simultáneos).'},
+ {tag:'Reticle Data Teleport',title:'Reticle Data Teleport',
+  body:`Componente del sistema de teletransporte que maneja el indicador visual. Tiene estados <strong>válido / inválido</strong>: el reticle cambia de apariencia según si el punto al que apunta el jugador es un destino permitido o no.`,
+  q:'¿Qué hace el Reticle Data Teleport?',
+  mc:['Calcula la velocidad del control','Maneja el indicador visual de teletransporte con estados válido/inválido','Renderiza las manos','Hace el baking de luz'],correct:1,
+  why:'Reticle Data Teleport controla el indicador de teletransporte: cambia según el destino sea válido o inválido.'},
+ {tag:'Vertical Layout Group',title:'Vertical Layout Group',
+  body:`Organiza los elementos UI en una <strong>columna vertical automáticamente</strong>. Parámetros clave: <em>Padding</em> (margen), <em>Spacing</em> (separación entre elementos), <em>Child Alignment</em> (cómo se alinean) y <em>Control Child Size Width</em> (estira los hijos al ancho disponible).`,
+  q:'¿Para qué sirve el Vertical Layout Group en un Canvas?',
+  mc:['Para hacer físicas','Para organizar los elementos UI en columna automáticamente (padding, spacing, alignment)','Para bakear luz en la UI','Para detectar el rayo'],correct:1,
+  why:'Vertical Layout Group ordena los hijos en columna automáticamente: padding, spacing, alignment y control de tamaño.'},
+ {tag:'Poke vs Ray (concepto)',title:'Interacción Poke vs Ray en un Canvas',
+  body:`<strong>Poke</strong>: interactuar <em>directamente</em>, tocando el Canvas con el dedo (hand tracking o distancia corta). <strong>Ray</strong>: interactuar <em>desde la distancia</em> con el rayo del control. Ambas se configuran como quick actions separadas desde el menú contextual del Canvas.`,
+  q:'¿Cuál es la diferencia entre Poke y Ray en un Canvas?',
+  mc:['Poke es para PC, Ray para móvil','Poke = tocar con el dedo (directo); Ray = apuntar de lejos con el rayo del control','Son lo mismo','Poke usa el ojo; Ray usa la mano'],correct:1,
+  why:'Poke = toque directo con el dedo; Ray = interacción a distancia con el rayo del control. Son quick actions separadas.'}
 ]},
-{id:'interfaces',name:'Interfaces UI en VR',icon:'🖥️',color:'#2FB57A',desc:'Canvas World Space, Add Ray, Add Poke, SDK wizard',qs:[
- {q:'¿Por qué el Canvas debe estar en World Space en VR?',a:'En VR no hay "pantalla 2D" fija: el Canvas debe existir <strong>dentro del mundo 3D</strong> para ser visible desde la cámara del headset y para que los rayos del SDK puedan detectarlo. En modo Screen Space no funciona con las interacciones de Meta.'},
- {q:'¿Qué hace "Add Ray Interaction" sobre un Canvas?',a:'Clic derecho Canvas → <code>Interaction SDK &gt; Add Ray Interaction</code>. Abre una ventana con botones <strong>Fix</strong>: 1) convierte el Canvas a World Space, 2) agrega el módulo de interacciones a la escena, 3) crea un Game Object con todos los componentes para interactuar con ese Canvas desde lejos con el rayo del control.'},
- {q:'El Canvas responde al toque pero no al rayo del control. ¿Por qué?',
-  mc:['El Canvas no está configurado en World Space','Solo se corrió Add Poke Interaction, falta Add Ray Interaction','El Ray Interactor no está correctamente referenciado en el rig','La versión del SDK es inferior a la versión 50'],correct:1,
-  a:'Porque solo se corrió <strong>Add Poke Interaction</strong> y no Add Ray Interaction. <strong>Poke</strong> (toque de dedo) y <strong>Ray</strong> (rayo del control) son interactables <em>separados</em>. Solución: clic derecho Canvas → <code>Interaction SDK &gt; Add Ray Interaction</code> → Fix → Create.'},
- {q:'¿Desde qué versión del SDK hay quick actions para Canvas?',
-  mc:['Versión 50 del paquete de interacciones de Meta','Versión 55 del Meta XR All-in-One SDK','Versión 62 del paquete de interacciones de Meta','Cualquier versión de Unity 2022 LTS o superior'],correct:2,
-  a:'Desde la <strong>versión 62</strong> del paquete de interacciones de Meta. Antes había que configurar manualmente los componentes de interacción. Ahora las quick actions <em>Add Ray</em> y <em>Add Poke</em> lo hacen automáticamente con el wizard.'},
- {q:'¿Qué es el Reticle Data Teleport?',a:'Componente del sistema de teletransporte que maneja el indicador visual. Tiene estados <strong>válido / inválido</strong>: el reticle cambia de apariencia según si el punto al que apunta el jugador es un destino permitido o no.'},
- {q:'¿Para qué sirve el Vertical Layout Group en un Canvas VR?',a:'Organiza los elementos UI en una <strong>columna vertical automáticamente</strong>. Parámetros clave: <em>Padding</em> (margen), <em>Spacing</em> (separación entre elementos), <em>Child Alignment</em> (cómo se alinean), <em>Control Child Size Width</em> (estira los hijos al ancho disponible).'},
- {q:'¿Qué diferencia hay entre la interacción Poke y la interacción Ray en un Canvas?',a:'<strong>Poke</strong>: interactuar <em>directamente</em>, tocando el Canvas con el dedo (hand tracking o distancia corta). <strong>Ray</strong>: interactuar <em>desde la distancia</em> con el rayo del control. Ambas se configuran como quick actions separadas desde el menú contextual del Canvas.'}
+{id:'building_blocks',name:'Building Blocks',icon:'📦',color:'#E8822E',desc:'Componentes modulares del Meta XR SDK: cámara, manos, grab, ray, teleport, eye gaze y passthrough',qs:[
+ {tag:'Qué son',title:'¿Qué son los Building Blocks?',
+  body:`Son <strong>componentes modulares pre-armados</strong> del Meta XR SDK para agregar funcionalidades XR rápido, con configuraciones por defecto. Se acceden desde <code>Oculus &gt; Tools &gt; Building Blocks</code> y se arrastran a la jerarquía. El <strong>Core SDK</strong> es requisito de todos; el <strong>Meta XR All-in-One SDK</strong> los trae completos.`,
+  q:'¿Qué son los Building Blocks del Meta XR SDK?',
+  mc:['Prefabs de geometría 3D de la Asset Store','Componentes modulares pre-armados para sumar funciones XR rápido','Scripts de colisiones','Materiales y shaders para VR'],correct:1,
+  why:'Building Blocks = componentes modulares pre-armados (Oculus > Tools > Building Blocks). El Core SDK es requisito de todos.'},
+ {tag:'Camera Rig',title:'Camera Rig',
+  body:`Es la <strong>base de toda escena VR</strong>: contiene la cámara (renderizado estereoscópico, una imagen por ojo), los controladores y el tracking de cabeza y cuerpo (el Player VR). Sin Camera Rig no hay punto de vista ni seguimiento del jugador.`,
+  q:'¿Qué provee el Camera Rig?',
+  mc:['Solo el sonido espacial','La cámara, los controladores y el tracking de cabeza y cuerpo (Player VR)','El baking de iluminación','El reconocimiento de imágenes AR'],correct:1,
+  why:'El Camera Rig es la base: cámara estéreo + controladores + tracking de cabeza y cuerpo (Player VR).'},
+ {tag:'Teleport Locomotion',title:'Teleport Locomotion',
+  body:`Sistema de desplazamiento por <strong>teletransporte</strong>. Usa <strong>Teleport Area</strong> (zonas válidas para caer), <strong>Teleport Point</strong> (puntos fijos) y un <strong>reticle</strong> que marca el destino con estado válido o inválido. Al ser instantáneo en vez de movimiento continuo, <strong>evita el mareo</strong>.`,
+  q:'¿Por qué el Teleport Locomotion ayuda a evitar el mareo?',
+  mc:['Porque baja la resolución','Porque mueve al jugador de forma instantánea en vez de con movimiento continuo','Porque desactiva el tracking','Porque usa menos batería'],correct:1,
+  why:'El teleport es instantáneo (Teleport Area/Point + reticle válido/inválido): sin movimiento continuo, evita el mareo.'},
+ {tag:'Hand Tracking',title:'Hand Tracking',
+  body:`Detecta la <strong>posición y las poses de las manos</strong> sin necesidad de controles, usando las cámaras del visor. Al agregarlo, el input de la escena pasa a soportar manos además de los controles.`,
+  q:'¿Qué hace el Hand Tracking?',
+  mc:['Renderiza una malla realista de las manos','Detecta la posición y poses de las manos sin controles','Bakea la iluminación de las manos','Conecta dos jugadores en red'],correct:1,
+  why:'Hand Tracking detecta posición y poses de las manos sin controles (con las cámaras del visor).'},
+ {tag:'Virtual Hands',title:'Virtual Hands',
+  body:`Muestra unas <strong>manos virtuales en VR</strong> cuya animación depende del <strong>hand tracking o de los controladores</strong>. Es la representación visual con la que el usuario se ve las manos dentro de la experiencia.`,
+  q:'¿De qué dependen las Virtual Hands?',
+  mc:['Solo del hand tracking','Del hand tracking o de los controladores','De Vuforia','Del baking de luz'],correct:1,
+  why:'Las Virtual Hands son la visualización de las manos en VR y dependen del hand tracking o de los controles.'},
+ {tag:'Real Hands',title:'Real Hands',
+  body:`Es la <strong>visualización de las manos con una malla mucho más realista</strong>. Aunque no depende del hand tracking, suma mucho realismo y resulta más necesaria cuando se busca presencia e inmersión.`,
+  q:'¿Qué caracteriza a las Real Hands?',
+  mc:['Son manos de baja poligonización para rendir más','Son una malla mucho más realista de las manos','Solo funcionan con controles','Sirven para teletransportarse'],correct:1,
+  why:'Real Hands = visualización con malla mucho más realista; no depende del hand tracking pero aporta más realismo.'},
+ {tag:'Grab Interaction',title:'Grab Interaction',
+  body:`Permite <strong>agarrar objetos</strong> aplicándole al objeto un grab interaction (<code>Interaction SDK &gt; Add Grab Interaction</code>). El sistema usa un <strong>Hand Grab Interactor</strong> (en la mano) y un <strong>Hand Grab Interactable</strong> (en el objeto, ej. una botella).`,
+  q:'¿Qué dos piezas intervienen en el Grab Interaction?',
+  mc:['Ray Interactor y Ray Interactable','Hand Grab Interactor (mano) y Hand Grab Interactable (objeto)','Teleport Area y reticle','Camera Rig y OVR Manager'],correct:1,
+  why:'Grab Interaction usa Hand Grab Interactor (en la mano) + Hand Grab Interactable (en el objeto, ej. botella).'},
+ {tag:'Ray Interaction',title:'Ray Interaction',
+  body:`Habilita <strong>interacciones a distancia</strong>, ideales para botones lejanos o elementos de UI. Funciona con un <strong>Ray Interactor</strong> (el rayo que sale de la mano o control) y un <strong>Ray Interactable</strong> (el objeto que recibe el rayo).`,
+  q:'¿Para qué sirve el Ray Interaction?',
+  mc:['Para agarrar objetos por contacto','Para interactuar a distancia con botones lejanos o UI','Para bakear luz','Para detectar la mirada'],correct:1,
+  why:'Ray Interaction = interacción a distancia (botones lejanos / UI) con Ray Interactor + Ray Interactable.'},
+ {tag:'Eye Gaze',title:'Eye Tracking / Eye Gaze',
+  body:`Detecta <strong>hacia dónde mira el usuario</strong>. Se puede configurar por cada ojo. Sirve para foveated rendering, selección por mirada o expresividad de avatares.`,
+  q:'¿Qué detecta el Eye Tracking / Eye Gaze?',
+  mc:['La posición de las manos','Hacia dónde mira el usuario (configurable por ojo)','La temperatura del visor','La distancia a las paredes'],correct:1,
+  why:'Eye Gaze detecta hacia dónde mira el usuario y se puede configurar en cada ojo.'},
+ {tag:'Passthrough',title:'Passthrough',
+  body:`Muestra el <strong>mundo real dentro del visor</strong> mediante el video de las cámaras, organizado por <strong>layers</strong>. Es la base de la <strong>realidad mixta (MR)</strong>: mezclar contenido virtual con el entorno físico.`,
+  q:'¿Qué permite el Passthrough?',
+  mc:['Ver el mundo real dentro del visor (base de la realidad mixta)','Agarrar objetos a distancia','Bakear la iluminación','Girar de a pasos'],correct:0,
+  why:'Passthrough muestra el mundo real (video de cámaras por layers) en el visor: es la base de la realidad mixta.'}
 ]},
-{id:'patrones',name:'Patrones y AR',icon:'🧩',color:'#E8822E',desc:'Object Pooling, Building Blocks, Vuforia, comunicación entre scripts',qs:[
- {q:'¿Qué es el Object Pooling?',a:'Patrón que <strong>reutiliza un conjunto de objetos pre-creados</strong> activándolos/desactivándolos en vez de hacer Instantiate/Destroy en runtime. Instantiate/Destroy genera picos de CPU y GC. Con pooling: FPS estables. Aplica a balas, partículas, enemigos, ítems.'},
- {q:'¿Por qué evitar Instantiate/Destroy constante en VR?',a:'Son operaciones <strong>caras que generan picos de CPU</strong> y disparan el Garbage Collector, provocando microfreezes. En VR cualquier caída de frames se percibe como malestar físico. Object Pooling reutiliza objetos ya existentes en memoria.'},
- {q:'¿Qué es Vuforia y para qué se usó en el curso?',
-  mc:['Building Block de Meta XR para passthrough y realidad mixta avanzada','Plugin de Unity para baking de iluminación automático en dispositivos móviles','SDK para reconocimiento de imágenes y superficies para anclar contenido 3D en AR','Framework para multijugador en VR con latencia reducida'],correct:2,
-  a:'<strong>Vuforia Engine SDK</strong> para Android/PC: reconocimiento de imágenes y superficies para anclar contenido 3D en el mundo real (image targets, análisis de planos). En el curso: proyecto AR con logo 3D del equipo + interfaz que dirija a un enlace del proyecto.'},
- {q:'¿Qué son los Building Blocks del Meta XR SDK?',
-  mc:['Prefabs de geometría 3D optimizados para VR en la Unity Asset Store','Componentes modulares pre-armados del SDK de Meta para agregar funcionalidades XR rápido','Scripts de Unity para manejo de colisiones y físicas en VR','Assets gratuitos de Meta para prototipado rápido sin programar'],correct:1,
-  a:'Componentes modulares pre-armados del SDK de Meta para agregar funcionalidades XR rápido, mediante configuraciones predeterminadas. Se acceden desde <code>Oculus &gt; Tools &gt; Building Blocks</code> y se arrastran a la jerarquía. Comprender su funcionamiento interno sigue siendo clave para resolver errores.'},
- {q:'¿Qué Building Blocks son los más importantes del curso?',a:'<strong>Camera Rig</strong> (base + renderizado estereoscópico), <strong>Pass Through</strong> (realidad mixta), <strong>Hand Tracking</strong> (manos sin controles), <strong>Synthetic Hands</strong> (visualización interactiva), <strong>Grab Interaction / Grabbable Item</strong> (agarre de objetos). Todos requieren el Core SDK.'},
- {q:'¿Cómo funciona la comunicación entre scripts con Event Wrappers?',a:'Gran parte se resuelve <strong>sin código</strong>: un interactable expone eventos en el Inspector y desde ahí se enlazan acciones de otros objetos/scripts (audio, partículas, mover objetos, cargar escenas). El Pointable Unity Event Wrapper y variantes son la forma principal recomendada.'}
+{id:'event_wrappers',name:'Event Wrappers',icon:'🔗',color:'#7A33B5',desc:'Enlazar acciones sin código: cada wrapper expone los eventos del interactor o interactable en el Inspector',qs:[
+ {tag:'Qué son',title:'¿Qué son los Event Wrappers?',
+  body:`Son componentes que <strong>exponen los eventos</strong> de un interactor o interactable (Hover, Select, Unselect, Release...) <strong>en el Inspector</strong>, para enlazar acciones de otros objetos o scripts <strong>sin escribir código</strong> (reproducir audio, partículas, mover objetos, cargar escenas).`,
+  q:'¿Para qué sirven los Event Wrappers?',
+  mc:['Para compilar shaders','Para exponer eventos en el Inspector y enlazar acciones sin código','Para bakear luz','Para reconocer imágenes AR'],correct:1,
+  why:'Los Event Wrappers exponen los eventos del interactor/interactable en el Inspector para enlazar acciones sin código.'},
+ {tag:'Interactor Wrapper',title:'Interactor Unity Event Wrapper',
+  body:`Responde a los eventos del <strong>interactor</strong> (la mano o el control): cuándo empieza o termina de hacer hover o select sobre cualquier interactable. Mira el lado de quien interactúa, no el del objeto.`,
+  q:'¿A qué eventos responde el Interactor Unity Event Wrapper?',
+  mc:['A los del objeto agarrado','A los del interactor: la mano o el control','Al baking de luz','A la mirada del usuario'],correct:1,
+  why:'El Interactor Unity Event Wrapper responde a los eventos del interactor (la mano/control), no a los del objeto.'},
+ {tag:'Interactable Wrapper',title:'Interactable Unity Event Wrapper',
+  body:`Responde a los eventos del <strong>interactable</strong> (el objeto): cuándo es hovereado o seleccionado. Es la contraparte del Interactor wrapper, mirando desde el lado del objeto.`,
+  q:'¿Desde qué lado mira el Interactable Unity Event Wrapper?',
+  mc:['Desde la mano o el control','Desde el objeto (interactable): cuándo es hovereado o seleccionado','Desde la cámara','Desde el sistema de teleport'],correct:1,
+  why:'El Interactable Unity Event Wrapper responde a los eventos del objeto (interactable): hover/select sobre él.'},
+ {tag:'Pointable Wrapper',title:'Pointable Unity Event Wrapper',
+  body:`El más <strong>general y recomendado</strong>. Expone los eventos de puntero (<strong>Hover, Unhover, Select, Unselect, Move</strong>) de cualquier interactable apuntado, sea por <strong>poke</strong> (dedo) o por <strong>ray</strong> (rayo). Es la forma principal de enlazar acciones sin código.`,
+  q:'¿Qué hace particular al Pointable Unity Event Wrapper?',
+  mc:['Solo funciona con hand tracking','Es el más general: eventos de puntero (hover/select/move) para poke o ray','Solo sirve para audio','Requiere programar en C#'],correct:1,
+  why:'El Pointable Unity Event Wrapper es el más general: expone hover/select/move de cualquier interactable, por poke o ray.'},
+ {tag:'Hand Grab Wrapper',title:'Hand Grab Unity Event Wrapper',
+  body:`Expone los eventos del <strong>Hand Grab Interactable</strong>: cuándo se <strong>agarra</strong> y cuándo se <strong>suelta</strong> el objeto con la mano. Útil para disparar sonido o efectos al agarrar.`,
+  q:'¿Qué eventos expone el Hand Grab Unity Event Wrapper?',
+  mc:['Los de tocar un botón con el dedo','Los de agarrar y soltar un objeto con la mano','Los de la mirada','Los de teletransporte'],correct:1,
+  why:'El Hand Grab Unity Event Wrapper expone los eventos de agarrar/soltar con la mano (Hand Grab Interactable).'},
+ {tag:'Poke Wrapper',title:'Poke Unity Event Wrapper',
+  body:`Expone los eventos del <strong>Poke Interactable</strong>: <strong>tocar</strong> una superficie o botón con el dedo (directamente o por hand tracking). Ideal para botones físicos y paneles.`,
+  q:'¿Cuándo dispara sus eventos el Poke Unity Event Wrapper?',
+  mc:['Al apuntar de lejos con el rayo','Al tocar con el dedo una superficie o botón (Poke)','Al bakear la luz','Al girar de a pasos'],correct:1,
+  why:'El Poke Unity Event Wrapper expone los eventos de tocar con el dedo (Poke Interactable): botones y paneles.'},
+ {tag:'Snap Wrapper',title:'Snap Unity Event Wrapper',
+  body:`Expone los eventos del <strong>Snap Interactor / Interactable</strong>: cuándo un objeto <strong>encaja en un slot</strong> (snap) o sale de él. Útil para encastres, inventarios y armado de piezas.`,
+  q:'¿Qué evento maneja el Snap Unity Event Wrapper?',
+  mc:['Cuando se mira un objeto','Cuando un objeto encaja en un slot (o sale de él)','Cuando se reproduce audio','Cuando se carga una escena'],correct:1,
+  why:'El Snap Unity Event Wrapper expone los eventos de encajar/soltar un objeto en un slot (snap).'},
+ {tag:'Micro Gesture Wrapper',title:'Micro Gesture Unity Event Wrapper',
+  body:`Expone los eventos de <strong>micro-gestos</strong>: pequeños movimientos del <strong>pulgar sobre el índice</strong> (swipes y taps) detectados por hand tracking. Sirven como comandos discretos sin controles.`,
+  q:'¿Qué detecta el Micro Gesture Unity Event Wrapper?',
+  mc:['Grandes movimientos del brazo','Micro-gestos del pulgar sobre el índice (swipes/taps)','La posición de la cabeza','El encaje en un slot'],correct:1,
+  why:'El Micro Gesture Unity Event Wrapper expone micro-gestos del pulgar sobre el índice (swipes/taps) por hand tracking.'}
 ]}
 ];
 
@@ -403,137 +738,158 @@ const VF_STATEMENTS=[
   {text:'El feedback basado solo en audio no alcanza como criterio de diseño VR.',answer:true,exp:'El jugador puede jugar sin sonido; el feedback debe funcionar también visualmente.'}
 ];
 
-const SCENARIOS=[
- {title:'El sonido no suena al agarrar el objeto',
-  body:'Configuraste un objeto con Grab Interaction. Querés que suene un audio cuando el jugador lo agarra. Pusiste un <strong>Interactor Unity Event Wrapper</strong> con un evento de Audio en el campo Select, pero no pasa nada. ¿Por qué y cómo lo solucionás?',
-  answer:`<h4>Respuesta</h4><p>El problema es el wrapper equivocado. El <strong>Interactor Unity Event Wrapper</strong> responde a eventos de la mano/control (el interactor), no del objeto agarrado.</p><p>Solución:</p><div class="flow">Root Grab Object (con Grabbable)<br>→ Add Component: <strong>Pointable Unity Event Wrapper</strong><br>→ Referenciar el <strong>Grabbable</strong> del objeto<br>→ Evento <strong>When Select</strong> → AudioSource → AudioSource.Play()<br>→ Para soltar: mismo proceso con <strong>When Release</strong></div>`},
- {title:'Canvas responde al dedo pero no al rayo del control',
-  body:'Tenés un Canvas en tu escena VR. Podés tocarlo con el dedo (hand tracking) y los botones responden, pero el rayo del control no lo detecta aunque el Ray Interactor parece activo en el rig. ¿Qué falta?',
-  answer:`<h4>Respuesta</h4><p>Falta el <strong>Add Ray Interaction</strong>. Poke (toque) y Ray son interactables <em>separados</em>: que uno funcione no implica que el otro esté configurado.</p><p>Solución: clic derecho sobre el Canvas → <code>Interaction SDK &gt; Add Ray Interaction</code> → la ventana pide Fix (World Space + módulo a la escena) → Create. El SDK agrega automáticamente todos los componentes necesarios para el rayo.</p>`},
- {title:'Bug del Snap: el objeto orbita al intentar agarrarlo',
-  body:'Implementaste un Snap Interaction. El objeto va al snap correctamente, pero cuando intentás agarrarlo de nuevo se queda orbitando alrededor y las físicas se rompen. ¿Cuál es el problema y cómo se soluciona?',
-  answer:`<h4>Respuesta</h4><p>El collider del Snap Interactor genera colisiones físicas que entran en conflicto con el sistema de grab. Dos pasos:</p><p><strong>1.</strong> En el <strong>Collider del objeto (Snap Interactor)</strong>: activar <strong>Is Trigger</strong> — el collider detecta sin generar física.</p><p><strong>2.</strong> En el <strong>Rigidbody del Snap Interactable</strong>: desactivar <strong>Use Gravity</strong> + activar <strong>Is Kinematic</strong> — no interactúa con la física mientras está snapeado.</p>`},
- {title:'Elegir SDK para proyecto multiplataforma',
-  body:'Estás diseñando un proyecto VR que debe correr en Meta Quest 3, PC con HTC Vive y posiblemente PlayStation VR. ¿Qué SDK deberías usar y por qué?',
-  answer:`<h4>Respuesta</h4><p><strong>OpenXR</strong>. Es un estándar abierto (Khronos Group) diseñado exactamente para interoperabilidad: una aplicación bien construida sobre OpenXR corre en múltiples dispositivos con mínimos cambios de código. El Meta XR SDK ata el proyecto al ecosistema Meta; SteamVR está orientado a PC.</p>`},
- {title:'Escena con FPS inestables en Quest 2',
-  body:'Tu escena tiene 30 luces dinámicas con sombras, muchos objetos con materiales distintos y un sistema de partículas que hace Instantiate en cada frame. El juego va a 40 FPS y hay microfreezes. Priorizá 3 cambios.',
-  answer:`<h4>Respuesta</h4><p><strong>1. Bakear la iluminación:</strong> convertir las luces a Baked elimina el costo de shadow maps en runtime. Las sombras realtime son lo más caro.</p><p><strong>2. Reducir materiales + batching:</strong> consolidar materiales similares en atlas de texturas para que el batching funcione y reducir draw calls.</p><p><strong>3. Object Pooling para partículas:</strong> reemplazar Instantiate/Destroy por un pool de objetos pre-creados para eliminar los microfreezes del garbage collector.</p>`},
- {title:'Flujo completo: sonido al agarrar con manos',
-  body:'Describí el flujo de trabajo completo para que al agarrar un objeto con las manos se reproduzca un sonido de feedback. Nombrá cada componente en orden.',
-  answer:`<h4>Respuesta</h4><div class="flow">E: Objeto base → Grabbable + Rigidbody + Collider<br>B: Add Component: Hand Grab Interactable<br>C: Crear hijo SFX con AudioSource (Play On Awake: OFF)<br>D: Add Component: <strong>Pointable Unity Event Wrapper</strong> → referenciar Grabbable<br>A: When Select → SFX/AudioSource → AudioSource.Play()</div>`},
- {title:'SDK para juego exclusivo Quest 3 con passthrough y hand tracking',
-  body:'Estás desarrollando un juego que usa passthrough, hand tracking avanzado y funcionalidades de mixed reality exclusivas del Quest 3. ¿Qué SDK conviene?',
-  answer:`<h4>Respuesta</h4><p><strong>Meta XR SDK</strong>. Cuando el objetivo es un dispositivo Quest específico y se quieren aprovechar <em>todas sus capacidades exclusivas</em> (passthrough, hand tracking propio, mixed reality del Quest 3), el Meta XR SDK da acceso directo al hardware. OpenXR solo da acceso a características estandarizadas y perdería estas funciones exclusivas.</p>`},
- {title:'Explicar Tangibilidad del Trabajo a alguien que no la conoce',
-  body:'Un colega te pregunta por qué en un simulador VR de ensamblaje el jugador realiza cada paso manualmente en vez de presionar un botón. Explicale el concepto teórico.',
-  answer:`<h4>Respuesta</h4><p><strong>Tangibilidad del Trabajo</strong>: las acciones deben producir consecuencias visibles y comprensibles. El usuario debe percibir que <em>realmente hizo algo</em> y que su esfuerzo tuvo impacto en el mundo virtual.</p><p>En el simulador de ensamblaje: realizar cada paso manualmente refuerza la inmersión. Si el jugador solo presiona un botón y aparece ensamblado, esa sensación desaparece. Los simuladores siempre cumplen la tangibilidad porque replican tareas reales paso a paso con resultado observable.</p>`}
-];
-
-const PUNTOS=[
- {num:1,label:'Relacionar conceptos',
-  body:`<p>Uní cada término con su definición:</p>
-  <p><strong>A.</strong> Affordance &nbsp; <strong>B.</strong> Presencia &nbsp; <strong>C.</strong> Embodiment &nbsp; <strong>D.</strong> Corporalidad &nbsp; <strong>E.</strong> Memoria muscular</p>
-  <ol style="margin:14px 0 0 18px;line-height:2.2;color:var(--text)">
-    <li>Sensación de que el cuerpo virtual es mío.</li>
-    <li>El jugador repite movimientos hasta hacerlos automáticamente.</li>
-    <li>El objeto comunica visualmente cómo debe usarse.</li>
-    <li>El cuerpo físico del jugador es la interfaz principal.</li>
-    <li>Sensación de "estar ahí", de habitar el espacio virtual.</li>
-  </ol>`,
-  answer:`<p><strong>1 → C</strong> (Embodiment: el cuerpo virtual es mío)<br><strong>2 → E</strong> (Memoria muscular: automatización por repetición)<br><strong>3 → A</strong> (Affordance: el objeto "dice" cómo usarse)<br><strong>4 → D</strong> (Corporalidad: el cuerpo como herramienta)<br><strong>5 → B</strong> (Presencia: "estar ahí")</p>`},
- {num:2,label:'Verdadero o Falso (8 afirmaciones) — INTERACTIVO',body:'__VF__',answer:''},
- {num:3,label:'Casos con errores prácticos (4 situaciones)',
-  body:`<p><strong>Caso A:</strong> El objeto hace Snap correctamente pero al intentar agarrarlo de nuevo queda orbitando y las físicas se rompen.</p>
-  <p style="margin-top:12px"><strong>Caso B:</strong> Puse feedback de partículas en el Select de un Interactor Unity Event Wrapper en el objeto agarrable. No pasa nada.</p>
-  <p style="margin-top:12px"><strong>Caso C:</strong> El Canvas responde al toque directo con el dedo pero el rayo del control no lo detecta.</p>
-  <p style="margin-top:12px"><strong>Caso D:</strong> Mi escena VR tiene 40 luces dinámicas con sombras y va a 35 FPS en Quest 2.</p>`,
-  answer:`<p><strong>A:</strong> Falta Is Trigger en el Collider del Snap Interactor + Is Kinematic en el Rigidbody del Snap Interactable.</p>
-  <p><strong>B:</strong> Wrapper equivocado. El Interactor wrapper responde a la mano. Solución: <strong>Pointable Unity Event Wrapper</strong> referenciando el Grabbable.</p>
-  <p><strong>C:</strong> Solo se configuró Add Poke, falta Add Ray. Clic derecho Canvas → <code>Interaction SDK &gt; Add Ray Interaction</code> → Fix → Create.</p>
-  <p><strong>D:</strong> Las sombras realtime son lo más caro. Solución: convertir luces a <strong>Baked</strong> y usar Light Probes para objetos dinámicos.</p>`},
- {num:4,label:'Código con errores — encontrá y corregí',
-  body:`<p>Este código no compila. Encontrá los errores y escribí la versión correcta:</p>
-  <pre>using UnityEngine;
-
-[RequiredComponent(typeof(InteractableUnityEventWrapper))]
+const SIMULACROS=[
+ {id:1,title:'Simulacro 1',desc:'10 preguntas de formato mixto: relacionar conceptos, verdadero/falso, opción múltiple, respuestas escritas, una de código y una de ordenar pasos. Las respuestas se revelan recién al entregar.',questions:[
+  {type:'match',label:'Relacionar conceptos',
+   q:`<p>Relacioná cada término con su definición (escribí los pares, ej: <code>1-C, 2-E...</code>):</p>
+   <p style="margin-top:8px"><strong>A.</strong> Affordance · <strong>B.</strong> Presencia · <strong>C.</strong> Embodiment · <strong>D.</strong> Corporalidad · <strong>E.</strong> Memoria muscular</p>
+   <ol><li>Sensación de que el cuerpo virtual es mío.</li><li>El jugador repite movimientos hasta hacerlos automáticos.</li><li>El objeto comunica visualmente cómo debe usarse.</li><li>El cuerpo físico del jugador es la interfaz principal.</li><li>Sensación de "estar ahí", de habitar el espacio.</li></ol>`,
+   keywords:['1-c','2-e','3-a','4-d','5-b','embodiment','memoria muscular','affordance','corporalidad','presencia'],
+   answer:`<p><strong>1 → C</strong> (Embodiment), <strong>2 → E</strong> (Memoria muscular), <strong>3 → A</strong> (Affordance), <strong>4 → D</strong> (Corporalidad), <strong>5 → B</strong> (Presencia).</p>`},
+  {type:'vf',label:'Verdadero o Falso (8 afirmaciones)',
+   q:`<p>Marcá V o F en cada afirmación:</p>`,
+   statements:VF_STATEMENTS},
+  {type:'written',label:'Casos prácticos con errores',
+   q:`<p>Resolvé estos 3 casos del SDK de Meta:</p><ol><li>El objeto hace Snap pero al reagarrarlo queda orbitando y se rompen las físicas.</li><li>Puse feedback de partículas en el Select de un <code>Interactor Unity Event Wrapper</code> en el objeto agarrable y no pasa nada.</li><li>El Canvas responde al dedo pero el rayo del control no lo detecta.</li></ol>`,
+   keywords:['is trigger','is kinematic','use gravity','pointable','grabbable','interactable','add ray','poke','world space'],
+   answer:`<p><strong>1.</strong> Is Trigger en el Collider del Snap Interactor + Is Kinematic (y Use Gravity off) en el Rigidbody del Snap Interactable.</p><p><strong>2.</strong> Wrapper equivocado: usar <strong>Pointable Unity Event Wrapper</strong> referenciando el Grabbable.</p><p><strong>3.</strong> Falta Add Ray Interaction (solo se corrió Add Poke). Clic derecho Canvas → Interaction SDK → Add Ray Interaction → Fix → Create.</p>`},
+  {type:'code',label:'Código con errores',
+   q:`<p>Este código no compila. Encontrá los errores y escribí la versión correcta:</p><pre>[RequiredComponent(typeof(InteractableUnityEventWrapper))]
 public class manager : MonoBehaviour
 {
-    public int score = 0;
     AudioSource lvlAudioSource;
-    public AudioClip dataCommonSound;
-
-    void Start()
-    {
+    void Start(){
         lvlAudioSource = GameObject.Find("LvlAudioSource");
     }
-
-    void SaveScore()
+}</pre>`,
+   keywords:['requirecomponent','getcomponent','audiosource','find'],
+   answer:`<p><strong>Error 1:</strong> <code>RequiredComponent</code> → <code>RequireComponent</code> (sin la "d").</p><p><strong>Error 2:</strong> <code>GameObject.Find()</code> devuelve un GameObject; falta encadenar <code>.GetComponent&lt;AudioSource&gt;()</code>.</p><pre>[RequireComponent(typeof(InteractableUnityEventWrapper))]
+public class manager : MonoBehaviour {
+  AudioSource lvlAudioSource;
+  void Start(){
+    lvlAudioSource = GameObject.Find("LvlAudioSource").GetComponent&lt;AudioSource&gt;();
+  }
+}</pre>`},
+  {type:'order',label:'Ordenar el flujo (sonido al agarrar)',
+   q:`<p>Ordená los pasos para configurar feedback de sonido al agarrar un objeto con las manos:</p>`,
+   steps:['Objeto base con Grabbable + Rigidbody + Collider','Agregar Hand Grab Interactable al objeto','Crear objeto hijo SFX con AudioSource (Play On Awake: OFF)','Agregar Pointable Unity Event Wrapper y referenciar el Grabbable','Evento When Select → AudioSource → AudioSource.Play()'],
+   why:`<p>Primero existe el objeto físico, después el interactable, luego el audio, y recién al final se conecta el evento que lo dispara.</p>`},
+  {type:'written',label:'Event Wrappers',
+   q:`<p>Nombrá al menos <strong>3 Event Wrappers</strong> del Meta XR SDK y explicá la diferencia entre un Interactor wrapper y un Interactable wrapper.</p>`,
+   keywords:['pointable','interactable unity event wrapper','interactor unity event wrapper','when select','grabbable','mano','control'],
+   answer:`<p>Pointable Unity Event Wrapper (eventos del objeto/Grabbable: When Select/Release/Hover), Interactable Unity Event Wrapper (variante para interactables) e Interactor Unity Event Wrapper (eventos de la mano/control). <strong>Interactable</strong> = responde al objeto; <strong>Interactor</strong> = responde a quien agarra.</p>`},
+  {type:'written',label:'Game Feeling',
+   q:`<p>¿Qué es el Game Feeling y por qué importa en VR? Incluí feedback positivo vs negativo y por qué solo audio no alcanza.</p>`,
+   keywords:['sensaciones','feedback','negativo','fisica','presencia','audio','visual','coherente'],
+   answer:`<p>Es la calidad de las sensaciones durante la interacción: cada acción produce respuesta clara y coherente. En VR el cuerpo habita el juego, así que el feedback negativo se vive físico e intenso (hay que tener más cuidado). Solo audio no alcanza: las señales deben entenderse también visualmente.</p>`},
+  {type:'written',label:'Tangibilidad del Trabajo',
+   q:`<p>¿Qué es la Tangibilidad del Trabajo y por qué los simuladores la cumplen siempre? Dá un ejemplo.</p>`,
+   keywords:['consecuencias visibles','esfuerzo','impacto','paso a paso','tarea real','simulador','observable'],
+   answer:`<p>Las acciones deben producir consecuencias visibles y comprensibles: el usuario percibe que realmente hizo algo y que su esfuerzo tuvo impacto. Los simuladores la cumplen porque replican tareas reales paso a paso con resultado observable (ej: ensamblar pieza por pieza).</p>`},
+  {type:'mc',label:'Gizmos en el editor',
+   q:`<p>Querés colorear en la Vista de Escena si un asiento está ocupado/libre, sin afectar el runtime. ¿Qué usás?</p>`,
+   opts:['Un método público llamado desde el Inspector','El callback OnDrawGizmos(), que corre solo en el editor, con Gizmos.color','Un shader que colorea el objeto en juego','Update() con un if que dibuja en pantalla'],
+   correct:1},
+  {type:'mc',label:'Canvas y el wizard del SDK',
+   q:`<p>El Canvas responde al dedo pero no al rayo del control, aunque el Ray Interactor está activo. ¿Por qué?</p>`,
+   opts:['El Canvas no está en World Space','Solo se corrió Add Poke Interaction; falta Add Ray Interaction','La versión del SDK es inferior a la 50','El Ray Interactor no está referenciado en el rig'],
+   correct:1}
+ ]},
+ {id:2,title:'Simulacro 2',desc:'10 preguntas de formato mixto: relacionar conceptos, verdadero/falso, opción múltiple, respuestas escritas, una de código y una de ordenar pasos. Las respuestas se revelan recién al entregar.',questions:[
+  {type:'match',label:'Relacionar conceptos de iluminación',
+   q:`<p>Relacioná cada concepto con su descripción (escribí los pares, ej: <code>1-C...</code>):</p>
+   <p style="margin-top:8px"><strong>A.</strong> Lightmap · <strong>B.</strong> Light Probes · <strong>C.</strong> LOD · <strong>D.</strong> UV2</p>
+   <ol><li>Canal donde se guarda la iluminación bakeada de las superficies estáticas.</li><li>Textura con la iluminación pre-calculada que se aplica sobre los estáticos.</li><li>Puntos que dan luz bakeada a los objetos dinámicos.</li><li>Versiones del mismo objeto con menos polígonos según la distancia.</li></ol>`,
+   keywords:['1-d','2-a','3-b','4-c','lightmap','light probes','lod','uv2'],
+   answer:`<p><strong>1 → D</strong> (UV2), <strong>2 → A</strong> (Lightmap), <strong>3 → B</strong> (Light Probes), <strong>4 → C</strong> (LOD).</p>`},
+  {type:'vf',label:'Verdadero o Falso (8 afirmaciones)',
+   q:`<p>Marcá V o F en cada afirmación:</p>`,
+   statements:[
+    {text:'OpenXR es un estándar abierto desarrollado por el grupo Khronos.',answer:true,exp:'Correcto: unifica el desarrollo VR/AR multiplataforma.'},
+    {text:'El Meta XR SDK es la mejor opción para máxima portabilidad multiplataforma.',answer:false,exp:'Para portabilidad conviene OpenXR; el Meta XR SDK ata al ecosistema Meta.'},
+    {text:'El Canvas en VR debe estar en World Space para que los rayos del SDK lo detecten.',answer:true,exp:'Correcto: en Screen Space no funciona con las interacciones de Meta.'},
+    {text:'Los Light Probes iluminan objetos dinámicos con luz bakeada interpolada.',answer:true,exp:'Correcto: leen luz pre-calculada de los probes cercanos.'},
+    {text:'La memoria muscular se logra repitiendo movimientos hasta volverlos reflejos.',answer:true,exp:'Correcto: la repetición convierte el gesto en automático.'},
+    {text:'El mareo en VR aparece por el conflicto entre lo que ves y lo que siente tu cuerpo.',answer:true,exp:'Correcto: es el conflicto sensoriomotor.'},
+    {text:'En VR el feedback solo de audio alcanza; no hace falta que sea visual.',answer:false,exp:'El jugador puede jugar sin sonido: el feedback debe entenderse también visualmente.'},
+    {text:'El UV2 puede tener overlaps sin afectar el lightmap.',answer:false,exp:'El UV2 debe ser único sin solapamientos o la iluminación queda mal.'}
+   ]},
+  {type:'written',label:'Casos prácticos',
+   q:`<p>Resolvé estos 2 casos:</p><ol><li>El Canvas responde al toque del dedo pero el rayo del control no lo detecta, aunque el Ray Interactor está activo.</li><li>Tu proyecto debe correr en Quest 3, HTC Vive y PSVR. ¿Qué SDK conviene y por qué?</li></ol>`,
+   keywords:['add ray','poke','world space','openxr','interoperabilidad','multiplataforma'],
+   answer:`<p><strong>1.</strong> Falta <strong>Add Ray Interaction</strong> (solo se corrió Add Poke); Poke y Ray son interactables separados → clic derecho Canvas → Interaction SDK → Add Ray Interaction → Fix → Create.</p><p><strong>2.</strong> <strong>OpenXR</strong>: estándar abierto diseñado para interoperabilidad entre fabricantes; corre en varios visores con mínimos cambios. Meta XR SDK o SteamVR atarían el proyecto a un ecosistema.</p>`},
+  {type:'code',label:'Código con errores (Gizmos)',
+   q:`<p>Querés marcar en la Vista de Escena (solo editor) si un hotspot está libre/ocupado, pero el color no se aplica. Encontrá los 2 errores y corregilos:</p><pre>public class HotspotGizmo : MonoBehaviour
+{
+    public bool ocupado;
+    void OnDrawGizmos()
     {
-        PlayerPrefs.SetInt("Score", score);
-        lvlAudioSource.clip = dataCommonSound;
-        lvlAudioSource.Play();
+        Gizmos.DrawWireSphere(transform.position, 0.2f);
+        color = ocupado ? Color.red : Color.green;
     }
 }</pre>`,
-  answer:`<p>Dos errores:</p>
-  <p><strong>Error 1:</strong> <code>[RequiredComponent]</code> no existe → debe ser <code>[RequireComponent]</code> (sin la "d").</p>
-  <p><strong>Error 2:</strong> <code>GameObject.Find()</code> devuelve un <code>GameObject</code>, no un <code>AudioSource</code> → hay que encadenar <code>.GetComponent&lt;AudioSource&gt;()</code>.</p>
-  <pre>[RequireComponent(typeof(InteractableUnityEventWrapper))]
-public class manager : MonoBehaviour
-{
-    AudioSource lvlAudioSource;
-    void Start()
-    {
-        lvlAudioSource = GameObject.Find("LvlAudioSource")
-                                   .GetComponent&lt;AudioSource&gt;();
-    }
-}</pre>`},
- {num:5,label:'Ordenar el flujo',
-  body:`<p>Ordená los pasos para configurar feedback de sonido al agarrar un objeto con las manos (están mezclados):</p>
-  <ol type="A" style="margin:14px 0 0 18px;line-height:2.4;color:var(--text)">
-    <li>En el evento When Select, arrastrar el AudioSource y elegir AudioSource.Play()</li>
-    <li>Agregar Hand Grab Interactable al objeto</li>
-    <li>Crear objeto hijo SFX con AudioSource, desactivar Play On Awake</li>
-    <li>Agregar Pointable Unity Event Wrapper y referenciar el Grabbable</li>
-    <li>Asegurarse de que el objeto tenga Grabbable, Rigidbody y Collider</li>
-  </ol>`,
-  answer:`<p>Orden correcto: <strong>E → B → C → D → A</strong></p>
-  <div class="flow">E: Objeto con Grabbable + Rigidbody + Collider<br>B: Agregar Hand Grab Interactable<br>C: Crear hijo SFX con AudioSource (Play On Awake: OFF)<br>D: Agregar Pointable Unity Event Wrapper → referenciar Grabbable<br>A: When Select → AudioSource.Play()</div>`},
- {num:6,label:'Event Wrappers',
-  body:`<p>Nombrá al menos <strong>3 Event Wrappers</strong> del Meta XR SDK, indicá cuándo se usa cada uno y explicá la diferencia entre un Interactor wrapper y un Interactable wrapper.</p>`,
-  answer:`<p><strong>1. Pointable Unity Event Wrapper:</strong> eventos del objeto interactable (Grabbable). Eventos: When Select, When Release, When Hover. Ideal para feedback en objetos agarrables.</p>
-  <p><strong>2. Interactable Unity Event Wrapper:</strong> variante para interactables específicos como Hand Grab Interactable directamente.</p>
-  <p><strong>3. Interactor Unity Event Wrapper:</strong> responde a eventos de la mano o control (el interactor), no del objeto.</p>
-  <p><strong>Diferencia clave:</strong> Interactable → responde al objeto que se agarra/toca. Interactor → responde a quien agarra (la mano/control). El error común es usar el Interactor wrapper en el objeto.</p>`},
- {num:7,label:'Game Feeling',
-  body:`<p>Explicá qué es el Game Feeling y por qué es especialmente importante en VR. Incluí: feedback positivo vs negativo, por qué solo audio no alcanza, y un ejemplo concreto.</p>`,
-  answer:`<p><strong>Game Feeling:</strong> la calidad de las sensaciones transmitidas durante la interacción. Cada acción debe producir respuesta clara y coherente (animaciones, sonidos, hápticos, cambios visuales).</p>
-  <p><strong>Por qué importa en VR:</strong> el jugador habita el mundo con su cuerpo. Sin feedback el mundo se siente muerto.</p>
-  <p><strong>Feedback positivo vs negativo:</strong> más cuidado con el negativo. En VR lo desagradable se vive físicamente e intensamente: puede romper la presencia.</p>
-  <p><strong>Solo audio no alcanza:</strong> el jugador puede jugar sin sonido. Las señales deben entenderse también visualmente (criterio explícito del profe).</p>
-  <p><strong>Ejemplo:</strong> Beat Saber — cada corte confirma al instante con luz, sonido y efecto visual.</p>`},
- {num:8,label:'Tangibilidad del Trabajo',
-  body:`<p>¿Qué es la <strong>Tangibilidad del Trabajo</strong>? ¿Por qué los simuladores VR la cumplen siempre? Dá un ejemplo concreto.</p>`,
-  answer:`<p><strong>Tangibilidad del Trabajo:</strong> las acciones del jugador deben producir consecuencias visibles y comprensibles. El usuario debe percibir que realmente hizo algo y que su esfuerzo tuvo impacto en el mundo virtual.</p>
-  <p><strong>Por qué los simuladores la cumplen siempre:</strong> replican tareas reales paso a paso con acciones físicas concretas y resultado observable.</p>
-  <p><strong>Ejemplo:</strong> simulador de mantenimiento donde el jugador afloja tornillos, retira piezas e instala la nueva. Cada acción tiene consecuencia visible.</p>`},
- {num:9,label:'Cambiar el color de los Gizmos',
-  body:`<p>Querés ver en la Vista de Escena si un asiento está <span style="color:#D43C9E">ocupado (rojo)</span> o <span style="color:#2FB57A">libre (verde)</span>, <strong>sin afectar el juego en runtime</strong>. ¿Cómo lo implementás? ¿Qué método usás?</p>`,
-  answer:`<p>Se usa el callback <strong><code>OnDrawGizmos()</code></strong> de MonoBehaviour, que Unity ejecuta solo en el editor. <code>Gizmos.color</code> define el color de los draw calls siguientes:</p>
-  <pre>#if UNITY_EDITOR
-void OnDrawGizmos()
-{
-    Gizmos.color = IsOccupied ? Color.red : Color.green;
-    Gizmos.DrawWireSphere(transform.position, 0.25f);
-}
-#endif</pre>
-  <p>El bloque <code>#if UNITY_EDITOR</code> garantiza que no compile en el build. Patrón exacto de <em>CustomerSeatPoint.cs</em> en Pour Decisions.</p>`},
- {num:10,label:'Canvas y el wizard del SDK',
-  body:`<p>Tenés un Canvas en tu escena VR. Funciona perfectamente cuando tocás los botones con el dedo (hand tracking), pero cuando usás el rayo del control no detecta nada, aunque el Ray Interactor está activo en el rig. ¿Por qué y cómo lo solucionás? ¿Qué "wizard" del SDK interviene?</p>`,
-  answer:`<p><strong>Por qué:</strong> Poke (toque de dedo) y Ray (rayo del control) son <em>interactables separados</em>. Solo se corrió <strong>Add Poke Interaction</strong> pero no <strong>Add Ray Interaction</strong>.</p>
-  <p><strong>Solución:</strong> clic derecho sobre el Canvas → <code>Interaction SDK &gt; Add Ray Interaction</code>. Se abre el wizard con botones <strong>Fix</strong> que: 1) convierte el Canvas a World Space, 2) agrega el módulo de interacciones, 3) crea los componentes → Create.</p>
-  <p>El mismo patrón de wizard aparece como "Grab Wizard" al hacer <code>Interaction SDK &gt; Add Grab Interaction</code>. Disponible desde la <strong>versión 62</strong> del paquete de interacciones.</p>`}
+   keywords:['gizmos.color','antes'],
+   answer:`<p><strong>Error 1:</strong> <code>color = ...</code> no existe en ese contexto; es <code>Gizmos.color = ...</code>.</p><p><strong>Error 2:</strong> hay que asignar <code>Gizmos.color</code> <strong>antes</strong> de dibujar, no después (si no, no afecta a ese DrawWireSphere).</p><pre>void OnDrawGizmos(){
+  Gizmos.color = ocupado ? Color.red : Color.green;
+  Gizmos.DrawWireSphere(transform.position, 0.2f);
+}</pre><p>(Opcional: envolver en <code>#if UNITY_EDITOR / #endif</code>.)</p>`},
+  {type:'order',label:'Ordenar el flujo (Canvas interactivo en VR)',
+   q:`<p>Ordená el flujo para dejar un Canvas operable con el rayo del control y con el dedo:</p>`,
+   steps:['Crear el Canvas en la escena','Clic derecho sobre el Canvas → Interaction SDK','Add Ray Interaction → Fix (convierte a World Space + agrega el módulo)','Add Poke Interaction para el toque directo con el dedo','Create → el SDK genera los componentes de interacción'],
+   why:`<p>Ray (rayo) y Poke (dedo) son interactables separados; el wizard los configura y Create agrega los componentes.</p>`},
+  {type:'written',label:'Cuándo usar cada SDK',
+   q:`<p>Resumí cuándo conviene usar Meta XR SDK, OpenXR y SteamVR.</p>`,
+   keywords:['meta xr','quest','openxr','multiplataforma','steamvr','pc vr','exclusivas','estandar'],
+   answer:`<p>Meta XR SDK: objetivo Quest 2/3 específico, aprovechar capacidades exclusivas del hardware. OpenXR: compatibilidad multiplataforma, estándares abiertos, proyecto a largo plazo. SteamVR: PC VR con múltiples headsets y distribución en Steam. La industria apunta a OpenXR.</p>`},
+  {type:'written',label:'Lightmaps y UV2',
+   q:`<p>¿Qué es un lightmap y por qué el UV2 no puede tener overlaps?</p>`,
+   keywords:['lightmap','iluminacion','pre-calculada','uv2','overlap','solapamiento','unico','estatic'],
+   answer:`<p>El lightmap es una textura que guarda la iluminación pre-calculada (luces y sombras) de superficies estáticas, aplicada por el canal UV2. El UV2 no puede tener overlaps porque cada cara necesita su propio espacio único: si dos caras comparten UV, la luz de una pisa a la otra y la iluminación queda incorrecta.</p>`},
+  {type:'written',label:'Mareo en VR',
+   q:`<p>¿Qué causa el mareo (motion sickness) en VR y cómo se mitiga?</p>`,
+   keywords:['conflicto','sensoriomotor','cuerpo','teletransporte','snap turning','viñeta','fps'],
+   answer:`<p>Aparece por el <strong>conflicto sensoriomotor</strong>: lo que ves no coincide con lo que siente tu cuerpo. Se mitiga con teletransporte, snap turning, viñeta al moverse, dando control de cámara al jugador y manteniendo <strong>72–90 FPS</strong> estables.</p>`},
+  {type:'mc',label:'¿Qué es OpenXR?',
+   q:`<p>¿Qué es OpenXR?</p>`,
+   opts:['Un SDK propietario de Meta exclusivo para Quest','Un estándar abierto de Khronos para VR/AR multiplataforma','La plataforma de distribución de apps VR de Steam','Un plugin para desarrollar sin headset físico'],
+   correct:1},
+  {type:'mc',label:'Reticles',
+   q:`<p>¿Para qué sirven los Reticles?</p>`,
+   opts:['Para mejorar la resolución de la UI','Para comunicar visualmente si una superficie u objetivo es válido para una acción','Para acelerar el renderizado de la escena','Para bakear la iluminación de la escena'],
+   correct:1}
+ ]},
+ {id:3,title:'Simulacro 3 — Repaso Integral',desc:'Examen integral: cubre TODO el temario con opción múltiple.',questions:[]}
 ];
+
+// Repaso Integral: MC por cada concepto (excluyendo zonas historia/patrones-AR y los temas vetados, que quedan en estudio) + ejercicios de recrear flujos.
+const EXCLUIR_ZONA=new Set([]);
+const EXCLUIR_TITULO=/draw call|batching|object pooling|shadow map|realtime vs baked|overdraw|instantiate\/destroy/i;
+const _mcIntegral = ZONES.filter(z=>!EXCLUIR_ZONA.has(z.id)).flatMap(z => z.qs.filter(c=>!EXCLUIR_TITULO.test(c.title)).map(c => ({type:'mc',label:z.name+' · '+(c.title||''),q:c.q,opts:c.mc,correct:c.correct})));
+const _flujosIntegral = [
+ {t:'Sonido al agarrar con las manos',prompt:'Ordená el flujo para que suene un feedback al agarrar un objeto con las manos, sin programar.',steps:['Agregar Rigidbody y Collider al objeto','Agregar el componente Grabbable','Agregar Hand Grab Interactable','Agregar un AudioSource con el clip','Agregar Interactable Unity Event Wrapper apuntando al interactable','En el evento When Select, llamar a AudioSource.Play()'],why:'El objeto se hace agarrable (Rigidbody + Grabbable + Hand Grab Interactable) y el wrapper dispara el AudioSource en When Select. Cero código.'},
+ {t:'Establecer una pose de manos',prompt:'Ordená el flujo para crear una Hand Grab Pose sobre un objeto.',steps:['Hacer el objeto agarrable (Grabbable + Hand Grab Interactable)','Abrir el Hand Grab Pose Recorder','Entrar en Play y envolver la mano en el objeto','Grabar: se crea un HandGrabPose con su HandPose y GhostHand','Ajustar los dedos con Fingers Freedom (Free/Constrained/Locked)','Create Mirrored para la otra mano'],why:'Intervienen Hand Grab Interactor (mano), Hand Grab Interactable (objeto), HandGrabPose y HandPose (hijos) y GhostHand (visual).'},
+ {t:'Agarrar un palo de las dos puntas',prompt:'Tenés un palo que querés agarrar de cualquiera de sus dos puntas. Ordená el flujo.',steps:['Poner Rigidbody + Grabbable en el palo (el padre)','Crear un hijo ubicado en la punta A','Ponerle Grab Interactable al hijo A, apuntando al Grabbable del padre','Crear otro hijo ubicado en la punta B','Ponerle Grab Interactable al hijo B, apuntando al mismo Grabbable'],why:'Un solo objeto que se mueve (Grabbable + Rigidbody en el padre) y dos puntos de detección, cada uno su hijo con su posición, los dos apuntando al mismo Grabbable.'},
+ {t:'Objeto agarrable con controles desde cero',prompt:'Ordená el flujo para hacer un objeto agarrable con controles desde cero.',steps:['Agregar un Rigidbody al objeto','Agregar un Collider (ej. Box Collider)','Agregar el componente Grabbable','Agregar Grab Interactable (agarre con controles)','Verificar que el Controller Grab Interactor esté en el control del rig'],why:'El objeto necesita física (Rigidbody), forma (Collider), el que lo mueve (Grabbable) y el que lo hace agarrable (Grab Interactable). El interactor va en el control.'},
+ {t:'Teleport a un punto fijo (hotspot)',prompt:'Ordená el flujo para teletransportarte a un punto fijo sin marearte.',steps:['Crear un GameObject donde querés caer','Clic derecho → Interaction SDK → Add Teleport Interaction','Se genera el Hotspot (destino absoluto)','El Teleport Interactor en la mano apunta al hotspot','El reticle marca el destino y al soltar te teletransporta'],why:'El Hotspot es el destino fijo; el Teleport Interactor apunta, el reticle confirma y al seleccionar te mueve sin movimiento continuo (por eso no marea).'},
+ {t:'Girar de a pasos (snap turning)',prompt:'Ordená el flujo para girar de a pasos con el control.',steps:['Tener el rig con locomoción configurada','Ubicar el Controller Turner Interactor en el control','En el Turner Event Broadcaster elegir el modo Snap','Setear los grados del giro (ej. 45)','Probar: el joystick gira de golpe en pasos fijos'],why:'El Turner Interactor genera el input y el Turner Event Broadcaster lo convierte en giros. En modo Snap el giro instantáneo marea menos que el continuo.'},
+ {t:'Bakear la iluminación del interior',prompt:'Ordená el flujo para bakear la iluminación de tu escena.',steps:['Marcar los objetos que no se mueven como Static (con Contribute GI)','Confirmar Generate Lightmap UVs en los FBX importados','Configurar las luces como Baked o Mixed','Guardar la escena','Abrir Window → Rendering → Lighting y darle Generate Lighting'],why:'Sin Static + Contribute GI y sin Lightmap UVs el bake sale mal; guardar antes de bakear evita resultados raros.'}
+];
+SIMULACROS[2].questions = _mcIntegral.concat(_flujosIntegral.map(f => ({type:'order',label:'Flujo · '+f.t,q:'<p>'+f.prompt+'</p>',steps:f.steps,why:'<p>'+f.why+'</p>'})));
+SIMULACROS[2].desc = 'Examen integral: '+SIMULACROS[2].questions.length+' preguntas — opción múltiple de cada concepto + ejercicios de recrear flujos. Cubre todo el temario de examen.';
+// ── Simulacro 4: solo armar flujos (paso a paso de los apuntes) ──
+const FLUJOS_SIM4=[{"t": "Crear el proyecto VR/RM en Unity", "prompt": "Ordená el flujo para crear desde cero un proyecto de Realidad Virtual/Mixta en Unity Hub.", "steps": ["Verificar en Unity Hub &gt; Installs que la versión tenga el módulo de Android (si falta, agregar Android Build Support, OpenJDK, Android SDK y NDK)", "En Unity Hub ir a Projects &gt; New Project, elegir versión, plantilla 3D, nombre y crear", "Ir a File &gt; Build Settings, seleccionar Android y hacer Switch Platform"], "why": "Los Meta Quest corren sobre Android, así que el módulo Android y el cambio de plataforma son requisitos previos a todo lo demás."}, {"t": "Importar el Meta XR All-in-One SDK", "prompt": "Ordená el flujo para importar e instalar el Meta XR All-in-One SDK.", "steps": ["En la Unity Asset Store buscar Meta XR All-in-One SDK", "Hacer Add to My Assets y aceptar los términos", "Abrir en Unity desde Package Manager &gt; My Assets", "Instalar el paquete y reiniciar el editor cuando lo pida", "Verificar en Package Manager (vista In Project) que estén todos los sub-paquetes"], "why": "El SDK es el componente central que da acceso a las funciones de los Quest; sin reiniciar e importar bien faltan sub-paquetes."}, {"t": "Configurar el proyecto con Project Setup Tool", "prompt": "Ordená el flujo para configurar el proyecto con el Project Setup Tool del SDK.", "steps": ["Abrir Oculus &gt; Tools &gt; Project Setup Tool", "Verificar que la pestaña activa sea Android", "Hacer Fix All para corregir automáticamente las configuraciones", "Hacer Apply All para aplicar los cambios", "Repetir el proceso en la pestaña de Windows"], "why": "La herramienta automatiza la configuración correcta para Quest; Fix All corrige y Apply All confirma, en Android y en Windows."}, {"t": "Agregar funcionalidades con Building Blocks", "prompt": "Ordená el flujo para agregar funcionalidades a la escena con Building Blocks.", "steps": ["Abrir Oculus &gt; Tools &gt; Building Blocks", "Arrastrar Camera Rig a la escena (indispensable: incluye OVR Camera Rig y OVR Manager)", "Arrastrar Pass Through si se quiere Realidad Mixta", "Arrastrar Hand Tracking y configurar la frecuencia en Alta", "Arrastrar Synthetic Hands para la representación visual de las manos", "Arrastrar Grabbable Item como objeto agarrable"], "why": "Los Building Blocks son módulos pre-armados; el Camera Rig es la base del jugador y el resto suma input de manos e interacciones."}, {"t": "Pasar de Realidad Virtual a Realidad Mixta", "prompt": "Ordená el flujo para convertir una escena VR en Realidad Mixta.", "steps": ["Abrir Oculus &gt; Tools &gt; Building Blocks", "Arrastrar el Building Block Pass Through a la escena", "Dejar que el soporte se agregue automáticamente al Camera Rig"], "why": "La arquitectura modular hace la transición simple: el Pass Through habilita el video del entorno real y se integra solo al Camera Rig."}, {"t": "Probar con Quest Link / Air Link sin compilar", "prompt": "Ordená el flujo para probar el juego en el casco en tiempo real sin hacer build.", "steps": ["Activar Modo Desarrollador desde la app Meta Quest del teléfono", "En Oculus para PC ir a Settings &gt; Beta y activar Pass Through over Meta Quest Link", "Conectar el casco por USB-C (Quest Link) o wifi (Air Link) y verificar en Devices que aparezca en verde", "Activar Quest Link / Air Link en el casco", "Hacer Play en Unity para que la escena corra en el casco en tiempo real"], "why": "Quest Link/Air Link permite ver la escena en vivo en el casco sin generar el APK, ideal para iterar rápido."}, {"t": "Compilar e instalar el APK (Build and Run)", "prompt": "Ordená el flujo para compilar el juego e instalarlo en el casco.", "steps": ["Abrir File &gt; Build Settings con plataforma Android (Switch Platform si hace falta)", "Agregar la escena actual a la lista", "En Run Device seleccionar el casco conectado (usar Refresh si no aparece)", "Hacer Build and Run", "Crear una carpeta para el APK y esperar a que termine (se instala y ejecuta solo en el dispositivo)"], "why": "El build genera el APK que se instala en el Quest; sin agregar la escena y elegir el Run Device la instalación no apunta al casco."}, {"t": "Hacer un objeto agarrable con el Grab Wizard", "prompt": "Ordená el flujo para hacer un objeto agarrable usando el asistente automático Grab Wizard.", "steps": ["Crear un cubo con clic derecho &gt; 3D Object &gt; Cube", "Seleccionarlo y hacer clic derecho &gt; Interaction SDK &gt; Add Grab Interaction", "En la ventana Grab Wizard elegir el tipo de interactor (manos, controles o ambos) y el gesto", "En los componentes requeridos, hacer clic en Fix para agregar el Rigidbody que falta", "Hacer clic en Create para que se agreguen automáticamente todos los componentes", "Ajustar escala y posición del cubo para probarlo en Play"], "why": "El Grab Wizard arma toda la interacción, pero antes necesita el Rigidbody (Fix) y la definición del interactor/gesto; recién con Create inyecta los componentes."}, {"t": "Hacer un objeto agarrable paso a paso (manual)", "prompt": "Ordená el flujo manual para hacer un objeto agarrable con manos y controles.", "steps": ["Crear la jerarquía: Root Grab Object con hijos Visual, Colliders, Hand Grab, Controller Grab y SFX, y poner el modelo 3D en Visual", "En Root Grab Object agregar el componente Rigidbody (características físicas)", "Agregar el componente Grabbable (toma la referencia del Rigidbody) y definir las físicas", "En Colliders definir los colliders que cubren la zona de agarre", "En Hand Grab agregar Hand Grab Interactable y asignar referencias a Grabbable y Rigidbody", "En Controller Grab agregar Grab Interactable y asignar manualmente las referencias"], "why": "Primero la jerarquía y la física (Rigidbody + Grabbable), después los colliders detectan el agarre, y por último los interactables de mano y control conectan con el Grabbable."}, {"t": "Armar la escena de grab con Building Blocks", "prompt": "Ordená el flujo para armar la escena base de grab con manos y controles.", "steps": ["Crear la escena con File &gt; New Scene &gt; Basic y guardarla como Grab Interaction", "En Oculus &gt; Tools &gt; Building Blocks agregar Camera Rig, Hand Tracking y Virtual Hands", "Buscar el prefab OVR Controllers (Asset = All) y agregarlo junto a Hand Interactions; eliminar la Main Camera", "Agregar Hand Grab Interactor en la mano izquierda y derecha", "Agregar Controller Grab Interactor en el control izquierdo y derecho", "Configurar los visuales del interactor de mano (Hand Grab Visual y Hand Grab Glow)"], "why": "Los Building Blocks arman el rig de cámara y manos; después se suman los controles, los interactores Grab y por último los visuales."}, {"t": "Sonido al agarrar y soltar (Pointable Event Wrapper)", "prompt": "Ordená el flujo para reproducir sonidos al agarrar y soltar un objeto, sin programar.", "steps": ["En Root Grab Object agregar el componente Pointable Unity Event Wrapper y referenciar el Grabbable", "En el objeto SFX crear dos vacíos: Select y Release", "En ambos agregar un Audio Source y desactivar Play On Awake", "Asignar el audio de agarrar en Select y el de soltar en Release", "Conectar When Select al Audio Source Play del objeto Select", "Conectar When Release al Audio Source Play del objeto Release"], "why": "El Pointable Unity Event Wrapper expone los eventos Select/Release que se enganchan a los Audio Source, que deben tener Play On Awake desactivado para sonar solo en el evento."}, {"t": "Manos y controles simultáneos (multimodal)", "prompt": "Ordená el flujo para habilitar manos y controles al mismo tiempo.", "steps": ["Crear la escena Basic, guardarla como Hands Controllers Interaction y eliminar la Main Camera", "En Building Blocks agregar Camera Rig, Hand Tracking, Virtual Hands y Grab Interaction", "En Camera Rig &gt; OVR Manager activar Simultaneous Hands and Controllers y poner Hand Tracking Support en Controllers and Hands", "En el OVR Hand de cada mano cambiar Show State a Always", "En el Hand Grab Interactor configurar el Hand Grab Visual con la Synthetic Hand y el data source del control", "Agregar el prefab OVR Controller Driven Hands y poner Show State en Always en los controles sintéticos"], "why": "El modo multimodal exige primero configurar el OVR Manager y el Show State Always, y luego enlazar la mano sintética con el data source del control para que convivan."}, {"t": "Crear una pose de agarre (Hand Grab Pose)", "prompt": "Ordená el flujo para crear una pose de agarre personalizada.", "steps": ["En el objeto Hand Grab (que tiene el Hand Grab Interactable) hacer clic en Add Hand Grab Pose", "Abrir el objeto generado y buscar el hijo Hand Grab Pose", "Mover y rotar ese objeto hacia el punto de agarre", "Ajustar cada dedo usando los círculos de cada falange", "Configurar en el script Hand Grab Pose el tipo de mano y el Fingers Freedom (Bloqueado/Restringido/Libre) de cada dedo"], "why": "La pose se genera desde el Hand Grab Interactable; después se posiciona la mano virtual sobre el punto de agarre y se ajustan dedos y libertad para que calce."}, {"t": "Crear la pose espejo para la otra mano", "prompt": "Ordená el flujo para reflejar una pose de agarre a la otra mano.", "steps": ["En el script Hand Grab Interactable hacer clic en Create Mirror Hand Grab Interactable", "Verificar que se crea el objeto con el sufijo mirror, ya configurado para la otra mano", "Ajustar la rotación si hace falta (por ejemplo Y: 180) para que calce desde el mismo ángulo"], "why": "El botón de mirror evita rehacer la pose dedo por dedo: refleja la pose existente y solo puede requerir corregir la rotación."}, {"t": "Agregar múltiples puntos de agarre a un objeto", "prompt": "Ordená el flujo para sumar un segundo punto de agarre (ej. agarrar un palo de las dos puntas).", "steps": ["Dentro del objeto crear un nuevo vacío (por ejemplo Hand Grab)", "Agregar el componente Hand Grab Interactable", "Verificar que las referencias al Grabbable y al Rigidbody estén correctas", "Añadir la pose y posicionar la mano sobre la nueva zona de agarre", "Crear la pose espejo y asegurar que los colliders cubran cada zona de agarre"], "why": "Cada punto de agarre es otro Hand Grab Interactable con sus referencias y su pose; los colliders deben cubrir cada zona para que el agarre se detecte."}, {"t": "Configurar el Snap Interactor en el objeto que se mueve", "prompt": "Ordená el flujo para agregar el Snap Interactor a un objeto agarrable.", "steps": ["En el objeto padre activar Is Trigger en su Collider", "Dentro del objeto crear un vacío llamado Snap Interactor", "Agregar el componente Snap Interactor", "Referenciar en Pointable Element el Grabbable (el ISDK Hand Grab Interaction)", "Referenciar el Rigidbody del objeto"], "why": "El Snap Interactor vive en el objeto móvil y necesita el Grabbable como Pointable Element y el Rigidbody para saber que se agarra/suelta y mover el objeto."}, {"t": "Crear el Snap Interactable (destino del Snap)", "prompt": "Ordená el flujo para crear el destino donde encaja el objeto.", "steps": ["Fuera del objeto crear un vacío llamado Snap Interactable y ubicarlo donde debe encajar", "Agregar un Box Collider que define la zona donde se activa el Snap", "Agregar un Rigidbody, desactivar Use Gravity y activar Is Kinematic", "Agregar el componente Snap Interactable"], "why": "El destino se ubica donde se quiere que encaje; el collider define la zona de activación y el Rigidbody kinematico evita que caiga, antes de sumar el Snap Interactable."}, {"t": "Crear el visual de la zona del Snap", "prompt": "Ordená el flujo para mostrar y ocultar un visual de la zona de Snap.", "steps": ["Dentro de Snap Interactable crear un cubo un poco más grande llamado Snap Visual", "Crear un material transparente (Rendering Mode Transparent, color verde) y asignarlo al cubo", "Eliminar el collider del cubo visual", "Agregar el componente Interactable Unity Event Wrapper y referenciar el Snap Interactable", "Conectar When Select al SetActive(false) del cubo visual (ocultarlo al encajar)", "Conectar When Unselect al SetActive(true) (mostrarlo al sacar el objeto)"], "why": "El visual transparente marca la zona; el Interactable Unity Event Wrapper usa Select/Unselect para ocultar el cubo cuando el objeto encaja y mostrarlo cuando se saca."}, {"t": "Varios Snaps con punto por defecto y retorno por tiempo", "prompt": "Ordená el flujo para manejar varios Snaps con default y time out.", "steps": ["Duplicar el Snap las veces necesarias y ubicar cada uno en su posición", "Seleccionar el Snap Interactor y abrir Options", "En Snap Pose Transform definir el pivote del objeto al moverse al Snap", "En Default Interactable referenciar el Snap predeterminado", "En Time Out Interactable referenciar el Snap al que el objeto regresa", "En Time Out poner el tiempo de regreso (ej. 3 segundos)"], "why": "Con varios Snaps, las Options del Snap Interactor definen el pivote, el punto inicial (Default) y a cuál vuelve el objeto tras un tiempo (Time Out)."}, {"t": "Filtrar con qué Snaps encaja el objeto (Tags)", "prompt": "Ordená el flujo para limitar con qué Snaps encaja un objeto usando tags.", "steps": ["Seleccionar todos los Snaps y agregar el componente Tag Set", "Asignar una etiqueta a cada Snap (por ejemplo cube o sphere)", "En el Snap Interactor agregar el componente Tag Set Filter", "En Options definir Required Tags y Excluded Tags", "Referenciar el Tag Set Filter dentro del Snap Interactor en Options &gt; Interactable Filters"], "why": "El filtrado por tags requiere un Tag Set en los Snaps y un Tag Set Filter en el Interactor con Required/Excluded Tags, enganchado en Interactable Filters."}, {"t": "Crear escena con el prefab de interacciones", "prompt": "Ordená el flujo para iniciar una escena con el prefab base de interacciones de Meta.", "steps": ["Ir a File &gt; New Scene &gt; Basic", "Guardar con Ctrl + S en la carpeta Scenes con un nombre", "Eliminar la Main Camera de la escena", "En el buscador de Project escribir OVR Camera Rig Interaction", "Cambiar el filtro de búsqueda a All", "Arrastrar el prefab a la jerarquía"], "why": "El prefab OVR Camera Rig Interaction ya trae Poke, Grab, Ray, Locomotion y Distance; se elimina la Main Camera porque el rig aporta su propia cámara."}, {"t": "Crear un Canvas y habilitar interacción (Ray y Poke)", "prompt": "Ordená el flujo para crear un Canvas e interactuar con él desde el Interaction SDK.", "steps": ["Crear un vacío con Create Empty llamado UI y posicionarlo", "Clic derecho sobre UI &gt; UI &gt; Canvas", "Clic derecho sobre el Canvas &gt; Interaction SDK &gt; Add Ray Interaction y hacer Fix (pasa a World Space y agrega el módulo)", "En Settings elegir manos, controles o ambos y crear", "Clic derecho sobre el Canvas &gt; Interaction SDK &gt; Add Poke Interaction y crear"], "why": "Desde la versión 62 Meta automatiza el Canvas; Ray habilita interacción a distancia y Poke interacción directa, y el Canvas debe estar en World Space."}, {"t": "Configurar el Canvas y el contenedor de elementos", "prompt": "Ordená el flujo para dejar el Canvas escalado y con un contenedor ordenado de UI.", "steps": ["En el Canvas ajustar Width y Height y poner Scale chico (ej. 0.002) para llevarlo a tamaño real", "Crear un vacío Create Empty llamado UI Elements", "En el Rect Transform anclarlo en stretch completo (Shift + Alt + clic en el anclaje)", "Add Component &gt; Vertical Layout Group con Padding, Spacing, Child Alignment y Control Child Size Width"], "why": "El escalado lleva el Canvas a tamaño real en World Space y el Vertical Layout Group ordena automáticamente los elementos hijos."}, {"t": "Construir y conectar los elementos de UI", "prompt": "Ordená el flujo para agregar controles de UI y conectarlos a funciones del script.", "steps": ["Dentro de UI Elements agregar un Text - TextMeshPro de título", "Agregar un Button - TextMeshPro y conectarlo a la función Generar objetos", "Agregar un Dropdown y conectarlo a la función Change Object", "Agregar un Slider y conectarlo a la función Rotate Object", "Agregar un Toggle y conectarlo a la función Toggle Object", "Guardar con Ctrl + S y probar con controles y manos"], "why": "Cada control se conecta arrastrando el GameObject con el código y eligiendo la función correspondiente del script."}, {"t": "Crear una zona de teleport con NavMesh", "prompt": "Ordená el flujo para definir una zona de teletransportación mediante NavMesh.", "steps": ["Crear un vacío llamado Teleport First Floor y hacer Reset en el Transform", "Add Component &gt; Teleport Interactable", "En el objeto del piso agregar NavMesh Surface y ajustar el agente en Window &gt; AI &gt; Navigation (Radius 0.15, Collect Objects = Current Object Hierarchy)", "Hacer Bake para generar solo esa zona", "Referenciar el NavMesh Surface en el Teleport Interactable", "Add Component &gt; Reticle Data Teleport"], "why": "El NavMesh define automáticamente por dónde puede desplazarse el jugador; el Teleport Interactable toma esa zona y el Reticle Data Teleport cambia lo que se muestra al final del rayo."}, {"t": "Crear una zona de teleport con Collider (escalera)", "prompt": "Ordená el flujo para crear una zona de teletransportación usando un Collider Surface.", "steps": ["Crear un vacío llamado Teleport Stairs y hacer Reset en el Transform", "Add Component &gt; Teleport Interactable y elegir Collider Surface como superficie", "Dentro crear un vacío Collider y Add Component &gt; Box Collider", "Alinear el collider con la escalera (posición y rotación)", "Referenciar el Collider en el Collider Surface", "Add Component &gt; Reticle Data Teleport"], "why": "Cuando la superficie es inclinada (escalera) se usa un Box Collider alineado como Collider Surface; hay que referenciarlo o la zona no funciona."}, {"t": "Crear una zona de teleport inválida", "prompt": "Ordená el flujo para definir una zona donde NO se puede teletransportar.", "steps": ["Crear un vacío llamado Invalid Teleport y hacer Reset en el Transform", "Add Component &gt; Teleport Interactable y desactivar Allow Teleport", "En Options bajar el Score (ej. -10) para que pierda contra las otras zonas", "Agregar una Surface, rotarla a horizontal y referenciarla", "Add Component &gt; Reticle Data Teleport y cambiar el modo a inválido"], "why": "Para bloquear una zona se desactiva el teleport y se baja el score; el reticle en modo inválido muestra el rayo en rojo al apuntar al vacío."}, {"t": "Crear un punto de teleport sobre un cubo", "prompt": "Ordená el flujo para crear un punto de teletransportación con dirección.", "steps": ["Crear un vacío llamado Teleport Point sobre el cubo y Add Component &gt; Teleport Interactable", "Dentro crear un vacío Collider con Box Collider fino", "Crear un vacío Target Point y rotarlo hacia donde debe mirar el jugador", "En el Collider Add Component &gt; Collider Surface y referenciar el collider", "En Teleport Point referenciar la superficie y en Options &gt; Target referenciar Target Point (mantener dirección en true)", "Add Component &gt; Reticle Data Teleport"], "why": "Un punto fija un destino exacto y una orientación: el Target Point define hacia dónde queda mirando el jugador al teletransportarse."}, {"t": "Indicadores visuales hover/unhover en un punto", "prompt": "Ordená el flujo para mostrar feedback visual al apuntar un punto de teleport.", "steps": ["Crear un cubo Hover plano y eliminar su collider", "Duplicarlo a Unhover (más chico) y asignarle el material del piso", "En Teleport Point Add Component &gt; Interactable Unity Event Wrapper y referenciar el Teleport Interactable", "En When Hover: Hover SetActive true y Unhover SetActive false", "En When Unhover: Hover SetActive false y Unhover SetActive true", "Dejar el estado inicial con Hover desactivado"], "why": "El Interactable Unity Event Wrapper expone los eventos hover/unhover y se usan para activar/desactivar los GameObjects indicadores."}, {"t": "Teleport a un punto fijo (hotspot)", "prompt": "Ordená el flujo para teletransportarte a un punto fijo (hotspot) sin marearte.", "steps": ["Crear un GameObject donde querés caer", "Clic derecho &gt; Interaction SDK &gt; Add Teleport Interaction", "Se genera el Hotspot (destino absoluto)", "El Teleport Interactor en la mano apunta al hotspot", "El reticle marca el destino y al soltar te teletransporta"], "why": "El Hotspot es el destino fijo; el Teleport Interactor apunta, el reticle confirma y al seleccionar te mueve sin movimiento continuo (por eso no marea)."}, {"t": "Girar de a pasos (snap turning)", "prompt": "Ordená el flujo para girar de a pasos con el control.", "steps": ["Tener el rig con locomoción configurada", "Ubicar el Controller Turner Interactor en el control", "En el Turner Event Broadcaster elegir el modo Snap", "Setear los grados del giro (ej. 45)", "Probar: el joystick gira de golpe en pasos fijos"], "why": "El Turner Interactor genera el input y el Turner Event Broadcaster lo convierte en giros. En modo Snap el giro instantáneo marea menos que el continuo."}, {"t": "Bakear la iluminación de la escena en Unity", "prompt": "Ordená el flujo para bakear la iluminación de un objeto estático en Unity.", "steps": ["Marcar los objetos que no se mueven como Static (con Contribute GI)", "Confirmar que el modelo tenga UV2 sin overlaps (Generate Lightmap UVs en el import)", "Configurar las luces como Baked o Mixed", "Guardar la escena", "Abrir Window &gt; Rendering &gt; Lighting y darle Generate Lighting", "Usar Light Probes para iluminar los objetos dinámicos con la luz pre-calculada"], "why": "Solo los objetos Static reciben lightmap; el lightmap se mapea por UV2 y los dinámicos se cubren con Light Probes interpolados."}, {"t": "Reducir draw calls con material y atlas", "prompt": "Ordená el flujo para bajar las draw calls reutilizando materiales.", "steps": ["Detectar que muchos materiales distintos rompen el batching", "Reutilizar un mismo material entre varios objetos", "Crear un atlas de texturas que agrupe las texturas de esos objetos", "Aplicar el atlas como material compartido", "Habilitar batching en Unity (Static, Dynamic o GPU Instancing)"], "why": "Cada material distinto implica al menos una draw call; compartir material y atlas permite agrupar objetos en una sola llamada."}, {"t": "Generar el canal UV2 para lightmap en Blender", "prompt": "Ordená el flujo para crear el UV2 destinado al bake de luz.", "steps": ["Abrir el modelo en UV Editing / Edit Mode", "En el panel UV Maps agregar un segundo canal UV2 (además del UV1)", "Con todo el mesh seleccionado usar Smart UV Project para generar el layout sin solapamiento", "Crear la imagen destino (Image &gt; New) para el lightmap"], "why": "El UV1/atlas no refleja bien la luz; el UV2 debe crearse manualmente y sin overlaps para alojar el lightmap."}, {"t": "Bake final de luz sobre UV2 en Blender", "prompt": "Ordená el flujo para el bake definitivo del lightmap sobre UV2.", "steps": ["Con UV2 ya generado, crear la imagen destino de alta resolución (ej. 1024x1024)", "Seleccionar el canal UV2 como activo en el editor UV", "Subir los samples de render y activar Denoise", "Ejecutar el Bake (Combined) sobre la imagen del UV2", "Revisar el lightmap horneado y agregar el nodo de imagen al material"], "why": "Hornear sobre un UV2 dedicado de alta resolución con muchos samples y denoise da un lightmap limpio sin ensuciar el atlas compartido (UV1)."}, {"t": "Bakeado sencillo de luz sobre UV1/atlas en Blender", "prompt": "Ordená el flujo para hornear la luz directamente sobre el UV1/atlas.", "steps": ["Partir de la habitación en Object Mode con el atlas aplicado", "Pasar a UV Editing en Edit Mode", "Ubicar las islas UV sobre los tiles del atlas", "Configurar el Bake (Combined, Direct + Indirect) con la imagen del atlas como target", "Ejecutar Bake y guardar el resultado como nueva textura", "Asignar la textura horneada como Base Color"], "why": "Es la forma sencilla: hornea la luz sobre el atlas compartido (UV1), pero la luz queda pegada a los tiles compartidos, limitación que resuelve el UV2."}];
+SIMULACROS[3] = {id:4, title:'Simulacro 4 — Flujos paso a paso', desc:'Solo ejercicios de armar flujos: orden\u00e1 los pasos de cada procedimiento del curso. 36 flujos extra\u00eddos de todos los apuntes.', questions: FLUJOS_SIM4.map(f => ({type:'order', label:'Flujo \u00b7 '+f.t, q:'<p>'+f.prompt+'</p>', steps:f.steps, why:'<p>'+f.why+'</p>'}))};
+
+function normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
+function scoreWritten(text,keywords){
+  const t=normalize(text);
+  if(!t)return {score:0,label:'❌ Sin responder'};
+  const hits=keywords.filter(k=>t.includes(normalize(k)));
+  const ratio=hits.length/keywords.length;
+  if(ratio>=0.65)return {score:1,label:'✅ Correcto'};
+  if(ratio>=0.35)return {score:0.5,label:'⚡ Parcialmente correcto'};
+  return {score:0,label:'❌ Necesita repaso'};
+}
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 
@@ -561,8 +917,8 @@ function updateHUD(){
 
 function resetAll(){
   if(!confirm('¿Resetear todo el progreso?'))return;
-  localStorage.removeItem('pd_seen');localStorage.removeItem('pd_exams');localStorage.removeItem('pd_nota');
-  seen=new Set();updateHUD();renderZones();
+  localStorage.removeItem('pd_seen');localStorage.removeItem('pd_exams');localStorage.removeItem('pd_nota');localStorage.removeItem('pd_sims');
+  seen=new Set();updateHUD();renderZones();renderSimCards();
 }
 
 // ── SCREENS ───────────────────────────────────────────────────────────────────
@@ -606,187 +962,266 @@ function openZone(zi){
   showScreen('screen-study');
 }
 
-// ── FLASHCARD ─────────────────────────────────────────────────────────────────
+// ── CONCEPT (modo estudio: contenido + multiple choice) ─────────────────────────
 
 function renderCard(){
-  const z=ZONES[currentZone],q=z.qs[currentCard];
+  const z=ZONES[currentZone],c=z.qs[currentCard];
   load();
   const id=z.id+'_'+currentCard;
   seen.add(id);save();updateHUD();
   mcAnswered=false;
 
-  document.getElementById('card-q').innerHTML=q.q;
-  document.getElementById('card-hint').textContent=q.hint||'';
-  document.getElementById('card-a').innerHTML=q.a;
+  const tagEl=document.getElementById('concept-tag');
+  tagEl.textContent=z.name+(c.tag?' · '+c.tag:'');
+  tagEl.style.color=z.color;
+  const titleEl=document.getElementById('concept-title');
+  titleEl.textContent=c.title||c.q;
+  titleEl.style.color=z.color;
+  document.getElementById('concept-body').innerHTML=c.body+(c.ej?`<div class="concept-ej"><b>En la práctica</b>${c.ej}</div>`:'');
+  document.getElementById('concept-quiz').innerHTML=`<span class="quiz-label">Comprobá que lo entendiste</span>${c.q}`;
   document.getElementById('card-counter').textContent=(currentCard+1)+' / '+z.qs.length;
   document.getElementById('study-prog').textContent=seen.size+'/'+total()+' revisados';
-  document.getElementById('flashcard').classList.remove('flipped');
   document.getElementById('btn-prev').disabled=currentCard===0;
   document.getElementById('btn-next').disabled=currentCard===z.qs.length-1;
   document.getElementById('mc-feedback-area').innerHTML='';
 
-  const mcArea=document.getElementById('mc-area');
-  const tapHint=document.getElementById('card-tap');
-  const fc=document.getElementById('flashcard');
+  const letters='ABCD';
+  document.getElementById('mc-area').innerHTML=c.mc.map((opt,i)=>
+    `<button class="mc-opt" id="mc-opt-${i}" onclick="selectMC(${i},${c.correct})"><span class="mc-letter">${letters[i]}</span><span>${opt}</span></button>`
+  ).join('');
 
-  if(q.mc){
-    fc.classList.add('has-mc');
-    tapHint.style.display='none';
-    const letters='ABCD';
-    mcArea.innerHTML='<div class="mc-wrap">'+q.mc.map((opt,i)=>
-      `<button class="mc-opt" id="mc-opt-${i}" onclick="selectMC(${i},${q.correct})">`+
-      `<span class="mc-letter">${letters[i]}</span><span>${opt}</span></button>`
-    ).join('')+'</div>';
-  } else {
-    fc.classList.remove('has-mc');
-    tapHint.style.display='block';
-    mcArea.innerHTML='';
-  }
-
+  window.scrollTo(0,0);
   renderZones();
-}
-
-function onCardClick(){
-  const q=ZONES[currentZone].qs[currentCard];
-  if(!q.mc)document.getElementById('flashcard').classList.toggle('flipped');
 }
 
 function selectMC(chosen, correct){
   if(mcAnswered)return;
   mcAnswered=true;
+  const c=ZONES[currentZone].qs[currentCard];
   const isCorrect=chosen===correct;
-  const opts=document.querySelectorAll('.mc-opt');
-  opts.forEach(b=>b.disabled=true);
+  document.querySelectorAll('.mc-opt').forEach(b=>b.disabled=true);
   document.getElementById('mc-opt-'+chosen).classList.add(isCorrect?'correct':'wrong');
   if(!isCorrect)document.getElementById('mc-opt-'+correct).classList.add('correct');
-  const fb=document.getElementById('mc-feedback-area');
-  fb.innerHTML=`<div class="mc-feedback ${isCorrect?'ok':'ko'}">`+
-    (isCorrect?'✓ Correcto':'✗ Incorrecto — la respuesta correcta está marcada en verde')+
-    '</div>';
-  setTimeout(()=>document.getElementById('flashcard').classList.add('flipped'),1400);
+  document.getElementById('mc-feedback-area').innerHTML=
+    `<div class="mc-feedback ${isCorrect?'ok':'ko'}" style="text-align:left;line-height:1.6">`+
+    `<strong>${isCorrect?'✓ Correcto':'✗ Incorrecto'}</strong> — ${c.why||''}</div>`;
 }
 
 function prevCard(){if(currentCard>0){currentCard--;renderCard()}}
 function nextCard(){if(currentCard<ZONES[currentZone].qs.length-1){currentCard++;renderCard()}}
 
-// ── APPLIED ───────────────────────────────────────────────────────────────────
+// ── SIM CARDS (home) ────────────────────────────────────────────────────────────
 
-function renderApplied(){
-  document.getElementById('applied-content').innerHTML=SCENARIOS.map((s,i)=>`
-    <div class="scenario-card">
-      <div class="scenario-title">${i+1}. ${s.title}</div>
-      <div class="scenario-body">${s.body}</div>
-      <button class="reveal-btn" onclick="toggleEl('sc-${i}',this)">Ver respuesta</button>
-      <div class="scenario-answer" id="sc-${i}">${s.answer}</div>
+function simsDone(){try{return JSON.parse(localStorage.getItem('pd_sims')||'[]')}catch{return[]}}
+
+function renderSimCards(){
+  const done=simsDone();
+  const g=document.getElementById('sim-grid');
+  g.innerHTML=SIMULACROS.map(s=>`
+    <div class="sim-card">
+      <div class="sim-n">Simulacro ${s.id}</div>
+      <h3>${s.title.replace(/^Simulacro \d+ — /,'')}</h3>
+      <p>${s.desc}</p>
+      <div class="sim-foot">
+        <button class="sim-start" onclick="startExam(${s.id})">${done.includes(s.id)?'Repetir':'Empezar'}</button>
+        ${done.includes(s.id)?'<span class="sim-done">✓ Completado</span>':''}
+      </div>
     </div>`).join('');
 }
 
-function toggleEl(id,btn){
-  const el=document.getElementById(id);
-  const shown=el.classList.toggle('shown');
-  if(btn)btn.textContent=shown?'Ocultar':'Ver respuesta';
+// ── EXAM ENGINE ─────────────────────────────────────────────────────────────────
+
+let exam=null;
+function getSim(id){return SIMULACROS.find(s=>s.id===id)}
+
+function shuffleSteps(n){
+  const a=Array.from({length:n},(_,i)=>i);
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  if(n>1&&a.every((v,i)=>v===i)){[a[0],a[1]]=[a[1],a[0]];}
+  return a;
 }
 
-// ── SIMULACRO ─────────────────────────────────────────────────────────────────
-
-function renderSimulacro(){
-  document.getElementById('simulacro-content').innerHTML=
-    PUNTOS.map(p=>{
-      let bodyHtml=p.body;
-      let ctrlHtml='';
-      let answerHtml='';
-
-      if(p.num===2){
-        bodyHtml=`<ul class="vf-list" id="vf-list">`+
-          VF_STATEMENTS.map((s,i)=>
-            `<li class="vf-item">
-              <span class="vf-num">${i+1}.</span>
-              <span class="vf-text">${s.text}</span>
-              <span class="vf-btns">
-                <button class="vf-btn" id="vf-v-${i}" onclick="answerVF(${i},true)">V</button>
-                <button class="vf-btn" id="vf-f-${i}" onclick="answerVF(${i},false)">F</button>
-              </span>
-            </li>`
-          ).join('')+
-          `</ul>
-          <div class="vf-score" id="vf-score"></div>
-          <button class="punto-reveal" style="margin-top:12px" onclick="revealAllVF(this)">Revelar todas las respuestas</button>`;
-        answerHtml='';
-        ctrlHtml='';
-      } else {
-        ctrlHtml=`<button class="punto-reveal" onclick="toggleEl('pt-${p.num}',this)">Ver respuesta</button>`;
-        answerHtml=`<div class="punto-answer" id="pt-${p.num}">
-          <div class="punto-answer-label">Respuesta</div>
-          ${p.answer}
-        </div>`;
-      }
-
-      return `<div class="punto-card">
-        <div class="punto-header">
-          <span class="punto-num">Punto ${p.num}</span>
-          <span class="punto-label">${p.label}</span>
-        </div>
-        <div class="punto-body">${bodyHtml}</div>
-        ${ctrlHtml}
-        ${answerHtml}
-      </div>`;
-    }).join('')+
-    `<button class="mark-done-btn" onclick="markDone()">✓ Marcar examen completado</button>`;
-}
-
-let vfAnswers={},vfCorrect=0;
-function answerVF(idx,userAnswer){
-  if(vfAnswers[idx]!==undefined)return;
-  const correct=VF_STATEMENTS[idx].answer;
-  const hit=userAnswer===correct;
-  vfAnswers[idx]=userAnswer;
-  if(hit)vfCorrect++;
-
-  const vBtn=document.getElementById('vf-v-'+idx);
-  const fBtn=document.getElementById('vf-f-'+idx);
-  vBtn.disabled=true;fBtn.disabled=true;
-
-  if(userAnswer===true){
-    vBtn.classList.add(hit?'hit':'miss');
-    if(!hit)fBtn.classList.add('reveal-correct');
-  } else {
-    fBtn.classList.add(hit?'hit':'miss');
-    if(!hit)vBtn.classList.add('reveal-correct');
-  }
-
-  const total=VF_STATEMENTS.length;
-  const answered=Object.keys(vfAnswers).length;
-  const scoreEl=document.getElementById('vf-score');
-  scoreEl.style.display='block';
-  scoreEl.innerHTML=`Respondidas: ${answered}/${total} · Correctas: ${vfCorrect}/${answered} · <em>${VF_STATEMENTS[idx].exp}</em>`;
-}
-
-function revealAllVF(btn){
-  btn.disabled=true;
-  btn.textContent='Respuestas mostradas';
-  VF_STATEMENTS.forEach((_,i)=>{
-    const correct=VF_STATEMENTS[i].answer;
-    const vBtn=document.getElementById('vf-v-'+i);
-    const fBtn=document.getElementById('vf-f-'+i);
-    if(vfAnswers[i]===undefined){
-      vBtn.disabled=true;fBtn.disabled=true;
-      (correct?vBtn:fBtn).classList.add('reveal-correct');
-    }
+function startExam(id){
+  const sim=getSim(id);
+  exam={simId:id,answers:{},submitted:false,warned:false};
+  sim.questions.forEach((q,i)=>{
+    if(q.type==='vf')exam.answers[i]={};
+    else if(q.type==='order')exam.answers[i]={picked:[],pool:shuffleSteps(q.steps.length)};
+    else if(q.type==='mc')exam.answers[i]=null;
+    else exam.answers[i]='';
   });
+  document.getElementById('exam-title').textContent=sim.title;
+  document.getElementById('exam-desc').textContent=sim.desc;
+  document.getElementById('exam-warn').textContent='';
+  renderExam();
+  showScreen('screen-exam');
 }
 
-function markDone(){
-  const nota=prompt('¿Qué nota te ponés? (ej: 8/10 o 80%)','');
-  localStorage.setItem('pd_exams',exams()+1);
-  if(nota)localStorage.setItem('pd_nota',nota);
-  vfAnswers={};vfCorrect=0;
-  updateHUD();
-  alert('Examen registrado. ¡Seguí estudiando!');
+function typeLabel(t){return {mc:'Opción múltiple',vf:'Verdadero / Falso',written:'Respuesta escrita',match:'Relacionar',code:'Corregir código',order:'Ordenar pasos'}[t]||t}
+function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function renderExam(){
+  const sim=getSim(exam.simId);
+  document.getElementById('exam-content').innerHTML=sim.questions.map((q,i)=>renderQuestion(q,i)).join('');
+  bindExam();
+  updateExamProg();
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
+function renderQuestion(q,i){
+  const letters='ABCD';
+  let inner='';
+  if(q.type==='mc'){
+    inner='<div class="mc-wrap">'+q.opts.map((o,k)=>
+      `<button class="exam-opt${exam.answers[i]===k?' sel':''}" data-q="${i}" data-opt="${k}"><span class="mc-letter">${letters[k]}</span><span>${o}</span></button>`
+    ).join('')+'</div>';
+  } else if(q.type==='vf'){
+    inner='<ul class="vf-list">'+q.statements.map((s,k)=>{
+      const v=exam.answers[i][k];
+      return `<li class="vf-item"><span class="vf-num">${k+1}.</span><span class="vf-text">${s.text}</span><span class="vf-btns">
+        <button class="vf-btn${v===true?' sel':''}" data-q="${i}" data-st="${k}" data-val="t">V</button>
+        <button class="vf-btn${v===false?' sel':''}" data-q="${i}" data-st="${k}" data-val="f">F</button>
+      </span></li>`;
+    }).join('')+'</ul>';
+  } else if(q.type==='order'){
+    const st=exam.answers[i];
+    const seq=st.picked.length?st.picked.map((s,k)=>`<div class="seq-item"><span>${k+1}</span>${q.steps[s]}</div>`).join(''):'<div class="seq-empty">Tocá los pasos en orden de ejecución...</div>';
+    const pool=st.pool.filter(s=>!st.picked.includes(s)).map(s=>`<button data-q="${i}" data-pick="${s}">${q.steps[s]}</button>`).join('');
+    inner=`<div class="seq-label">Tu secuencia</div><div class="seq">${seq}</div>`+
+      (st.picked.length<q.steps.length?`<div class="seq-label">Pasos disponibles</div><div class="seq-pool">${pool}</div>`:'')+
+      (st.picked.length?`<button class="seq-reset" data-q="${i}" data-reset="1">Reiniciar</button>`:'');
+  } else {
+    inner=`<textarea class="exam-ta" data-q="${i}" placeholder="Escribí tu respuesta...">${escapeHtml(exam.answers[i]||'')}</textarea>`;
+  }
+  return `<div class="exam-q" id="exam-q-${i}">
+    <div class="exam-qhead"><span class="exam-qnum">${i+1}</span><span class="exam-qtype">${typeLabel(q.type)}</span></div>
+    <div class="exam-qtext"><strong>${q.label}.</strong> ${q.q}</div>
+    ${inner}
+  </div>`;
+}
 
-load();updateHUD();renderZones();renderApplied();renderSimulacro();
+function bindExam(){
+  document.querySelectorAll('.exam-opt').forEach(b=>b.onclick=()=>{
+    if(exam.submitted)return;
+    exam.answers[+b.dataset.q]=+b.dataset.opt;renderExam();
+  });
+  document.querySelectorAll('.vf-btn[data-st]').forEach(b=>b.onclick=()=>{
+    if(exam.submitted)return;
+    exam.answers[+b.dataset.q][+b.dataset.st]=(b.dataset.val==='t');renderExam();
+  });
+  document.querySelectorAll('.seq-pool button[data-pick]').forEach(b=>b.onclick=()=>{
+    if(exam.submitted)return;
+    exam.answers[+b.dataset.q].picked.push(+b.dataset.pick);renderExam();
+  });
+  document.querySelectorAll('[data-reset]').forEach(b=>b.onclick=()=>{
+    if(exam.submitted)return;
+    exam.answers[+b.dataset.q].picked=[];renderExam();
+  });
+  document.querySelectorAll('.exam-ta').forEach(t=>t.oninput=()=>{exam.answers[+t.dataset.q]=t.value;updateExamProg();});
+}
+
+function isAnswered(q,a){
+  if(q.type==='mc')return a!==null&&a!==undefined;
+  if(q.type==='vf')return Object.keys(a).length===q.statements.length;
+  if(q.type==='order')return a.picked.length===q.steps.length;
+  return (a||'').trim().length>0;
+}
+
+function updateExamProg(){
+  const sim=getSim(exam.simId);
+  const n=sim.questions.filter((q,i)=>isAnswered(q,exam.answers[i])).length;
+  document.getElementById('exam-prog').textContent=n+'/'+sim.questions.length+' respondidas';
+}
+
+function confirmExitExam(){
+  if(exam&&!exam.submitted&&!confirm('¿Salir del examen? Vas a perder las respuestas de este intento.'))return;
+  exam=null;showScreen('screen-home');
+}
+
+// ── SCORING + RESULTS ───────────────────────────────────────────────────────────
+
+function scoreQuestion(q,a){
+  if(q.type==='mc')return {score:a===q.correct?1:0,label:a===q.correct?'✅ Correcto':'❌ Incorrecto'};
+  if(q.type==='vf'){
+    const tot=q.statements.length;
+    let hit=0;q.statements.forEach((s,k)=>{if(a[k]===s.answer)hit++;});
+    const ratio=hit/tot;
+    const sc=ratio===1?1:(ratio>=0.5?0.5:0);
+    return {score:sc,label:(sc===1?'✅':sc===0.5?'⚡':'❌')+' '+hit+'/'+tot+' correctas'};
+  }
+  if(q.type==='order'){
+    const ok=a.picked.length===q.steps.length&&a.picked.every((s,i)=>s===i);
+    return {score:ok?1:0,label:ok?'✅ Orden correcto':'❌ Orden incorrecto'};
+  }
+  return scoreWritten(a,q.keywords);
+}
+
+function submitExam(){
+  const sim=getSim(exam.simId);
+  const pend=sim.questions.filter((q,i)=>!isAnswered(q,exam.answers[i])).length;
+  if(pend>0&&!exam.warned){
+    document.getElementById('exam-warn').textContent='Quedan '+pend+' pregunta(s) sin responder. Tocá "Entregar examen" otra vez para entregar igual (cuentan 0).';
+    sim.questions.forEach((q,i)=>{const el=document.getElementById('exam-q-'+i);if(el)el.classList.toggle('warn',!isAnswered(q,exam.answers[i]));});
+    exam.warned=true;
+    return;
+  }
+  exam.submitted=true;
+  let total=0;
+  const detail=sim.questions.map((q,i)=>{const r=scoreQuestion(q,exam.answers[i]);total+=r.score;return {q,i,r};});
+  const score=sim.questions.length?Math.round(total/sim.questions.length*100)/10:0;
+  localStorage.setItem('pd_exams',(parseInt(localStorage.getItem('pd_exams')||'0')+1));
+  localStorage.setItem('pd_nota',score+'/10');
+  const done=simsDone();if(!done.includes(exam.simId)){done.push(exam.simId);localStorage.setItem('pd_sims',JSON.stringify(done));}
+  updateHUD();renderSimCards();
+  renderResults(sim,detail,score);
+  showScreen('screen-results');
+}
+
+function renderResults(sim,detail,score){
+  document.getElementById('res-title').textContent=sim.title;
+  document.getElementById('res-score').textContent=score+' / 10';
+  let rank,sub;
+  if(score>=8){rank='🏆 Aprobado con mérito';sub='Dominás el tema. Repasá solo lo que quedó en amarillo o rojo.';}
+  else if(score>=6){rank='✅ Aprobado';sub='Buen nivel. Reforzá las preguntas que no salieron.';}
+  else{rank='📚 A repasar';sub='Volvé a las zonas de estudio antes de reintentar.';}
+  document.getElementById('res-rank').textContent=rank;
+  document.getElementById('res-sub').textContent=sub;
+  document.getElementById('res-content').innerHTML=detail.map(({q,i,r})=>{
+    const cls=r.score===1?'ok':(r.score>=0.5?'half':'no');
+    return `<div class="res-item">
+      <div class="res-head" onclick="this.nextElementSibling.classList.toggle('show')">
+        <span class="res-badge ${cls}">${r.label}</span>
+        <span class="res-qlabel">${i+1}. ${q.label}</span>
+        <span class="res-pts">${r.score} pt</span>
+      </div>
+      <div class="res-body">${resultBody(q,exam.answers[i])}</div>
+    </div>`;
+  }).join('');
+}
+
+function resultBody(q,a){
+  const letters='ABCD';
+  let your='',correct='';
+  if(q.type==='mc'){
+    your=(a!=null)?letters[a]+'. '+q.opts[a]:'(sin responder)';
+    correct='<span class="ans-correct">'+letters[q.correct]+'. '+q.opts[q.correct]+'</span>';
+  } else if(q.type==='vf'){
+    correct=q.statements.map((s,k)=>{const ok=a[k]===s.answer;return (k+1)+'. '+(ok?'✅':'❌')+' <strong>'+(s.answer?'V':'F')+'</strong> — '+s.exp;}).join('<br>');
+  } else if(q.type==='order'){
+    your=a.picked.length?a.picked.map((s,k)=>(k+1)+'. '+q.steps[s]+(s===k?' ✅':' ❌')).join('<br>'):'(sin responder)';
+    correct='<div class="flow">'+q.steps.map((s,k)=>(k+1)+'. '+s).join('<br>')+'</div>'+(q.why||'');
+  } else {
+    your=escapeHtml(a||'(sin responder)');
+    correct=q.answer;
+  }
+  let html='';
+  if(q.type!=='vf')html+='<div class="lbl">Tu respuesta</div><div class="your-ans">'+your+'</div>';
+  html+='<div class="lbl">Respuesta correcta</div><div>'+correct+'</div>';
+  return html;
+}
+
+// ── INIT ────────────────────────────────────────────────────────
+
+load();updateHUD();renderZones();renderSimCards();
 </script>
 </body>
 </html>
