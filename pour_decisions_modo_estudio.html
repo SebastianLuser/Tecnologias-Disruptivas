@@ -235,6 +235,11 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .res-body .your-ans{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px 14px;white-space:pre-wrap;font-size:13px;color:var(--text)}
 /* RESPONSIVE */
 @media(max-width:600px){.stats-bar{grid-template-columns:repeat(2,1fr)}.zones-grid,.sim-grid{grid-template-columns:1fr}.hud-stat:nth-child(n+4){display:none}}
+/* Escalado en monitores grandes (2K/27"): zoom reflowea y re-rasteriza → texto nítido,
+   sin scroll horizontal. No-op por debajo de 1600px (mobile/laptop/1080p quedan igual). */
+@media(min-width:1600px){html{zoom:1.12}}
+@media(min-width:2000px){html{zoom:1.24}}
+@media(min-width:2560px){html{zoom:1.36}}
 </style>
 </head>
 <body>
