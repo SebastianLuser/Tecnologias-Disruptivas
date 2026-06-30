@@ -1047,6 +1047,85 @@ function resultBody(q,a){
   return html;
 }
 
+// ── DIAGRAMAS (mapas visuales de jerarquías del SDK) ────────────────────────────
+// tree:  {type:'tree', root:{label,note?,color?,children:[...]}}
+// pairs: {type:'pairs', head?, rows:[{interactor,interactable,wrapper?}]}
+const DIAGRAMS=[
+ {id:'rig',title:'Jerarquía del OVR Camera Rig Interaction',color:'#1F66F2',
+  desc:'El "súper prefab" todo-incluido del jugador: qué trae adentro y dónde encaja cada cosa.',
+  type:'tree',root:{label:'OVR Camera Rig Interaction',note:'súper prefab: todo el jugador listo',color:'#1F66F2',children:[
+    {label:'OVR Camera Rig',note:'cámara estéreo (un ojo por lente) + OVR Manager — la base'},
+    {label:'OVR Controllers',note:'solo tracking + modelo 3D de los joysticks'},
+    {label:'Synthetic Hands',note:'representación visual de las manos'},
+    {label:'Locomotion Controller Group',note:'handler: ordena el movimiento → cápsula física',children:[
+      {label:'Teleport'},{label:'Snap Turn / Step'},{label:'Slide (continuo + viñeta)'}]},
+    {label:'Interactores (en manos y controles)',note:'la "herramienta" que actúa',children:[
+      {label:'Hand Grab / Controller Grab'},{label:'Distance Grab'},{label:'Ray (láser a distancia)'},{label:'Poke (tocar con el dedo)'}]}
+  ]},
+  foot:'No confundir: <b>OVR Camera Rig</b> pelado = solo mirás alrededor (sin manos ni movimiento). <b>OVR Controllers</b> sueltos = solo joysticks, sin lógica de agarrar/teletransportarse.'},
+
+ {id:'rule',title:'Regla de oro: Interactor ↔ Interactable',color:'#E8822E',
+  desc:'Interactor = la herramienta que actúa · Interactable = el objeto que la recibe. Y qué Event Wrapper escucha a cada par.',
+  type:'pairs',rows:[
+    {interactor:'Hand Grab / Controller Grab Interactor',interactable:'Grabbable + Hand Grab Interactable',wrapper:'Pointable Unity Event Wrapper'},
+    {interactor:'Snap Interactor (en el objeto móvil)',interactable:'Snap Interactable (zona destino)',wrapper:'Interactable Unity Event Wrapper'},
+    {interactor:'Teleport Interactor (mano / joystick)',interactable:'Teleport Interactable (zona)',wrapper:'Reticle Data Teleport'},
+    {interactor:'Ray Interactor (láser)',interactable:'Canvas World Space / Ray Interactable',wrapper:'—'},
+    {interactor:'Poke Interactor (dedo)',interactable:'Canvas / Poke Interactable',wrapper:'—'}
+  ]},
+
+ {id:'grab',title:'Anatomía de un objeto agarrable',color:'#2FB57A',
+  desc:'La jerarquía del Root Grab Object armado a mano y qué componente vive en cada hijo.',
+  type:'tree',root:{label:'Root Grab Object',note:'Rigidbody + Grabbable (físicas del objeto)',color:'#2FB57A',children:[
+    {label:'Visual',note:'el modelo 3D que se ve'},
+    {label:'Colliders',note:'definen la zona de agarre (Box/Mesh)'},
+    {label:'Hand Grab',note:'Hand Grab Interactable + Hand Grab Pose → ref. Grabbable y Rigidbody'},
+    {label:'Controller Grab',note:'Grab Interactable → mismas referencias'},
+    {label:'SFX',note:'Pointable Unity Event Wrapper → When Select / When Release a un Audio Source'}
+  ]},
+  foot:'Atajo: el <b>Grab Wizard</b> (Add Grab Interaction) arma todo esto solo — pero primero hay que hacer <b>Fix</b> para que agregue el Rigidbody que falta.'},
+
+ {id:'loco',title:'Stack de Locomoción + tipos de Teleport',color:'#7A33B5',
+  desc:'Cómo se mueve el cuerpo del jugador respetando físicas, y las variantes de zona de teleport.',
+  type:'tree',root:{label:'Player Controller / Camera Rig',note:'el "cuerpo" del jugador',color:'#7A33B5',children:[
+    {label:'Rigidbody / Character Controller',note:'colisiones: no atraviesa paredes ni cae al vacío'},
+    {label:'Locomotion Handler',note:'parámetros del movimiento (ej. velocidad de salto)'},
+    {label:'Locomotion Controller Group',note:'agrupa y ordena las mecánicas',children:[
+      {label:'Teleport'},{label:'Snap Turn'},{label:'Slide'}]},
+    {label:'Teleport Interactable (zona de destino)',note:'dónde puede aterrizar el jugador',children:[
+      {label:'NavMesh Surface',note:'bake; genera la zona automáticamente'},
+      {label:'Collider Surface',note:'para superficies inclinadas (escalera)'},
+      {label:'Hotspot',note:'punto fijo (Add Teleport Interaction)'},
+      {label:'Inválida',note:'Allow Teleport off + score bajo → reticle rojo'},
+      {label:'+ Reticle Data Teleport',note:'qué se muestra al final del rayo'}]}
+  ]}}
+];
+
+function dgTree(node){
+  const style=node.color?` style="border-left-color:${node.color}"`:'';
+  const note=node.note?`<span class="dg-note">${node.note}</span>`:'';
+  const kids=(node.children&&node.children.length)?`<div class="dg-children">${node.children.map(dgTree).join('')}</div>`:'';
+  return `<div class="dg-node"><div class="dg-label"${style}><b>${node.label}</b>${note}</div>${kids}</div>`;
+}
+
+function dgPairs(rows){
+  const head=`<div class="dg-pair dg-pair-head"><span>Interactor — la herramienta</span><span>Interactable — lo que recibe</span><span>Event Wrapper</span></div>`;
+  return head+rows.map(r=>
+    `<div class="dg-pair"><span class="dg-pair-a">${r.interactor}</span><span class="dg-pair-b">${r.interactable}</span><span class="dg-pair-c">${r.wrapper||'—'}</span></div>`
+  ).join('');
+}
+
+function renderDiagrams(){
+  document.getElementById('diagrams-content').innerHTML=DIAGRAMS.map(d=>{
+    const body=d.type==='pairs'?dgPairs(d.rows):dgTree(d.root);
+    const foot=d.foot?`<div class="dg-foot">${d.foot}</div>`:'';
+    return `<div class="diagram-block">
+      <h3 class="dg-title" style="color:${d.color}">${d.title}</h3>
+      <p class="dg-desc">${d.desc}</p>
+      <div class="dg-body">${body}</div>${foot}</div>`;
+  }).join('');
+}
+
 // ── INIT ────────────────────────────────────────────────────────
 
-load();updateHUD();renderZones();renderSimCards();
+load();updateHUD();renderZones();renderSimCards();renderDiagrams();

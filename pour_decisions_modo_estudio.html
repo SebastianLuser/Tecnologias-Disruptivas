@@ -36,6 +36,10 @@
       <div class="stat-card"><div class="val" id="stat-exams" style="color:var(--purple)">0</div><div class="label">Exámenes</div></div>
       <div class="stat-card"><div class="val" id="stat-nota" style="color:var(--gold)">—</div><div class="label">Última nota</div></div>
     </div>
+    <button class="diagrams-cta" onclick="showScreen('screen-diagrams')">
+      <span class="diagrams-cta-i">🗺️</span>
+      <span><span class="diagrams-cta-t">Mapas visuales / Diagramas</span><span class="diagrams-cta-s">Jerarquías del SDK: Camera Rig, interactors, objeto agarrable y locomoción</span></span>
+    </button>
     <div class="sec-head"><h2>Zonas de Estudio</h2></div>
     <div class="zones-grid" id="zones-grid"></div>
     <div class="sec-head" style="margin-top:34px"><h2>Simulacros de Examen</h2></div>
@@ -96,6 +100,16 @@
   </div>
   <div id="res-content"></div>
   <button class="mark-done-btn" onclick="showScreen('screen-home')">Elegir otro simulacro</button>
+</div>
+
+<!-- DIAGRAMS -->
+<div id="screen-diagrams" class="screen">
+  <div class="study-header">
+    <button class="back-btn" onclick="showScreen('screen-home')">← Volver</button>
+    <div class="study-zone-name">Diagramas · Mapas visuales</div>
+  </div>
+  <p class="mode-desc">Qué contiene cada prefab y dónde va cada cosa. Repaso visual rápido de las jerarquías del Meta XR SDK.</p>
+  <div id="diagrams-content"></div>
 </div>
 
 </div>
