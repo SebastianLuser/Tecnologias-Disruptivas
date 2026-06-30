@@ -26,6 +26,8 @@ RUN set -eux; \
 FROM nginx:1.27-alpine
 COPY deploy/default.conf /etc/nginx/conf.d/default.conf
 COPY pour_decisions_modo_estudio.html /usr/share/nginx/html/index.html
+COPY styles.css /usr/share/nginx/html/styles.css
+COPY app.js     /usr/share/nginx/html/app.js
 COPY assets /usr/share/nginx/html/assets
 COPY --from=fetch /out/assets/transformers/ /usr/share/nginx/html/assets/transformers/
 COPY --from=fetch /out/models/ /usr/share/nginx/html/models/
