@@ -240,7 +240,7 @@ const ZONES=[
   q:'¿Dónde se configura el brillo/contorno de la mano para cambiarle el color?',
   mc:['En el componente Hand Grab Glow, dentro del Hand Grab Interactor de la mano sintética (sección Visual)','En el OVR Controller, que maneja las visuals de los joysticks','En el Locomotion Controller Group, junto a las reglas de movimiento','En el Snap Interactable de la zona de encaje'],correct:0,
   why:'El color/brillo de la mano se configura en el Hand Grab Glow, dentro del Hand Grab Interactor (sección Visual) de la mano sintética — no en el OVR Controller.'}]},
-{id:'sdk',name:'Comparativa SDK',icon:'⚖️',color:'#7A33B5',desc:'★ MÁS IMPORTANTE ★  Meta XR SDK vs OpenXR vs SteamVR',qs:[
+{id:'sdk',name:'Comparativa SDK',icon:'⚖️',color:'#7A33B5',desc:'Meta XR SDK vs OpenXR vs SteamVR',qs:[
  {tag:'Meta XR — ventaja',title:'Ventaja del Meta XR SDK',
   body:`Acceso directo a las <strong>funcionalidades exclusivas del hardware Meta Quest</strong>: seguimiento de manos, passthrough para realidad mixta, tracking espacial avanzado, optimizaciones específicas y herramientas de rendimiento de Meta. También tiene excelente documentación y gran comunidad.`,
   q:'¿Cuál es la ventaja principal del Meta XR SDK?',
@@ -674,9 +674,8 @@ function renderZones(){
     const el=document.createElement('div');
     el.className='zone-card';
     el.style.borderLeftColor=zone.color;
-    const star=zone.id==='sdk'?` <span style="color:var(--gold);font-size:11px">★ IMPORTANTE</span>`:'';
     el.innerHTML=`<div class="zone-icon">${zone.icon}</div>
-      <div class="zone-name">${zone.name}${star}</div>
+      <div class="zone-name">${zone.name}</div>
       <div class="zone-desc">${zone.desc}</div>
       <div class="zone-prog"><div class="zone-prog-fill" style="width:${pct}%;background:${zone.color}"></div></div>
       <div class="zone-sub">${sc}/${zone.qs.length} revisados${mc?' · '+mc+' MC':''}</div>`;
