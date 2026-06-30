@@ -8,3 +8,12 @@ production/session-state/*.log
 # OS
 .DS_Store
 Thumbs.db
+
+# Embeddings: el Dockerfile los baja en build, no se commitean
+/models/
+/assets/transformers/ort-wasm-*.wasm
+/assets/transformers/ort-wasm-*.mjs
+
+# Node / pruebas locales
+node_modules/
+/localmodels/

@@ -1,0 +1,11 @@
+# El build solo necesita el HTML, assets/ y deploy/.
+# Todo lo demás afuera para un contexto chico y rápido.
+.git
+.gitignore
+.claude
+.claude.bak
+production
+node_modules
+localmodels
+models
+*.md

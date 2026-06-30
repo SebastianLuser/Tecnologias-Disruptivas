@@ -1155,7 +1155,52 @@ function scoreQuestion(q,a){
   return scoreWritten(a,q.keywords);
 }
 
-function submitExam(){
+// ── Validación semántica (embeddings en navegador, self-host; fallback a keywords) ──
+let _semExtractor=null,_semReady=false,_semLoading=null;
+const _semRefCache=new Map();
+async function ensureSemModel(){
+  if(_semReady)return true;
+  if(_semLoading)return _semLoading;
+  _semLoading=(async()=>{
+    try{
+      const T=await import('/assets/transformers/transformers.min.js');
+      T.env.allowRemoteModels=false;
+      T.env.localModelPath='/models/';
+      T.env.backends.onnx.wasm.wasmPaths='/assets/transformers/';
+      _semExtractor=await T.pipeline('feature-extraction','Xenova/paraphrase-multilingual-MiniLM-L12-v2',{dtype:'q8'});
+      _semReady=true;return true;
+    }catch(e){console.warn('Modelo semántico no disponible; corrijo por keywords.',e);return false;}
+  })();
+  return _semLoading;
+}
+async function _semEmbed(t){const o=await _semExtractor(t,{pooling:'mean',normalize:true});return o.data;}
+function _semCos(a,b){let s=0;for(let i=0;i<a.length;i++)s+=a[i]*b[i];return s;}
+function stripHtml(h){const d=document.createElement('div');d.innerHTML=h||'';return (d.textContent||'').replace(/\s+/g,' ').trim();}
+async function _semRef(q){if(_semRefCache.has(q))return _semRefCache.get(q);const v=await _semEmbed(stripHtml(q.answer));_semRefCache.set(q,v);return v;}
+async function scoreSemantic(text,q){
+  const kw=scoreWritten(text,q.keywords);              // piso/fallback léxico
+  if(!_semReady||!normalize(text)||!q.answer)return kw;
+  try{
+    const sim=_semCos(await _semEmbed(text),await _semRef(q));
+    const sem=sim>=0.70?1:(sim>=0.50?0.5:0);           // umbrales (validados)
+    if(sem<=kw.score)return kw;                        // máx(léxico, semántico)
+    return {score:sem,label:sem===1?'✅ Correcto':'⚡ Parcialmente correcto'};
+  }catch(e){return kw;}
+}
+function semOverlay(show){
+  let el=document.getElementById('sem-overlay');
+  if(show){
+    if(!el){
+      el=document.createElement('div');el.id='sem-overlay';
+      el.style.cssText='position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(8,10,18,.82);backdrop-filter:blur(4px);font-family:monospace;color:#fff;text-align:center;padding:24px';
+      el.innerHTML='<div style="width:38px;height:38px;border:3px solid rgba(255,255,255,.2);border-top-color:#1F66F2;border-radius:50%;animation:semspin .8s linear infinite"></div><div style="font-size:14px;max-width:380px;line-height:1.5">Analizando respuestas con comprensión semántica…<br><span style="opacity:.6;font-size:12px">La primera vez puede tardar mientras se descarga el modelo (después queda cacheado).</span></div><style>@keyframes semspin{to{transform:rotate(360deg)}}</style>';
+      document.body.appendChild(el);
+    }
+    el.style.display='flex';
+  }else if(el){el.style.display='none';}
+}
+
+async function submitExam(){
   const sim=getSim(exam.simId);
   const pend=sim.questions.filter((q,i)=>!isAnswered(q,exam.answers[i])).length;
   if(pend>0&&!exam.warned){
@@ -1165,8 +1210,15 @@ function submitExam(){
     return;
   }
   exam.submitted=true;
-  let total=0;
-  const detail=sim.questions.map((q,i)=>{const r=scoreQuestion(q,exam.answers[i]);total+=r.score;return {q,i,r};});
+  const TEXT=new Set(['written','code','match']);
+  if(sim.questions.some(q=>TEXT.has(q.type))){semOverlay(true);await ensureSemModel();}
+  let total=0;const detail=[];
+  for(let i=0;i<sim.questions.length;i++){
+    const q=sim.questions[i];
+    const r=TEXT.has(q.type)?await scoreSemantic(exam.answers[i],q):scoreQuestion(q,exam.answers[i]);
+    total+=r.score;detail.push({q,i,r});
+  }
+  semOverlay(false);
   const score=sim.questions.length?Math.round(total/sim.questions.length*100)/10:0;
   localStorage.setItem('pd_exams',(parseInt(localStorage.getItem('pd_exams')||'0')+1));
   localStorage.setItem('pd_nota',score+'/10');
