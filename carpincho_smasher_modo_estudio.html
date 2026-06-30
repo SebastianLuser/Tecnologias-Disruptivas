@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carpincho Smasher - Modo Estudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#150f14;
+    --bg-2:#1f161d;
+    --panel:#2a1e28;
+    --panel-2:#352632;
+    --ink:#f6ecdf;
+    --muted:#b39d92;
+    --carp:#d39a5c;
+    --carp-dark:#a8743d;
+    --impact:#ff5340;
+    --gold:#ffce3c;
+    --mint:#4fd6c0;
+    --line:rgba(255,255,255,.08);
+    --line-2:rgba(255,255,255,.14);
+    --shadow:0 18px 50px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #3a2230 0%, transparent 60%),
+      radial-gradient(900px 500px at 100% 110%, #28303a 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    min-height:100%;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:22px 18px 90px}
+
+  /* ---------- HUD top bar ---------- */
+  .hud{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    background:linear-gradient(180deg,var(--panel),var(--bg-2));
+    border:1px solid var(--line);border-radius:16px;
+    padding:12px 14px;box-shadow:var(--shadow);
+    position:sticky;top:10px;z-index:30;
+  }
+  .hud .brand{font-family:"Bungee";font-size:14px;letter-spacing:.5px;color:var(--carp);line-height:1}
+  .hud .brand small{display:block;font-family:"Inter";font-weight:700;font-size:9px;letter-spacing:2px;color:var(--muted)}
+  .hud .stat{
+    display:flex;flex-direction:column;align-items:flex-start;line-height:1;
+    padding:4px 10px;border-left:1px solid var(--line);
+  }
+  .hud .stat b{font-family:"Space Mono";font-size:16px;color:var(--gold)}
+  .hud .stat.smash b{color:var(--impact)}
+  .hud .stat.prog b{color:var(--mint)}
+  .hud .stat span{font-size:9px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-top:3px}
+  .hud .spacer{flex:1}
+  .pill{
+    font-family:"Space Mono";font-size:11px;color:var(--ink);
+    background:rgba(255,255,255,.05);border:1px solid var(--line-2);
+    padding:6px 10px;border-radius:99px;cursor:pointer;transition:.15s;
+  }
+  .pill:hover{background:rgba(255,255,255,.1)}
+
+  /* ---------- shared ---------- */
+  .eyebrow{font-family:"Space Mono";font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+  h1.title{font-family:"Bungee";font-size:clamp(30px,8vw,58px);line-height:.95;letter-spacing:.5px;margin:8px 0}
+  h1.title .smash{color:var(--impact);display:block}
+  .lead{color:var(--muted);font-size:15px;line-height:1.6;max-width:48ch}
+  .btn{
+    font-family:"Bungee";font-size:14px;letter-spacing:.5px;
+    background:var(--impact);color:#1a0d0a;border:none;border-radius:14px;
+    padding:14px 22px;cursor:pointer;transition:transform .12s, box-shadow .12s;
+    box-shadow:0 6px 0 #b8331f, 0 14px 24px rgba(255,83,64,.25);
+  }
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b8331f}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2);box-shadow:none;font-family:"Inter";font-weight:700;font-size:13px}
+  .btn.ghost:active{transform:translateY(2px)}
+  .btn.gold{background:var(--gold);box-shadow:0 6px 0 #c99a14, 0 14px 24px rgba(255,206,60,.2);color:#241a04}
+  .btn.gold:active{box-shadow:0 2px 0 #c99a14}
+
+  /* ---------- title screen ---------- */
+  .title-screen{padding-top:18px;animation:fade .4s ease}
+  .title-art{display:flex;justify-content:center;margin:6px 0 14px;position:relative}
+  .title-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .howto{
+    margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;
+  }
+  .howto .h{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .howto .h b{display:block;font-family:"Bungee";font-size:12px;color:var(--gold);margin-bottom:6px}
+  .howto .h p{font-size:13px;color:var(--muted);line-height:1.5}
+
+  /* ---------- zone map ---------- */
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:18px 0 14px;flex-wrap:wrap}
+  .section-head h2{font-family:"Bungee";font-size:22px}
+  .zones{display:grid;grid-template-columns:1fr;gap:14px}
+  .zone-card{
+    text-align:left;cursor:pointer;border:1px solid var(--line);border-radius:18px;
+    padding:18px;display:flex;align-items:center;gap:16px;transition:.18s;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,var(--panel),var(--bg-2));
+  }
+  .zone-card:hover{transform:translateY(-3px);border-color:var(--line-2)}
+  .zone-card .zidx{
+    font-family:"Bungee";font-size:30px;min-width:54px;height:54px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;color:#1a0d0a;flex-shrink:0;
+  }
+  .zone-card .zbody{flex:1}
+  .zone-card .zbody h3{font-family:"Bungee";font-size:17px;margin-bottom:3px}
+  .zone-card .zbody p{font-size:13px;color:var(--muted);line-height:1.45}
+  .zbar{height:7px;border-radius:99px;background:rgba(255,255,255,.08);margin-top:10px;overflow:hidden}
+  .zbar > i{display:block;height:100%;border-radius:99px;transition:width .5s}
+  .zone-card .zprog{font-family:"Space Mono";font-size:12px;color:var(--muted);flex-shrink:0;text-align:right}
+  .zone-card .zprog b{display:block;font-size:18px;color:var(--ink)}
+
+  .boss{
+    margin-top:16px;border:1px dashed var(--gold);border-radius:18px;padding:18px;
+    background:linear-gradient(135deg,#3a2a18,#211610);display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .boss .bt{flex:1;min-width:200px}
+  .boss .bt h3{font-family:"Bungee";font-size:18px;color:var(--gold)}
+  .boss .bt p{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+  /* ---------- concept list ---------- */
+  .clist{display:grid;grid-template-columns:1fr;gap:10px}
+  .crow{
+    text-align:left;cursor:pointer;display:flex;align-items:center;gap:14px;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;transition:.15s;
+  }
+  .crow:hover{transform:translateX(4px);border-color:var(--line-2)}
+  .crow .num{font-family:"Space Mono";font-size:13px;color:var(--muted);min-width:26px}
+  .crow .cn{flex:1}
+  .crow .cn b{font-size:15px;font-weight:700;display:block}
+  .crow .cn span{font-size:12px;color:var(--muted)}
+  .crow .check{width:26px;height:26px;border-radius:99px;border:2px solid var(--line-2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:transparent}
+  .crow.done .check{background:var(--mint);border-color:var(--mint);color:#0c2520}
+
+  /* ---------- concept / quiz ---------- */
+  .panel{
+    background:linear-gradient(180deg,var(--panel),var(--bg-2));
+    border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);animation:fade .35s ease;
+  }
+  .ctag{font-family:"Space Mono";font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--carp)}
+  .panel h2.cname{font-family:"Bungee";font-size:24px;margin:6px 0 14px;line-height:1.05}
+  .body-txt{font-size:15px;line-height:1.7;color:var(--ink)}
+  .ej{
+    margin-top:14px;border-left:3px solid var(--carp);background:rgba(211,154,92,.08);
+    border-radius:0 12px 12px 0;padding:12px 14px;font-size:14px;line-height:1.6;
+  }
+  .ej b{color:var(--carp);font-family:"Space Mono";font-size:11px;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px}
+
+  .arena{margin-top:18px;text-align:center}
+  .stage{position:relative;height:170px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px}
+  .ground{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:160px;height:18px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(3px)}
+  .carp-unit{position:relative;transition:transform .25s}
+  .carp-unit.hit{animation:smash .5s ease}
+  .carp-unit.dodge{animation:dodge .5s ease}
+  .hammer{position:absolute;top:-6px;right:-30px;transform-origin:90% 90%;transform:rotate(-35deg);opacity:0;transition:opacity .1s}
+  .carp-unit.hit .hammer{opacity:1;animation:swing .45s ease}
+  .burst{position:absolute;top:30px;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+  .burst span{position:absolute;width:9px;height:9px;border-radius:2px;background:var(--gold);opacity:0}
+  .carp-unit.hit .burst span{animation:spark .55s ease forwards}
+  .pts-pop{position:absolute;top:0;left:50%;transform:translateX(-50%);font-family:"Bungee";font-size:26px;color:var(--gold);opacity:0;pointer-events:none;text-shadow:0 2px 0 #b8331f}
+  .pts-pop.show{animation:pop .8s ease}
+
+  .quiz-q{font-size:16px;font-weight:700;margin:10px 0 12px;line-height:1.45}
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;cursor:pointer;background:var(--panel-2);border:1px solid var(--line-2);
+    border-radius:12px;padding:13px 15px;font-size:14px;color:var(--ink);transition:.13s;font-family:inherit;
+  }
+  .opt:hover:not(:disabled){border-color:var(--carp);transform:translateX(3px)}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:rgba(79,214,192,.14);border-color:var(--mint)}
+  .opt.wrong{background:rgba(255,83,64,.14);border-color:var(--impact)}
+  .verdict{margin-top:14px;padding:13px 15px;border-radius:12px;font-size:14px;line-height:1.55;display:none;animation:fade .3s}
+  .verdict.show{display:block}
+  .verdict.ok{background:rgba(79,214,192,.1);border:1px solid var(--mint)}
+  .verdict.no{background:rgba(255,83,64,.1);border:1px solid var(--impact)}
+  .verdict b{font-family:"Bungee";font-size:13px;display:block;margin-bottom:5px}
+  .verdict.ok b{color:var(--mint)}
+  .verdict.no b{color:var(--impact)}
+  .nav-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center}
+  .combo-tag{font-family:"Bungee";font-size:14px;color:var(--gold);margin-left:auto;opacity:0;transition:.2s}
+  .combo-tag.show{opacity:1;animation:comboIn .4s ease}
+
+  /* ---------- exam / boss ---------- */
+  .exam-prog{font-family:"Space Mono";font-size:13px;color:var(--muted);margin-bottom:10px}
+  .seq-label{font-family:"Space Mono";font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+  .seq{display:grid;gap:6px;margin-bottom:4px;min-height:42px}
+  .seq-item{display:flex;align-items:center;gap:10px;background:rgba(79,214,192,.1);border:1px solid var(--mint);border-radius:10px;padding:9px 12px;font-size:13px;line-height:1.35}
+  .seq-item span{font-family:"Space Mono";font-size:12px;color:var(--mint);min-width:16px;flex-shrink:0}
+  .seq-item.seq-bad{background:rgba(255,83,64,.1);border-color:var(--impact)}
+  .seq-item.seq-bad span{color:var(--impact)}
+  .seq-empty{color:var(--muted);font-size:13px;font-style:italic;padding:10px 12px;border:1px dashed var(--line-2);border-radius:10px}
+  .result{text-align:center;padding:10px}
+  .result .big{font-family:"Bungee";font-size:clamp(34px,11vw,64px);line-height:1}
+  .result .rank{font-family:"Bungee";font-size:22px;margin:10px 0}
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+    background:var(--panel-2);border:1px solid var(--line-2);color:var(--ink);
+    padding:11px 18px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:60;pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .shake{animation:shake .35s ease}
+
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes smash{0%{transform:translateY(0) scaleY(1)}25%{transform:translateY(10px) scaleY(.7) scaleX(1.15)}55%{transform:translateY(-40px) rotate(18deg)}100%{transform:translateY(-160px) rotate(60deg);opacity:0}}
+  @keyframes dodge{0%,100%{transform:translateX(0)}20%{transform:translateX(-22px) rotate(-8deg)}60%{transform:translateX(20px) rotate(8deg)}}
+  @keyframes swing{0%{transform:rotate(-35deg)}40%{transform:rotate(75deg)}100%{transform:rotate(60deg)}}
+  @keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}}
+  @keyframes pop{0%{opacity:0;transform:translateX(-50%) translateY(0) scale(.6)}30%{opacity:1;transform:translateX(-50%) translateY(-30px) scale(1.1)}100%{opacity:0;transform:translateX(-50%) translateY(-70px) scale(1)}}
+  @keyframes comboIn{from{transform:scale(.6)}to{transform:scale(1)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  @media(max-width:560px){
+    .hud .stat{padding:4px 7px}
+    .hud .brand small{display:none}
+    .zone-card{padding:14px;gap:12px}
+    .zone-card .zidx{min-width:46px;height:46px;font-size:24px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hud">
+    <div class="brand">CARPINCHO<br>SMASHER<small>MODO ESTUDIO</small></div>
+    <div class="spacer"></div>
+    <div class="stat"><b id="hudScore">0</b><span>puntos</span></div>
+    <div class="stat smash"><b id="hudSmash">0</b><span>smasheados</span></div>
+    <div class="stat prog"><b id="hudProg">0%</b><span>repaso</span></div>
+    <span class="pill" id="homeBtn" style="display:none">Mapa</span>
+  </div>
+  <div id="app"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ CONTENIDO ============
+const ZONES = [
+  {
+    id:"sensacion", name:"La Sensacion", color:"#ff5340",
+    sub:"Como se SIENTE el VR. Los pilares de la experiencia.",
+    concepts:[
+      {t:"Affordance", tag:"Don Norman",
+       body:"El affordance es la pista visual que te dice como se usa algo sin que nadie te explique. Una palanca pide que la tires, una manija pide que la agarres, un boton pide que lo aprietes. En VR es clave porque no tenes teclado ni mouse, tu unica guia es la forma del objeto. Si algo parece agarrable y no lo es (o al reves), el jugador se frustra al toque.",
+       ej:"El martillo tiene mango grueso y cabeza pesada: con solo verlo ya sabes que se agarra del mango y se golpea con la cabeza. Eso es affordance bien hecho.",
+       q:"Que es el affordance en VR?",
+       opts:["La cantidad de FPS que soporta el visor","La pista visual que comunica como se usa un objeto","Un tipo de iluminacion bakeada","El sistema de puntaje del juego"],
+       correct:1, why:"El objeto te explica solo como se usa por su forma."},
+      {t:"Presencia", tag:"Estar ahi",
+       body:"La presencia es la sensacion de estar realmente adentro. No depende de graficos hiperrealistas, depende de coherencia: que el mundo responda como esperas. Buena escala, sonido consistente, fisica creible. Cuando todo encaja, el cerebro compra la ilusion. Un error chico, como atravesar una pared, la rompe al instante.",
+       ej:"Si el martillo atraviesa al carpincho en vez de pegarle, se rompe la presencia. El golpe tiene que sentirse solido para que creas que estas ahi.",
+       q:"De que depende principalmente la presencia?",
+       opts:["De tener la mayor cantidad de poligonos posible","De la coherencia del mundo (escala, sonido, fisica)","De usar siempre joystick para moverse","De la cantidad de menus en pantalla"],
+       correct:1, why:"Presencia = coherencia, no realismo grafico."},
+      {t:"Embodiment", tag:"El cuerpo es tuyo",
+       body:"El embodiment es cuando sentis que el cuerpo virtual es TUYO, no que estas manejando un personaje. Tus manos virtuales se mueven como las tuyas, sin delay ni animaciones raras que te saquen el control. Si el jugador siente que controla a un muñeco, ya perdiste. Tiene que sentir que el muñeco ES el.",
+       ej:"Cuando movas tu brazo real y el martillo se mueve igual en el mismo instante, sentis que esa mano es la tuya. Eso es embodiment.",
+       q:"Que describe el embodiment?",
+       opts:["La sensacion de que el cuerpo virtual te pertenece","La distancia de dibujado de la camara","El peso de los archivos de audio","La cantidad de luces dinamicas"],
+       correct:0, why:"Embodiment = el cuerpo virtual se siente propio."},
+      {t:"Corporalidad", tag:"Tu cuerpo es el mando",
+       body:"La corporalidad es usar tu propio cuerpo como herramienta principal de interaccion. En VR giras la cabeza para mirar, estiras los brazos para agarrar, te agachas, te moves. El diseño tiene que contemplar lo que el cuerpo puede y no puede hacer comodo, para que las acciones salgan naturales.",
+       ej:"Giras fisicamente para encarar a cada carpincho que aparece. No usas joystick, usas tu cuerpo. Eso es corporalidad pura.",
+       q:"La corporalidad se refiere a...",
+       opts:["Comprimir texturas en ASTC","Usar el propio cuerpo como herramienta de interaccion","Bakear la iluminacion global","Reducir draw calls con atlas"],
+       correct:1, why:"Corporalidad = tu cuerpo es el mando."},
+      {t:"Memoria muscular", tag:"Habito motor",
+       body:"La memoria muscular es el habito motor que vas armando al repetir movimientos. Cuanto mas practicas una accion, menos pensas para hacerla. Por eso los tutoriales en VR meten las mecanicas de a poco: primero lo basico, despues lo complejo, asi el cuerpo aprende antes de que la cosa se ponga dificil.",
+       ej:"Las primeras oleadas son lentas para que tu brazo agarre el ritmo del martillazo. Cuando llega lo dificil, ya golpeas sin pensar.",
+       q:"Por que los tutoriales VR introducen mecanicas de forma gradual?",
+       opts:["Para gastar menos memoria RAM","Para que el jugador desarrolle memoria muscular antes de lo complejo","Para reducir el peso del build","Porque el SDK lo obliga"],
+       correct:1, why:"Gradual = el cuerpo arma el habito motor primero."},
+      {t:"Game feeling", tag:"La sensacion de cada accion",
+       body:"El game feeling es la calidad de las sensaciones cuando interactuas. Cada accion tiene que devolver una respuesta clara y coherente: animacion, sonido, vibracion, cambio visual, reaccion fisica. Cuanto mas inmediata y consistente la respuesta, mas satisfactorio se siente. Sin feedback, el mundo se siente muerto.",
+       ej:"Cada martillazo a un carpincho deberia tener impacto: sonido seco, vibracion del control, el carpincho que sale volando y el puntaje que sube.",
+       q:"Que es el game feeling?",
+       opts:["La calidad de las sensaciones y la respuesta a cada accion","La cantidad de poligonos por mesh","El tipo de compresion de audio","La distancia minima de un menu"],
+       correct:0, why:"Game feeling = que cada accion se sienta rica y responda al toque."},
+      {t:"Tangibilidad del trabajo", tag:"Tu esfuerzo deja marca",
+       body:"La tangibilidad del trabajo es que tus acciones dejen consecuencias visibles y claras en el mundo. El jugador tiene que sentir que realmente hizo algo y que su esfuerzo tuvo impacto. Armar un mecanismo pieza por pieza, recargar un arma a mano, colocar objetos en su lugar: todo eso transmite trabajo tangible y suma inmersion.",
+       ej:"Cada carpincho smasheado desaparece y suma puntos. Ves el resultado de tu esfuerzo en pantalla, eso es trabajo tangible.",
+       q:"La tangibilidad del trabajo implica que...",
+       opts:["El juego corra a 90 FPS fijos","Las acciones del jugador produzcan consecuencias visibles","Las texturas sean potencia de 2","Se use hand tracking en vez de controles"],
+       correct:1, why:"Tu esfuerzo se ve reflejado en el mundo."}
+    ]
+  },
+  {
+    id:"meta", name:"El Arsenal Meta", color:"#4fd6c0",
+    sub:"Las herramientas concretas del SDK de Meta.",
+    concepts:[
+      {t:"Interactors e Interactables", tag:"Meta SDK",
+       body:"En el SDK de Meta las interacciones se arman con dos piezas: el interactor es el que HACE la accion (tus manos, los controles, un rayo), y el interactable es el que la RECIBE (un objeto agarrable, un boton, una zona de teleport). El interactor actua, el interactable responde.",
+       ej:"Tu mano con el martillo es el interactor. El martillo agarrable es el interactable. La mano actua, el martillo responde.",
+       q:"Cual es la diferencia entre interactor e interactable?",
+       opts:["El interactor recibe la accion, el interactable la hace","El interactor hace la accion, el interactable la recibe","Son lo mismo con distinto nombre","Uno es para audio y otro para video"],
+       correct:1, why:"Interactor = el que actua (mano/control). Interactable = el que recibe (objeto)."},
+      {t:"Mecanica de agarre (Grab)", tag:"La estrella del VR",
+       body:"El agarre es la mecanica estrella del VR. Para que un objeto se pueda tomar necesita componentes especificos que le digan al sistema que es interactuable. Segun como lo configures, agarras con controles fisicos o con hand tracking. Tambien podes definir cuantas manos pueden agarrar a la vez, util para cosas que se usan con las dos manos.",
+       ej:"El martillo es agarrable. Si quisieras que se use con las dos manos para pegar mas fuerte, configuras el agarre para dos manos.",
+       q:"Para que un objeto se pueda agarrar en VR necesita...",
+       opts:["Ser potencia de 2 en sus texturas","Componentes que lo marquen como interactuable","Estar marcado como Static","Tener mipmaps activados"],
+       correct:1, why:"Sin componentes de interaccion, el sistema no sabe que es agarrable."},
+      {t:"Hand tracking", tag:"Manos sin control",
+       body:"El hand tracking deja usar tus manos reales sin controles fisicos. Las camaras y sensores del Quest detectan la posicion de tus dedos y arman una version virtual de tus manos. Sube muchisimo la inmersion, pero pide configuracion especifica en el SDK y los prefabs correctos.",
+       ej:"Podrias hacer una version donde golpeas con las manos peladas (hand tracking) en vez de con el martillo. Mas inmersivo, pero mas delicado de configurar.",
+       q:"Que permite el hand tracking?",
+       opts:["Bakear luces mas rapido","Usar las manos reales sin controles fisicos","Comprimir audio a OGG","Aumentar la distancia de dibujado"],
+       correct:1, why:"Manos reales detectadas por las camaras del visor."},
+      {t:"Reticles", tag:"Indicadores visuales",
+       body:"Los reticles son indicadores visuales que te avisan cuando una superficie o accion es valida. Son el feedback de 'aca si podes'. Se usan mucho en teleport (te marca donde vas a caer), en interaccion a distancia y en realidad mixta cuando el visor detecta planos o mallas del entorno.",
+       ej:"Si hubiera teleport en el menu, el reticle seria el circulito en el piso mostrando a donde te vas a teletransportar.",
+       q:"Para que sirven los reticles?",
+       opts:["Para comprimir imagenes","Para indicar cuando una superficie o accion es valida","Para agrupar mallas","Para bajar los FPS a proposito"],
+       correct:1, why:"El indicador que te dice 'aca la accion es valida'."},
+      {t:"Building Blocks", tag:"Piezas listas",
+       body:"Los Building Blocks son bloques prearmados del SDK de Meta que te agregan funciones complejas ya configuradas: interaccion, locomocion, hand tracking y mas, sin programar todo de cero. Te ahorran un monton de laburo. Igual conviene entender que hace cada uno por dentro, para arreglar bugs y adaptarlos a tu juego.",
+       ej:"Para meter teleport en el menu podrias arrastrar el Building Block de locomocion en vez de programar el sistema entero.",
+       q:"Que son los Building Blocks del SDK de Meta?",
+       opts:["Texturas en potencia de 2","Bloques prearmados que agregan funciones ya configuradas","Un formato de audio comprimido","Versiones de baja poli de un modelo"],
+       correct:1, why:"Piezas listas para usar, sin armar el sistema de cero."},
+      {t:"Event Wrappers", tag:"Acciones sin codigo",
+       body:"Los Event Wrappers exponen eventos en el Inspector de Unity para que conectes acciones sin escribir codigo. Cuando pasa una interaccion (agarrar, soltar, apretar) podes disparar un sonido, una animacion, cambiar una variable, cargar una escena, lo que quieras, todo desde el Inspector. Cada tipo de interactable tiene sus eventos propios.",
+       ej:"Cuando agarras el martillo, un Event Wrapper podria disparar un sonidito de 'agarre' sin que escribas una linea de codigo.",
+       q:"Que hacen los Event Wrappers?",
+       opts:["Exponen eventos en el Inspector para asociar acciones sin codigo","Reducen la densidad poligonal de las mallas","Comprimen las texturas a ASTC","Detectan las manos del usuario"],
+       correct:0, why:"Disparar acciones desde el Inspector sin programar."},
+      {t:"Positional Snap", tag:"Encaja solo",
+       body:"El Positional Snap permite que un objeto se ubique solo en una posicion predefinida. Sirve para rompecabezas, ensamblar piezas, inventarios fisicos, cualquier cosa que tenga que ir en un lugar exacto. Hay que configurar bien las fisicas y los componentes para que no se vuelva loco al volver a agarrar el objeto.",
+       ej:"Si tuvieras que colgar el martillo en un gancho de la pared del living, el Positional Snap haria que se acomode solo en su lugar.",
+       q:"Para que se usa el Positional Snap?",
+       opts:["Para ubicar objetos en posiciones predefinidas exactas","Para girar la camara de a pasos","Para bakear iluminacion","Para detectar planos en realidad mixta"],
+       correct:0, why:"El objeto encaja solo en su lugar exacto."}
+    ]
+  },
+  {
+    id:"mareo", name:"Anti-Mareo", color:"#c98aff",
+    sub:"Movimiento y confort. Que el jugador no quiera sacarse el visor.",
+    concepts:[
+      {t:"Locomocion", tag:"Como te moves",
+       body:"La locomocion es como te moves por el mundo VR, y es de lo mas delicado del diseño. Un movimiento mal hecho marea, desorienta o incomoda. Por eso hay que elegir el sistema con cuidado, pensando en el confort del jugador antes que en la inmersion.",
+       ej:"Carpincho Smasher esquiva el problema entero: durante el gameplay no te moves, estas parado en el centro y solo giras. Sin locomocion no hay mareo por locomocion.",
+       q:"Por que la locomocion es el aspecto mas delicado del diseño VR?",
+       opts:["Porque consume mucha RAM","Porque un movimiento mal hecho puede marear y desorientar","Porque obliga a usar PNG","Porque rompe el occlusion culling"],
+       correct:1, why:"Locomocion mal hecha = mareo. Por eso se cuida tanto."},
+      {t:"Teleport", tag:"Area vs punto",
+       body:"El teleport es la forma mas usada de moverse sin marear, porque te lleva de un lado a otro sin movimiento visual continuo. Hay dos tipos: por area (te moves dentro de una zona valida) y por punto de destino (te marca lugares especificos a donde podes ir). Las dos bajan el conflicto entre lo que ves moverse y tu cuerpo quieto.",
+       ej:"Si quisieras explorar la casa de Martincito en el menu, el teleport por puntos te dejaria saltar de un lugar marcado a otro sin marearte.",
+       q:"Cuales son los dos tipos de teleport?",
+       opts:["Por joystick y por cabeza","Por area y por punto de destino","Por audio y por video","Estatico y dinamico"],
+       correct:1, why:"Por area (zona valida) y por punto (destinos especificos)."},
+      {t:"Snap turning", tag:"Giros de a pasos",
+       body:"El snap turning son los giros de a pasos: en vez de rotar la camara suave y continua, gira de golpe en angulos fijos (por ejemplo de a 30 o 45 grados). Suena menos inmersivo pero es mucho mas tolerable, porque el giro continuo es uno de los grandes culpables del mareo.",
+       ej:"En el juego giras con tu cuerpo real, pero si alguien no puede, el snap turning le dejaria reorientarse de a pasos sin marearse.",
+       q:"Que es el snap turning?",
+       opts:["Girar la camara de a pasos en angulos fijos","Comprimir las texturas","Mover objetos a posiciones fijas","Detectar las manos sin controles"],
+       correct:0, why:"Giros de golpe en angulos fijos, mas tolerables que el giro continuo."},
+      {t:"Mareo / conflicto sensorial", tag:"Cybersickness",
+       body:"El mareo aparece cuando lo que ves NO coincide con lo que siente tu cuerpo. Si el juego te mueve para adelante pero estas quieto, el cerebro entra en conflicto. Es el mismo mecanismo que cuando te marea leer en un auto en movimiento. El ejemplo clasico: avanzar con joystick mientras la camara se desliza.",
+       ej:"Carpincho Smasher evita esto manteniendote quieto. Lo que ves (carpinchos que vienen) y lo que sentis (estas parado) no chocan.",
+       q:"Por que se produce el mareo en VR?",
+       opts:["Por usar demasiados poligonos","Cuando lo que ves no coincide con lo que siente tu cuerpo","Por bakear mal las luces","Por no usar atlas de texturas"],
+       correct:1, why:"Conflicto entre la vista (movimiento) y el cuerpo (quieto)."},
+      {t:"Diseño de confort", tag:"Decision fisiologica",
+       body:"El diseño de confort es todo lo que haces para que el jugador no la pase mal: oscurecer los bordes de la pantalla al moverse, reducir el campo de vision en movimiento, ofrecer teleport y snap turning, dejar elegir como moverse. No son decisiones esteticas, son fisiologicas. Un buen proyecto VR las trata como parte central, no como extra.",
+       ej:"Carpincho Smasher ya es comodo por diseño (jugador quieto), pero podrias sumar opciones de confort en el menu para distintos tipos de jugador.",
+       q:"El diseño de confort en VR es principalmente...",
+       opts:["Una decision estetica opcional","Una decision fisiologica central del proyecto","Un formato de compresion","Un tipo de interactable"],
+       correct:1, why:"Decisiones fisiologicas para que el jugador no se maree ni se canse."},
+      {t:"Control de camara", tag:"El jugador manda",
+       body:"En VR el jugador tiene que tener siempre el control de la camara. En un juego normal podes meter una cinematica con movimientos espectaculares, en VR si moves la camara sin que el jugador lo espere, lo descolocas y lo mareas. Ese tipo de decisiones hay que pensarlas dos veces.",
+       ej:"Nunca le sacarias la camara al jugador para mostrar una animacion. Si queres mostrar algo, lo haces aparecer en su campo de vision, no le moves la cabeza vos.",
+       q:"Por que el jugador debe mantener el control de la camara?",
+       opts:["Para ahorrar draw calls","Porque mover la camara sin que lo espere lo descoloca y marea","Porque el SDK no permite cinematicas","Para reducir el peso del audio"],
+       correct:1, why:"Camara fuera de control del jugador = desorientacion y mareo."},
+      {t:"FPS estable (72-90)", tag:"La base de todo",
+       body:"Mantener una tasa de frames alta y estable (72 a 90 FPS) no es opcional en VR, es la base. Si el juego baja de frames, el jugador no piensa 'bajo el rendimiento', se empieza a sentir mal fisicamente. La inestabilidad genera conflicto sensorial directo. Por eso la optimizacion en VR es tambien una cuestion de salud del jugador.",
+       ej:"En Quest 3, Carpincho Smasher tiene que sostener 72 a 90 FPS aunque haya muchos carpinchos en pantalla. Si tironea, el jugador se marea.",
+       q:"Por que es critico mantener 72-90 FPS estables en VR?",
+       opts:["Para que se vea mas realista","Porque la caida de frames hace que el jugador se sienta mal fisicamente","Para usar menos texturas PNG","Porque lo exige el affordance"],
+       correct:1, why:"Frames inestables = malestar fisico real, no solo un bajon tecnico."}
+    ]
+  },
+  {
+    id:"ui", name:"La Interfaz Invisible", color:"#ffce3c",
+    sub:"UI e inmersion. La mejor interfaz casi no parece interfaz.",
+    concepts:[
+      {t:"UI diegetica", tag:"Info en el mundo",
+       body:"La UI diegetica es la que vive DENTRO del mundo en vez de flotar pegada encima. En lugar de una barra de vida flotante, la info esta en un reloj, en el arma, en el entorno. Es el estandar en VR porque mantiene la inmersion: cuanto menos tengas que interpretar una interfaz, mas fluido se siente todo. Half-Life: Alyx casi no tiene HUD y siempre sabes que pasa.",
+       ej:"En vez de una barra de vida flotante, podrias mostrar la vida en la TV del living del menu, o que el martillo cambie de aspecto. Eso seria UI diegetica.",
+       q:"Que es la UI diegetica?",
+       opts:["Informacion integrada dentro del mundo del juego","Un menu flotante lejano","Un tipo de compresion de imagen","Una luz dinamica"],
+       correct:0, why:"La info vive en el mundo, no flota encima."},
+      {t:"UI espacial", tag:"Ubicada en 3D",
+       body:"La UI espacial es ubicar elementos en el espacio 3D de forma comoda. No alcanza con poner un menu flotando: tiene que estar a una distancia comoda, con tamaño legible, sin obligarte a forzar la vista o el cuello. En VR leer mal no es una molestia, es fatiga fisica.",
+       ej:"El menu de Carpincho Smasher esta en la TV del living a una distancia comoda para leer. Eso es UI espacial bien pensada.",
+       q:"Que tiene en cuenta la UI espacial?",
+       opts:["La compresion de audio","Distancia comoda, tamaño legible, sin forzar la vista o el cuello","La cantidad de luces bakeadas","El numero de draw calls"],
+       correct:1, why:"Ubicar la interfaz en 3D de forma comoda y legible."},
+      {t:"Manos como interfaz", tag:"Tocar, agarrar, señalar",
+       body:"Usar las manos como interfaz significa interactuar tocando, agarrando o señalando en vez de navegar menus complejos. Baja la friccion y sube la naturalidad. Cuando funciona bien, desaparece la sensacion de 'interfaz' y queda solo la accion. Lone Echo lleva esto al extremo: el cuerpo entero es la UI.",
+       ej:"En el menu podrias elegir opciones tocando botones fisicos en el living de Martincito, no navegando un menu abstracto.",
+       q:"Que ventaja tiene usar las manos como interfaz?",
+       opts:["Aumenta los poligonos","Baja la friccion y sube la naturalidad","Reduce los FPS","Obliga a usar PNG"],
+       correct:1, why:"Menos friccion, mas natural, desaparece la 'interfaz'."},
+      {t:"Legibilidad y escala", tag:"Grande y proporcionado",
+       body:"La legibilidad manda en VR: tipografias simples, buen contraste, tamaños generosos. Un texto chico o con poco contraste no se lee y forzar la vista cansa rapido. La escala tambien es critica: si una puerta es muy chica o un objeto parece de juguete, el cerebro lo detecta al toque y se rompe la inmersion. Todo tiene que sentirse proporcionado al cuerpo humano.",
+       ej:"El puntaje tiene que ser grande y contrastado para leerse de un vistazo en pleno combate. Y los carpinchos, de tamaño creible, ni gigantes ni miniatura.",
+       q:"Por que la escala es critica en VR?",
+       opts:["Porque afecta la compresion de texturas","Porque una escala incorrecta rompe la inmersion al instante","Porque cambia el formato de audio","Porque reduce los draw calls"],
+       correct:1, why:"El cerebro detecta la escala mal hecha y se rompe la inmersion."},
+      {t:"Feedback visual", tag:"Confirmar cada accion",
+       body:"El feedback visual cierra el circulo: cada accion necesita una respuesta clara, un cambio de color, una animacion, una reaccion fisica. Beat Saber es el caso perfecto: cada corte confirma al instante que hiciste lo correcto. Sin feedback, el mundo se siente muerto.",
+       ej:"Cada martillazo certero deberia disparar un flash, el carpincho que reacciona y el numerito de puntos. Eso confirma visualmente que pegaste bien.",
+       q:"Que aporta el feedback visual?",
+       opts:["Confirma claramente que una accion ocurrio","Comprime las imagenes","Reduce el campo de vision","Detecta planos en MR"],
+       correct:0, why:"Confirmacion clara de cada accion. Sin el, el mundo se siente muerto."},
+      {t:"Canvas interactivo e input", tag:"UI tecnica en VR",
+       body:"Cuando usas un Canvas de Unity como UI en VR (un menu, botones), no alcanza con ponerlo en la escena: hay que configurar el sistema de input para que responda tanto a controles como a hand tracking. Si no, el menu se ve pero no lo podes tocar. En el SDK de Meta esto se arma con interactores tipo ray o poke apuntando al Canvas.",
+       ej:"El menu en la TV del living, si fuera un Canvas, necesita el input configurado para seleccionarlo con el rayo o tocandolo. Que se vea no alcanza.",
+       q:"Que hay que configurar al usar un Canvas interactivo en VR?",
+       opts:["Solo el color de fondo","El sistema de input para que responda a controles y hand tracking","La compresion de audio del menu","La cantidad de luces dinamicas"],
+       correct:1, why:"El Canvas se ve, pero sin input configurado (ray o poke) no lo podes tocar."}
+    ]
+  },
+  {
+    id:"opti", name:"El Optimizador", color:"#7bd66c",
+    sub:"Optimizacion en Unity. Cada poligono, textura y luz cuenta.",
+    concepts:[
+      {t:"Frustum & Occlusion Culling", tag:"No dibujar de gusto",
+       body:"Unity no renderiza todo siempre, y eso te salva. El Frustum Culling solo dibuja lo que esta dentro del campo de vision de la camara. El Occlusion Culling ademas evita dibujar lo que esta tapado por otros objetos. Si estas dentro de una casa, no tiene sentido renderizar lo de afuera detras de las paredes. Si no lo usas, Unity igual lo procesa: rendimiento tirado a la basura.",
+       ej:"En el living del menu, el occlusion culling evita renderizar lo que hay detras de las paredes que no ves.",
+       q:"Que hace el Occlusion Culling?",
+       opts:["Dibuja todo siempre por las dudas","Evita renderizar objetos tapados por otros","Comprime el audio","Genera mipmaps"],
+       correct:1, why:"Occlusion = no dibujar lo tapado. Frustum = no dibujar lo que esta fuera de camara."},
+      {t:"LOD (Level of Detail)", tag:"Detalle segun distancia",
+       body:"El LOD es tener varias versiones del mismo objeto con distinta cantidad de poligonos. Cerca usas el modelo detallado, lejos usas el simplificado. Un auto a 2 metros puede tener 10k triangulos, a 50 metros puede ser una caja con ruedas. El jugador no ve el detalle lejano, pero la GPU igual lo paga si no optimizas. En Unity se usa el componente LOD Group.",
+       ej:"Un carpincho lejano en el fondo no necesita todos sus poligonos. Con LOD usas una version simple de lejos y la detallada de cerca.",
+       q:"En que consiste el LOD?",
+       opts:["Versiones del mismo objeto con distinta cantidad de poligonos segun la distancia","Un formato de audio comprimido","Un indicador visual de teleport","Un tipo de luz dinamica"],
+       correct:0, why:"Mas detalle de cerca, menos de lejos. Se maneja con el LOD Group."},
+      {t:"Mip Maps", tag:"Texturas mas chicas de lejos",
+       body:"Los mipmaps son versiones mas chicas de una textura. Cuando un objeto esta lejos, usar la textura completa genera ruido visual y gasto innecesario. Un cartel lejano no necesita una textura de 2048px, con una version mas chica alcanza. Activarlos mejora rendimiento y calidad, pero consumen mas memoria. Ojo: solo funcionan bien si la textura es potencia de 2.",
+       ej:"Las texturas del fondo lejano pueden usar mipmaps para no malgastar resolucion en cosas que el jugador ve chiquitas.",
+       q:"Que son los mipmaps?",
+       opts:["Versiones mas chicas de una textura para usar a distancia","Bloques prearmados del SDK","Giros de a pasos","Un tipo de interactor"],
+       correct:0, why:"Versiones reducidas de la textura para objetos lejanos."},
+      {t:"Niebla (Fog)", tag:"Optimizacion visual",
+       body:"La niebla no es solo decoracion. Al difuminar lo que esta lejos, te deja recortar la distancia de dibujado: lo que se pierde en la niebla no hace falta renderizarlo nitido. Bien usada mejora el rendimiento, guia la mirada y refuerza la atmosfera. En VR donde el rendimiento manda, es parte del diseño, no un capricho.",
+       ej:"Si Carpincho Smasher tuviera un fondo abierto, una niebla suave te dejaria no renderizar el detalle lejano y de paso darle clima.",
+       q:"Para que sirve la niebla (fog) ademas de lo estetico?",
+       opts:["Para subir la cantidad de poligonos","Para recortar la distancia de dibujado y mejorar el rendimiento","Para comprimir audio","Para detectar las manos"],
+       correct:1, why:"La niebla tapa lo lejano, asi no hace falta dibujarlo nitido. Menos render, mejor performance."},
+      {t:"Distancia de dibujado", tag:"Draw distance",
+       body:"Es hasta que distancia el motor dibuja los objetos. Reducirla significa dejar de renderizar lo que esta muy lejos. En VR conviene recortarla, casi siempre junto con niebla y LODs, para no gastar GPU en cosas que el jugador ve como un puntito o ni ve.",
+       ej:"En Carpincho Smasher no tiene sentido renderizar detalle a 100 metros si el combate pasa al lado tuyo. Recortas la distancia de dibujado y listo.",
+       q:"Que implica reducir la distancia de dibujado?",
+       opts:["Dibujar todo siempre por las dudas","Dejar de renderizar lo que esta muy lejos para ahorrar rendimiento","Aumentar la resolucion de las texturas","Bakear mas luces"],
+       correct:1, why:"Menos distancia de dibujado = no renderizar lo lejano. Va de la mano con fog y LODs."},
+      {t:"Compresion de audio", tag:"WAV vs OGG",
+       body:"El audio tambien pesa. El .WAV es sin compresion, pesado pero preciso. El .OGG es comprimido, ideal para juegos. Regla practica: musica en OGG (es larga, conviene comprimir), efectos cortos en WAV si necesitas precision.",
+       ej:"La musica de fondo iria en OGG. El sonido seco del martillazo, que tiene que sonar exacto, podria ir en WAV.",
+       q:"Cual es la regla practica de compresion de audio?",
+       opts:["Todo en WAV siempre","Musica en OGG, efectos cortos en WAV si necesitas precision","Todo en PNG","Musica en WAV, efectos en OGG"],
+       correct:1, why:"OGG para musica (comprimido), WAV para efectos cortos que piden precision."},
+      {t:"Compresion de imagenes", tag:"ASTC vs PNG",
+       body:"No todas las texturas necesitan ser PNG. El PNG no usa compresion con perdida, asi que pesa mas en memoria. La solucion es usar formatos comprimidos como ASTC en Quest, y evitar PNG si no hay transparencias. Una pared sin transparencia en PNG es memoria desperdiciada.",
+       ej:"Las texturas de las paredes del living no necesitan PNG, conviene ASTC. Solo usas PNG donde haga falta transparencia.",
+       q:"Que formato conviene para texturas en Quest?",
+       opts:["PNG siempre","Formatos comprimidos como ASTC","WAV","OGG"],
+       correct:1, why:"ASTC (comprimido) en Quest. PNG solo si necesitas transparencia."},
+      {t:"Luces estaticas vs dinamicas", tag:"Baking",
+       body:"Las luces son de lo mas caro en tiempo real. Estrategia: las luces estaticas (baked) son baratas, las dinamicas son caras. Un shopping con 50 luces dinamicas es un desastre de rendimiento, el mismo con baked lighting corre estable. En Unity usas Light Baking (Global Illumination) y marcas los objetos como Static. Solo lo que se mueve necesita luz dinamica.",
+       ej:"El living, que no se mueve, deberia tener iluminacion bakeada. Asi te ahorras el costo de calcular las luces en tiempo real.",
+       q:"Cual es la estrategia de luces para rendimiento?",
+       opts:["Usar todas dinamicas","Estaticas bakeadas (baratas) para lo que no se mueve, dinamicas solo donde haga falta","Sacar todas las luces","Solo PNG"],
+       correct:1, why:"Baked = barato para lo estatico. Dinamicas solo para lo que se mueve."},
+      {t:"UV mapping y reutilizacion", tag:"Una textura para varios",
+       body:"Un buen UV mapping te deja reutilizar texturas y reducir memoria. En vez de tener 10 texturas para 10 objetos, usas 1 bien organizada para todos. Resultado: menos draw calls y menos consumo. El UV es como desplegas la superficie 3D en una imagen 2D, si lo haces ordenado, aprovechas mejor cada textura.",
+       ej:"Varios muebles del living podrian compartir una sola textura bien mapeada en lugar de una textura distinta cada uno.",
+       q:"Que permite un buen UV mapping?",
+       opts:["Reutilizar texturas y reducir memoria","Aumentar las luces dinamicas","Forzar el mareo","Subir la cantidad de draw calls"],
+       correct:0, why:"Una textura para varios objetos, menos memoria y draw calls."},
+      {t:"Densidad poligonal y limpieza", tag:"Si no se ve, no existe",
+       body:"Aca entra el criterio del artista. Problemas comunes: caras duplicadas, vertices innecesarios, bordes internos invisibles. Un cubo mal optimizado puede tener el doble de poligonos sin razon. La regla de oro: si no se ve, no deberia existir. Cada poligono que la GPU procesa de gusto es rendimiento perdido.",
+       ej:"Si un carpincho tiene poligonos en partes que nunca se ven, conviene limpiarlos. En Quest cada triangulo de mas cuenta.",
+       q:"Cual es la regla de oro de la limpieza de mallas?",
+       opts:["Cuantos mas poligonos mejor","Si no se ve, no deberia existir","Todo en una sola mega malla","Siempre usar PNG"],
+       correct:1, why:"Si no se ve, no deberia existir. Nada de poligonos invisibles de gusto."},
+      {t:"Atlas de texturas", tag:"Potencia de 2",
+       body:"Un atlas es una sola imagen que contiene varias texturas juntas. Reduce draw calls: 10 objetos con 10 materiales son 10 draw calls, 10 objetos con 1 atlas es 1 draw call. Y tiene que ser potencia de 2 (64, 128, 512, 1024) porque las GPUs estan optimizadas para esos tamaños. Si no, se generan conversiones internas, peor rendimiento, y se rompen los niveles de mipmap con artefactos visuales.",
+       ej:"Podrias juntar las texturas de varios objetos del living en un solo atlas de 1024x1024 para bajar los draw calls.",
+       q:"Por que un atlas debe ser potencia de 2?",
+       opts:["Por estetica","Porque las GPUs estan optimizadas para esos tamaños y evita conversiones y artefactos","Para que pese mas","Porque lo pide el hand tracking"],
+       correct:1, why:"La GPU lo maneja optimizado, sin conversiones ni mipmaps rotos."},
+      {t:"Agrupar mallas coherentemente", tag:"Ayuda o arruina",
+       body:"Unir objetos puede ayudar o arruinar todo. Bien usado: menos draw calls, mejor rendimiento. Mal usado: rompe el occlusion culling y renderiza cosas que no deberian verse. Si unis todo un edificio en una sola malla, Unity lo renderiza completo aunque veas solo una parte. La clave es agrupar lo que tiene sentido junto, no todo a lo bruto.",
+       ej:"Conviene agrupar objetos chicos cercanos, pero no fusionar todo el living en una sola malla, o perdes el occlusion culling.",
+       q:"Cual es el riesgo de agrupar mallas mal?",
+       opts:["Mejora siempre el rendimiento","Rompe el occlusion culling y renderiza cosas que no deberian verse","Reduce la memoria a cero","Activa el hand tracking solo"],
+       correct:1, why:"Se rompe el occlusion culling y se renderiza de mas."}
+    ]
+  },
+  {
+    id:"sdk", name:"Bajo el Capo del SDK", color:"#5aa9ff",
+    sub:"Lo fino del Meta SDK: todo lo que explicamos en detalle para el parcial aplicado.",
+    concepts:[
+      {t:"Grabbable vs Interactable (padre/hijo)", tag:"Estructura del agarre",
+       body:"Son tres cosas distintas. El Grabbable es el que MUEVE, rota y escala el objeto, y va en la raiz junto al Rigidbody porque representa el objeto fisico. El Grab Interactable (controles) y el HandGrabInteractable (manos) son los que DETECTAN el agarre, y van en hijos. El interactable hijo apunta de vuelta al Grabbable del padre (campos Pointable Element y Rigidbody). El hijo es el sensor, el padre es el motor.",
+       ej:"Un palo: el Grabbable + Rigidbody van en el palo (padre). Le colgas dos hijos, uno en cada punta, cada uno con su Grab Interactable apuntando al mismo Grabbable. Asi lo agarras de cualquier punta y se mueve el mismo objeto.",
+       q:"Por que el interactable va en un hijo y no en el padre?",
+       opts:["Es un bug del SDK","Para poder tener varios puntos de agarre, cada uno con su propia posicion (Transform)","Porque pesa menos","Porque el padre no acepta componentes"],
+       correct:1, why:"Cada GameObject tiene un solo Transform. Para varios puntos de agarre necesitas varios hijos. Tecnicamente se puede juntar para un solo agarre simple, pero se separa para tener varios puntos y poses."},
+      {t:"Los 4 interactables mas usados", tag:"Grab, Hand, Poke, Ray",
+       body:"Un objeto puede tener varios interactables a la vez. Los mas comunes: Grab Interactable (agarre con controles), HandGrabInteractable (agarre con manos), PokeInteractable (tocar con el dedo) y RayInteractable (apuntar con rayo). Cada interactable necesita su interactor correspondiente en la mano o el control.",
+       ej:"Un boton del menu que se pueda tocar con el dedo Y apretar con rayo lleva PokeInteractable + RayInteractable juntos. El martillo agarrable con manos y controles lleva HandGrabInteractable + Grab Interactable.",
+       q:"Como haces un objeto agarrable con manos Y con controles?",
+       opts:["Solo con HandGrabInteractable","Le pones HandGrabInteractable y Grab Interactable al mismo tiempo","Dos objetos separados","Con eye tracking"],
+       correct:1, why:"Un objeto soporta varios interactables. Sumas el de manos y el de controles, cada uno con su interactor."},
+      {t:"HandGrabPose (pose de manos)", tag:"Como cierra la mano",
+       body:"La HandGrabPose define como se cierra la mano virtual alrededor del objeto. Sin pose, la mano se pega pero no acomoda los dedos, queda feo. El flujo: objeto agarrable, abris el Hand Grab Pose Recorder, entras en Play, envolves la mano, grabas (se crea el HandGrabPose con su HandPose y un GhostHand que muestra como quedo), ajustas dedo por dedo con Fingers Freedom y al final Create Mirrored para la otra mano.",
+       ej:"En tu martillo, una HandGrabPose hace que la mano envuelva el mango de forma natural en vez de quedar pegada flotando.",
+       q:"Que controla el Fingers Freedom de una HandGrabPose?",
+       opts:["La compresion de la textura","Que tan libre o fijo queda cada dedo: Free, Constrained o Locked","La velocidad del throw","El color del GhostHand"],
+       correct:1, why:"Fingers Freedom es dedo por dedo: Free (suelto), Constrained (limitado), Locked (clavado a la pose)."},
+      {t:"Event Wrapper: interactor vs interactable", tag:"El error clasico",
+       body:"Hay dos wrappers parecidos pero distintos. El InteractableUnityEventWrapper escucha al INTERACTABLE (el objeto). El InteractorUnityEventWrapper escucha al INTERACTOR (la mano o el control). Si los confundis no pasa nada: poner un wrapper de interactor en un objeto agarrable falla, porque el objeto tiene un interactable, no un interactor.",
+       ej:"Para que suene un audio al agarrar el martillo, va el InteractableUnityEventWrapper apuntando al HandGrabInteractable, con el AudioSource.Play en el evento When Select.",
+       q:"Pusiste un InteractorUnityEventWrapper en un objeto agarrable y no dispara. Por que?",
+       opts:["Faltan poligonos","Ese wrapper escucha a un interactor, pero el objeto tiene un interactable","Las particulas no andan en VR","Falta bakear"],
+       correct:1, why:"El objeto lleva un interactable. Va el InteractableUnityEventWrapper apuntando al interactable, evento When Select (agarrar) o When Unselect (soltar)."},
+      {t:"FirstPersonLocomotor y el velocity", tag:"El script de locomocion",
+       body:"El FirstPersonLocomotor mueve un personaje (un Character Controller) y lo mantiene sincronizado con tu camera rig real. Cada frame intenta llevar la capsula a donde estas vos, recibe los eventos de locomocion y los aplica. El velocity es la traslacion CONTINUA: el movimiento suave que se va frenando solo con drag. Desactivar el velocity apaga ese movimiento continuo (el deslizamiento con joystick), que es justo el que mas marea. Es una decision de confort.",
+       ej:"En el menu con living si hay locomocion. Si apagas el velocity, dejas solo movimiento fisico o teleport, mas comodo para los que se marean.",
+       q:"Que es el velocity en el FirstPersonLocomotor?",
+       opts:["El movimiento continuo y suave (deslizamiento)","El brillo de las luces","La cantidad de poligonos","El formato del audio"],
+       correct:0, why:"Velocity = traslacion continua que se amortigua sola. Apagarla quita el movimiento suave por joystick, que es el que mas marea."},
+      {t:"CharacterController contra las paredes", tag:"No atravesar geometria",
+       body:"El CharacterController es una capsula fisica que el sistema mueve por la escena chequeando colisiones. Cuando choca contra una pared o una pendiente, se desliza por la superficie en vez de atravesarla. Junto con el FirstPersonLocomotor, que reposiciona al jugador cuando camina fisicamente hacia una barrera, te evita atravesar geometria sin escribir codigo.",
+       ej:"En el living del menu, el CharacterController hace que el jugador no se cuele por las paredes al moverse, y el locomotor lo reacomoda si mete la cabeza fisica donde no va.",
+       q:"Que hace el CharacterController cuando choca con una pared?",
+       opts:["La atraviesa","Se desliza por la superficie sin atravesarla","Apaga las luces","Cambia la textura"],
+       correct:1, why:"Castea una capsula y, al chocar, se desliza por la superficie. El FirstPersonLocomotor reposiciona al jugador si camina fisicamente hacia la barrera."},
+      {t:"Lanzar objetos (throw)", tag:"Force Kinematic Disabled",
+       body:"Para que un objeto salga volando al soltarlo, el Rigidbody tiene que responder a la velocidad del lanzamiento. Si el objeto quedo kinematico, no responde y cae muerto. Force Kinematic Disabled lo pasa a no-kinematico al soltarlo, asi el throw tiene efecto. Tambien existe el Throw When Unselected que activa el lanzamiento al soltar.",
+       ej:"Si quisieras tirar el martillo a un carpincho lejano, activas Force Kinematic Disabled para que al soltarlo salga con la velocidad de tu brazo.",
+       q:"El objeto no sale volando al soltarlo. Que activas?",
+       opts:["Mas luces","Force Kinematic Disabled, para que el Rigidbody responda a la velocidad al soltar","Un atlas","Eye tracking"],
+       correct:1, why:"Si queda kinematico no responde a la velocidad. Force Kinematic Disabled lo pasa a no-kinematico en el release y ahi vuela."},
+      {t:"Eye tracking (OVREyeGaze)", tag:"Trampa de hardware",
+       body:"El eye tracking deja hacer mecanicas segun a donde mira el ojo. El componente es OVREyeGaze, y te deja elegir el ojo izquierdo o derecho. PERO la trampa: solo el Quest Pro tiene hardware de eye tracking. Quest 2, Quest 3 y Quest 3S NO tienen sensores de ojo. En tu target (Quest 3/3S) esta mecanica no funciona.",
+       ej:"Si quisieras que en Carpincho Smasher apuntes con la mirada, no podrias en Quest 3: no tiene eye tracking. Solo andaria en Quest Pro.",
+       q:"Que dispositivo soporta eye tracking?",
+       opts:["Cualquier Quest","Solo el Quest Pro (OVREyeGaze); Quest 3 y 3S no tienen el hardware","Solo Quest 3","Ninguno"],
+       correct:1, why:"OVREyeGaze deja elegir ojo, pero solo el Quest Pro tiene los sensores. Quest 3/3S no."},
+      {t:"Teleport por dentro", tag:"Hotspot, interactor, reticle",
+       body:"El teleport mas basico es el Hotspot: un destino absoluto, un punto fijo a donde caes. Lo agregas con Add Teleport Interaction. El TeleportInteractor (en la mano) apunta, el reticle (el indicador visual) te marca donde vas a caer, y al soltar te teletransporta. Como no hay movimiento continuo, no marea.",
+       ej:"Para moverte por el living del menu sin marearte, ponedes hotspots en distintos lugares y saltas de uno a otro apuntando con el TeleportInteractor.",
+       q:"Que es el Hotspot en el sistema de teleport?",
+       opts:["El indicador visual","Un destino absoluto, un punto fijo a donde te teletransportas","El interactor de la mano","Una luz dinamica"],
+       correct:1, why:"Hotspot = destino fijo (interactable de locomocion). El TeleportInteractor apunta, el reticle marca, y al soltar te lleva."},
+      {t:"Snap turning por dentro", tag:"Turner Interactor + Broadcaster",
+       body:"El snap turning (giro de a pasos) se arma con el TurnerInteractor en el control, que genera el input de giro, y el TurnerEventBroadcaster, que lo convierte en giros. En modo Snap dispara un giro instantaneo de los grados que definas (ej 45). En modo Smooth gira continuo, que marea mas.",
+       ej:"Si un jugador de Carpincho Smasher no puede girar el cuerpo, el snap turning le deja reorientarse de a 45 grados de golpe sin marearse.",
+       q:"Que diferencia al modo Snap del modo Smooth en el giro?",
+       opts:["Snap gira de golpe en pasos fijos; Smooth gira continuo (marea mas)","Son iguales","Snap es para audio","Smooth desactiva la fisica"],
+       correct:0, why:"Snap = giro instantaneo en angulos fijos (mas comodo). Smooth = giro continuo (marea mas). El TurnerEventBroadcaster define el modo."}
+    ]
+  },
+  {
+    id:"inspector", name:"Inspector y Componentes", color:"#ff9d4d",
+    sub:"Preguntas finas: que campos contiene cada componente del SDK por dentro.",
+    concepts:[
+      {t:"FirstPersonLocomotor: que contiene", tag:"Componente",
+       body:"El FirstPersonLocomotor mueve un Character Controller y lo mantiene en sync con tu camera rig. Cada frame hace tres cosas: trata de mover la capsula a donde estas (ajustando la altura), recibe y aplica los LocomotionEvents al character controller, y devuelve el delta al camera rig para que quede sincronizado. Ademas trae los controles esenciales: salto, agacharse (crouch), correr (sprint) y ajustes de velocidad, aceleracion y drag. Tambien detecta cuando caminas fisicamente hacia una barrera y te reposiciona para no entrar a zonas no caminables.",
+       ej:"En el menu con living, el FirstPersonLocomotor es el que te mantiene caminando sincronizado y te frena si vas contra una pared.",
+       q:"Cuales de estos controles trae el FirstPersonLocomotor?",
+       opts:["Compresion de texturas","Salto, crouch, sprint y ajustes de velocidad, aceleracion y drag","Generacion de mipmaps","Baking de luces"],
+       correct:1, why:"Incluye salto, crouch, sprint y ajustes de velocidad/aceleracion/drag, ademas de sincronizar la capsula con el camera rig."},
+      {t:"LocomotionEvents: Velocity, Relative, Absolute", tag:"Traslaciones",
+       body:"El locomotor recibe LocomotionEvents. Las traslaciones tienen tres tipos. Translation.Velocity le suma a la velocidad actual y aplica un delta cada update, chequeando colisiones y amortiguando con el tiempo: es el movimiento continuo. Translation.Relative mueve al personaje en una direccion chequeando colisiones. Translation.Absolute mueve los pies a una posicion exacta, tratando de pegarlo al piso (esto es lo que usa el teleport).",
+       ej:"El deslizamiento suave con joystick es Velocity. El teleport, que te planta en un punto exacto, es Absolute.",
+       q:"Que tipo de traslacion usa el teleport (plantarte en un punto exacto)?",
+       opts:["Translation.Velocity","Translation.Absolute","Translation.Relative","Ninguna"],
+       correct:1, why:"Absolute mueve los pies a la posicion pedida pegandolo al piso. Velocity es el continuo, Relative es por direccion."},
+      {t:"CharacterController: que contiene", tag:"Componente",
+       body:"El CharacterController es la capsula fisica que se mueve por la escena. Trae controles de slope (pendiente) y step (escalon), puede cambiar la altura de forma dinamica sin clipear contra techos bajos, y al chocar con paredes o pendientes se desliza por la superficie. Clave: las Physics Layers (colliding layers) se configuran para que detecte los colliders que SI bloquean (paredes) e ignore los que no (los colliders del propio jugador, objetos chicos).",
+       ej:"Para que el jugador choque con las paredes del living pero no con objetos chicos, ponedes las paredes en una layer y la configuras en las colliding layers del CharacterController.",
+       q:"Para que sirven las Physics Layers (colliding layers) del CharacterController?",
+       opts:["Para comprimir audio","Para elegir que colliders bloquean el movimiento (paredes) y cuales se ignoran","Para bakear luces","Para girar de a pasos"],
+       correct:1, why:"Defines que colliders bloquean (paredes) y cuales no (colliders del propio jugador, objetos chicos)."},
+      {t:"Grabbable: que campos tiene", tag:"Componente",
+       body:"El Grabbable, ademas de mover el objeto, trae campos clave. Max Grab Points limita cuantos puntos de agarre se permiten (-1 = sin limite). En la seccion Physics estan: Kinematic While Selected (si queda kinematico mientras lo agarras), Throw When Unselected (si se lanza al soltar) y Force Kinematic Disabled (lo pasa a no-kinematico al soltar, para que el throw funcione).",
+       ej:"Para que el martillo salga volando al soltarlo, activas Throw When Unselected y Force Kinematic Disabled en su Grabbable.",
+       q:"Que campo del Grabbable hace que el objeto se pueda lanzar al soltarlo?",
+       opts:["Max Grab Points","Throw When Unselected (con Force Kinematic Disabled)","Distance Threshold","Pointable Element"],
+       correct:1, why:"Throw When Unselected activa el lanzamiento al soltar, y Force Kinematic Disabled lo pasa a no-kinematico para que la velocidad tenga efecto."},
+      {t:"Grab Interactable: que campos tiene", tag:"Componente",
+       body:"El Grab Interactable (agarre con controles) tiene: Max Interactors y Max Selecting Interactors (cuantos interactores pueden tocarlo o seleccionarlo), Pointable Element y Rigidbody (apuntan al objeto que se mueve, normalmente el Grabbable del padre), Use Closest Point As Grab Source, Release Distance (a que distancia se suelta solo) y Reset Grab On Grabs Updated.",
+       ej:"En tu CenterSnap, el Pointable Element del Grab Interactable apunta al Clown Assistant (Grabbable), o sea al padre.",
+       q:"A que apunta el campo Pointable Element del Grab Interactable?",
+       opts:["A la textura","Al Grabbable del objeto que se va a mover (normalmente el padre)","A la luz","Al audio"],
+       correct:1, why:"Pointable Element apunta al Grabbable (el que mueve). Por eso el hijo interactable referencia al padre."},
+      {t:"Snap Interactor: que campos tiene", tag:"Componente",
+       body:"El Snap Interactor (parte del sistema de snap/posicionado) trae: Max Iterations Per Frame (cuantas veces calcula por frame), Pointable Element y Rigidbody (a que objeto afecta) y Distance Threshold (la distancia a la que considera que el objeto entra al snap).",
+       ej:"Si quisieras que el martillo se acomode solo en un gancho, el Distance Threshold define que tan cerca tiene que estar para engancharse.",
+       q:"Que define el Distance Threshold del Snap Interactor?",
+       opts:["El brillo","La distancia a la que el objeto entra en el snap","La cantidad de poligonos","El volumen del audio"],
+       correct:1, why:"Distance Threshold = a que distancia se considera que el objeto entra al snap."},
+      {t:"Botones de locomocion (controles)", tag:"Mapeo por defecto",
+       body:"Cuando usas slide locomotion con controles, el mapeo por defecto es: joystick izquierdo para moverte, joystick derecho para girar. Saltar con el boton A. Agacharte (crouch) apretando el joystick derecho hacia abajo. Correr (sprint) haciendo click en el joystick izquierdo. Y seleccionar un hotspot bajo tus pies con el boton X. Esto lo manejan los ControllerLocomotionSlideActions, y podes desactivar las acciones que no uses.",
+       ej:"Si en el menu quisieras que el jugador corra, el sprint es click del joystick izquierdo por defecto.",
+       q:"Con que se selecciona un hotspot bajo tus pies (controles, por defecto)?",
+       opts:["Boton A","Boton X","Click del joystick izquierdo","Joystick derecho abajo"],
+       correct:1, why:"Por defecto: A = saltar, X = seleccionar hotspot, click izquierdo = sprint, joystick derecho abajo = crouch."},
+      {t:"Canvas UI: el backplate", tag:"UI interactiva",
+       body:"Para una UI en VR, el SDK trae el prefab EmptyUIBackplateWithCanvas, que ya viene con un Canvas, un fondo, componentes de layout y, lo importante, componentes ray y poke interactable para que puedas tocar con el dedo o apuntar con el rayo. O sea, no alcanza el Canvas pelado: necesita esos interactables para responder al input.",
+       ej:"El menu en la TV podria armarse sobre ese backplate, asi ya responde al rayo y al dedo sin configurar el input a mano.",
+       q:"Que le agrega el backplate del SDK al Canvas para que sea interactivo?",
+       opts:["Mas poligonos","Componentes ray y poke interactable","Una luz dinamica","Un atlas"],
+       correct:1, why:"El backplate trae ray y poke interactable, asi el Canvas responde al rayo y al dedo. El Canvas solo no responde al input."}
+    ]
+  }
+];
+
+const TOTAL = ZONES.reduce((a,z)=>a+z.concepts.length,0);
+
+// ============ ESTADO ============
+const state = {
+  score:0, smashed:0, combo:0, maxCombo:0,
+  cleared:new Set(),
+  zoneId:null, ci:0, answered:false,
+  exam:null, applied:null
+};
+
+// ============ SVG CARPINCHO + MARTILLO ============
+function carpinchoSVG(){
+  return `<svg width="130" height="120" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="65" cy="78" rx="48" ry="34" fill="var(--carp)"/>
+    <ellipse cx="65" cy="86" rx="40" ry="24" fill="var(--carp-dark)" opacity="0.35"/>
+    <circle cx="98" cy="50" r="26" fill="var(--carp)"/>
+    <ellipse cx="108" cy="56" rx="11" ry="9" fill="var(--carp-dark)"/>
+    <circle cx="86" cy="30" r="7" fill="var(--carp)"/>
+    <circle cx="106" cy="28" r="7" fill="var(--carp)"/>
+    <circle cx="86" cy="30" r="3" fill="var(--carp-dark)"/>
+    <circle cx="106" cy="28" r="3" fill="var(--carp-dark)"/>
+    <circle cx="93" cy="46" r="3.4" fill="#1a0d0a"/>
+    <circle cx="106" cy="45" r="3.4" fill="#1a0d0a"/>
+    <circle cx="94" cy="45" r="1" fill="#fff"/>
+    <circle cx="107" cy="44" r="1" fill="#fff"/>
+    <circle cx="112" cy="55" r="1.6" fill="#1a0d0a"/>
+    <ellipse cx="40" cy="108" rx="8" ry="5" fill="var(--carp-dark)"/>
+    <ellipse cx="64" cy="110" rx="8" ry="5" fill="var(--carp-dark)"/>
+    <ellipse cx="88" cy="108" rx="8" ry="5" fill="var(--carp-dark)"/>
+  </svg>`;
+}
+function hammerSVG(){
+  return `<svg width="70" height="80" viewBox="0 0 70 80" xmlns="http://www.w3.org/2000/svg">
+    <rect x="30" y="20" width="9" height="58" rx="4" fill="#7a5230"/>
+    <rect x="10" y="6" width="50" height="26" rx="6" fill="#c7c7cf"/>
+    <rect x="10" y="6" width="50" height="9" rx="5" fill="#e6e6ee"/>
+    <rect x="12" y="22" width="46" height="8" rx="4" fill="#8f8f9a"/>
+  </svg>`;
+}
+
+// ============ HELPERS ============
+const app = ()=>document.getElementById("app");
+function setHUD(){
+  document.getElementById("hudScore").textContent = state.score.toLocaleString("es-AR");
+  document.getElementById("hudSmash").textContent = state.smashed;
+  document.getElementById("hudProg").textContent = Math.round(state.cleared.size/TOTAL*100)+"%";
+  document.getElementById("homeBtn").style.display = state.zoneId||state.exam||state.applied ? "inline-block":"none";
+}
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),1700);
+}
+function zoneDone(z){ return z.concepts.every((c,i)=>state.cleared.has(z.id+"-"+i)); }
+function zoneCount(z){ return z.concepts.filter((c,i)=>state.cleared.has(z.id+"-"+i)).length; }
+
+// ============ PANTALLAS ============
+function renderTitle(){
+  state.zoneId=null; state.exam=null; state.applied=null;
+  app().innerHTML = `
+  <div class="title-screen">
+    <span class="eyebrow">Tecnologias Disruptivas / Parcial Teorico VR</span>
+    <h1 class="title">Carpincho <span class="smash">Smasher</span></h1>
+    <div class="title-art">${carpinchoSVG()}</div>
+    <p class="lead">Cada concepto del apunte es un carpincho. Lo lees, lo entendes, y lo smasheas respondiendo bien. ${TOTAL} carpinchos te separan de tener el parcial en el bolsillo.</p>
+    <div class="title-actions">
+      <button class="btn" id="startBtn">Empezar repaso</button>
+      <button class="btn gold" id="examBtn">Modo Examen</button>
+      <button class="btn ghost" id="appliedBtn">Modo Aplicado</button>
+    </div>
+    <div class="howto">
+      <div class="h"><b>1. Elegis zona</b><p>Cinco zonas tematicas, una por bloque del apunte.</p></div>
+      <div class="h"><b>2. Lees el carpincho</b><p>Explicacion corta, en criollo, con ejemplo de tu propio juego.</p></div>
+      <div class="h"><b>3. Lo smasheas</b><p>Responde bien para voltearlo y sumar combo. Si fallas, te lo explica.</p></div>
+    </div>
+  </div>`;
+  document.getElementById("startBtn").onclick=renderMap;
+  document.getElementById("examBtn").onclick=startExam;
+  document.getElementById("appliedBtn").onclick=startApplied;
+  setHUD();
+}
+
+function renderMap(){
+  state.zoneId=null; state.exam=null; state.applied=null;
+  const allDone = state.cleared.size===TOTAL;
+  app().innerHTML = `
+    <div class="section-head">
+      <div><span class="eyebrow">Mapa de zonas</span><h2>Elegi tu arena</h2></div>
+      <span class="pill" id="resetBtn">Reiniciar progreso</span>
+    </div>
+    <div class="zones">
+      ${ZONES.map((z,zi)=>{
+        const done=zoneCount(z), total=z.concepts.length, pct=Math.round(done/total*100);
+        return `<button class="zone-card" data-z="${z.id}">
+          <div class="zidx" style="background:${z.color}">${zi+1}</div>
+          <div class="zbody">
+            <h3>${z.name}${zoneDone(z)?' ✔':''}</h3>
+            <p>${z.sub}</p>
+            <div class="zbar"><i style="width:${pct}%;background:${z.color}"></i></div>
+          </div>
+          <div class="zprog"><b>${done}/${total}</b>smasheados</div>
+        </button>`;
+      }).join("")}
+    </div>
+    <div class="boss">
+      <div class="bt">
+        <h3>${allDone?'JEFE FINAL':'Modo Examen'}</h3>
+        <p>${allDone?'Limpiaste el mapa. Cerra con una ronda de 12 preguntas al azar de todo el temario.':'Ronda de 12 preguntas mezcladas de todas las zonas. Ideal para el dia antes del parcial.'}</p>
+      </div>
+      <button class="btn gold" id="examBtn2">Jugar examen</button>
+    </div>
+    <div class="boss" style="border-color:var(--mint)">
+      <div class="bt">
+        <h3 style="color:var(--mint)">Modo Aplicado</h3>
+        <p>Preguntas estilo parcial real: completar flujos de trabajo, troubleshooting y elegir building blocks. Lo mas parecido a lo que toma el profe.</p>
+      </div>
+      <button class="btn" id="appliedBtn2" style="background:var(--mint);box-shadow:0 6px 0 #2a9586,0 14px 24px rgba(79,214,192,.2);color:#0c2520">Jugar aplicado</button>
+    </div>`;
+  document.querySelectorAll(".zone-card").forEach(b=>b.onclick=()=>openZone(b.dataset.z));
+  document.getElementById("examBtn2").onclick=startExam;
+  document.getElementById("appliedBtn2").onclick=startApplied;
+  document.getElementById("resetBtn").onclick=()=>{
+    state.cleared.clear(); state.score=0; state.smashed=0; state.maxCombo=0; state.combo=0;
+    toast("Progreso reiniciado"); renderMap();
+  };
+  setHUD();
+}
+
+function openZone(zid){
+  state.zoneId=zid; state.exam=null; state.applied=null;
+  const z=ZONES.find(x=>x.id===zid);
+  app().innerHTML = `
+    <div class="section-head">
+      <div><span class="eyebrow" style="color:${z.color}">Zona ${ZONES.indexOf(z)+1}</span><h2>${z.name}</h2></div>
+    </div>
+    <div class="clist">
+      ${z.concepts.map((c,i)=>{
+        const done=state.cleared.has(zid+"-"+i);
+        return `<button class="crow ${done?'done':''}" data-i="${i}">
+          <span class="num">${String(i+1).padStart(2,"0")}</span>
+          <div class="cn"><b>${c.t}</b><span>${c.tag}</span></div>
+          <span class="check">✔</span>
+        </button>`;
+      }).join("")}
+    </div>`;
+  document.querySelectorAll(".crow").forEach(b=>b.onclick=()=>openConcept(zid,+b.dataset.i));
+  setHUD();
+}
+
+function openConcept(zid,i){
+  state.zoneId=zid; state.ci=i; state.answered=false; state.exam=null; state.applied=null;
+  const z=ZONES.find(x=>x.id===zid); const c=z.concepts[i];
+  app().innerHTML = `
+    <div class="panel">
+      <span class="ctag" style="color:${z.color}">${z.name} · ${c.tag}</span>
+      <h2 class="cname">${c.t}</h2>
+      <p class="body-txt">${c.body}</p>
+      <div class="ej"><b>En Carpincho Smasher</b>${c.ej}</div>
+      <div class="arena">
+        <div class="stage">
+          <div class="ground"></div>
+          <div class="carp-unit" id="carp">
+            ${carpinchoSVG()}
+            <div class="hammer">${hammerSVG()}</div>
+            <div class="burst">${Array.from({length:8}).map((_,k)=>{
+              const a=k/8*Math.PI*2; return `<span style="--dx:${Math.cos(a)*60}px;--dy:${Math.sin(a)*60}px"></span>`;
+            }).join("")}</div>
+            <div class="pts-pop" id="ptsPop"></div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-q">${c.q}</div>
+      <div class="opts" id="opts">
+        ${c.opts.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join("")}
+      </div>
+      <div class="verdict" id="verdict"></div>
+      <div class="nav-row" id="navRow"></div>
+    </div>`;
+  const opts=document.getElementById("opts");
+  opts.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answerConcept(+b.dataset.k,c,zid,i));
+  setHUD();
+}
+
+function answerConcept(k,c,zid,i){
+  if(state.answered) return;
+  state.answered=true;
+  const btns=document.querySelectorAll("#opts .opt");
+  btns.forEach(b=>b.disabled=true);
+  const ok = k===c.correct;
+  btns[k].classList.add(ok?"correct":"wrong");
+  if(!ok) btns[c.correct].classList.add("correct");
+
+  const carp=document.getElementById("carp");
+  const verdict=document.getElementById("verdict");
+  const firstTime = !state.cleared.has(zid+"-"+i);
+
+  if(ok){
+    carp.classList.add("hit");
+    state.combo++; state.maxCombo=Math.max(state.maxCombo,state.combo);
+    const base=100, gain=base*Math.min(state.combo,5);
+    if(firstTime){ state.cleared.add(zid+"-"+i); }
+    state.score+=gain; state.smashed++;
+    const pop=document.getElementById("ptsPop");
+    pop.textContent="+"+gain; pop.classList.add("show");
+    verdict.className="verdict ok show";
+    verdict.innerHTML=`<b>SMASH! ${state.combo>1?'Combo x'+Math.min(state.combo,5):''}</b>${c.why}`;
+  }else{
+    carp.classList.add("dodge");
+    document.querySelector(".panel").classList.add("shake");
+    setTimeout(()=>document.querySelector(".panel").classList.remove("shake"),350);
+    state.combo=0;
+    verdict.className="verdict no show";
+    verdict.innerHTML=`<b>Se te escapo</b>La correcta era: <strong>${c.opts[c.correct]}</strong>. ${c.why}`;
+  }
+  setHUD();
+
+  // navegacion
+  const z=ZONES.find(x=>x.id===zid);
+  const next = i+1<z.concepts.length;
+  const nav=document.getElementById("navRow");
+  nav.innerHTML = `
+    <button class="btn ghost" id="retryBtn">Reintentar</button>
+    ${next?'<button class="btn" id="nextBtn">Siguiente carpincho</button>':'<button class="btn" id="zoneBtn">Volver a la zona</button>'}
+    ${zoneDone(z)&&next?'':''}
+    <span class="combo-tag ${state.combo>1?'show':''}">${state.combo>1?'🔥 x'+Math.min(state.combo,5):''}</span>`;
+  document.getElementById("retryBtn").onclick=()=>openConcept(zid,i);
+  if(next) document.getElementById("nextBtn").onclick=()=>openConcept(zid,i+1);
+  else document.getElementById("zoneBtn").onclick=()=>{
+    if(zoneDone(z)) toast("Zona "+z.name+" completada!");
+    openZone(zid);
+  };
+}
+
+// ============ MODO EXAMEN ============
+function startExam(){
+  const pool=[];
+  ZONES.forEach(z=>z.concepts.forEach(c=>pool.push({...c,zone:z.name,color:z.color})));
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  state.exam={q:pool.slice(0,12),idx:0,correct:0,answered:false};
+  state.applied=null; state.zoneId=null;
+  state.combo=0;
+  renderExam();
+}
+
+function renderExam(){
+  const e=state.exam;
+  if(e.idx>=e.q.length){ return renderExamResult(); }
+  const c=e.q[e.idx];
+  app().innerHTML=`
+    <div class="panel">
+      <div class="exam-prog">PREGUNTA ${e.idx+1}/${e.q.length} · Aciertos: ${e.correct} · ${c.zone}</div>
+      <div class="arena">
+        <div class="stage" style="height:140px">
+          <div class="ground"></div>
+          <div class="carp-unit" id="carp">
+            ${carpinchoSVG()}
+            <div class="hammer">${hammerSVG()}</div>
+            <div class="burst">${Array.from({length:8}).map((_,k)=>{const a=k/8*Math.PI*2;return `<span style="--dx:${Math.cos(a)*60}px;--dy:${Math.sin(a)*60}px"></span>`;}).join("")}</div>
+            <div class="pts-pop" id="ptsPop"></div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-q">${c.q}</div>
+      <div class="opts" id="opts">${c.opts.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join("")}</div>
+      <div class="verdict" id="verdict"></div>
+      <div class="nav-row" id="navRow"></div>
+    </div>`;
+  e.answered=false;
+  document.querySelectorAll("#opts .opt").forEach(b=>b.onclick=()=>answerExam(+b.dataset.k,c));
+  setHUD();
+}
+
+function answerExam(k,c){
+  const e=state.exam;
+  if(e.answered) return; e.answered=true;
+  const btns=document.querySelectorAll("#opts .opt");
+  btns.forEach(b=>b.disabled=true);
+  const ok=k===c.correct;
+  btns[k].classList.add(ok?"correct":"wrong");
+  if(!ok) btns[c.correct].classList.add("correct");
+  const verdict=document.getElementById("verdict");
+  const carp=document.getElementById("carp");
+  if(ok){
+    e.correct++; state.combo++; state.maxCombo=Math.max(state.maxCombo,state.combo);
+    const gain=100*Math.min(state.combo,5); state.score+=gain; state.smashed++;
+    carp.classList.add("hit");
+    const pop=document.getElementById("ptsPop"); pop.textContent="+"+gain; pop.classList.add("show");
+    verdict.className="verdict ok show";
+    verdict.innerHTML=`<b>SMASH! ${state.combo>1?'Combo x'+Math.min(state.combo,5):''}</b>${c.why}`;
+  }else{
+    state.combo=0; carp.classList.add("dodge");
+    document.querySelector(".panel").classList.add("shake");
+    setTimeout(()=>document.querySelector(".panel").classList.remove("shake"),350);
+    verdict.className="verdict no show";
+    verdict.innerHTML=`<b>Fallaste</b>Correcta: <strong>${c.opts[c.correct]}</strong>. ${c.why}`;
+  }
+  setHUD();
+  const nav=document.getElementById("navRow");
+  nav.innerHTML=`<button class="btn" id="nextBtn">${e.idx+1<e.q.length?'Siguiente':'Ver resultado'}</button>`;
+  document.getElementById("nextBtn").onclick=()=>{ e.idx++; renderExam(); };
+}
+
+function renderExamResult(){
+  const e=state.exam; const total=e.q.length; const pct=Math.round(e.correct/total*100);
+  let rank,msg,col;
+  if(pct>=90){rank="CARPINCHO MAESTRO";msg="Tenes el parcial mas que dominado. A romperla.";col="var(--mint)";}
+  else if(pct>=70){rank="SMASHER SOLIDO";msg="Vas muy bien. Repasa los que fallaste y listo.";col="var(--gold)";}
+  else if(pct>=50){rank="EN ENTRENAMIENTO";msg="Buena base, pero hay que darle otra vuelta al apunte.";col="var(--carp)";}
+  else {rank="A SEGUIR PRACTICANDO";msg="Tranqui, volve a las zonas y repasa concepto por concepto.";col="var(--impact)";}
+  app().innerHTML=`
+    <div class="panel result">
+      <span class="eyebrow">Resultado del examen</span>
+      <div class="big" style="color:${col}">${e.correct}/${total}</div>
+      <div class="rank" style="color:${col}">${rank}</div>
+      <p class="lead" style="margin:0 auto 6px">${msg}</p>
+      <p style="font-family:'Space Mono';font-size:13px;color:var(--muted);margin-bottom:18px">Combo maximo de la sesion: x${Math.min(state.maxCombo,5)}</p>
+      <div class="nav-row" style="justify-content:center">
+        <button class="btn gold" id="againBtn">Otra ronda</button>
+        <button class="btn ghost" id="mapBtn">Ir al mapa</button>
+      </div>
+    </div>`;
+  document.getElementById("againBtn").onclick=startExam;
+  document.getElementById("mapBtn").onclick=renderMap;
+  setHUD();
+}
+
+// ============ MODO APLICADO ============
+const APPLIED=[
+  {type:"orden", t:"Sonido al agarrar con las manos",
+   prompt:"Orden el flujo para que suene un feedback al agarrar un objeto con las manos, sin programar.",
+   steps:["Agregar Rigidbody y Collider al objeto","Agregar el componente Grabbable","Agregar HandGrabInteractable","Agregar un AudioSource con el clip","Agregar InteractableUnityEventWrapper apuntando al interactable","En el evento When Select, llamar a AudioSource.Play()"],
+   why:"El objeto se hace agarrable (Rigidbody + Grabbable + HandGrabInteractable) y el InteractableUnityEventWrapper dispara el AudioSource en When Select. Cero codigo."},
+  {type:"orden", t:"Establecer una pose de manos",
+   prompt:"Orden el flujo para crear una hand grab pose sobre un objeto.",
+   steps:["Hacer el objeto agarrable (Grabbable + HandGrabInteractable)","Abrir el Hand Grab Pose Recorder","Entrar en Play y envolver la mano en el objeto","Grabar: se crea un HandGrabPose con su HandPose y GhostHand","Ajustar los dedos con Fingers Freedom (Free/Constrained/Locked)","Create Mirrored para la otra mano"],
+   why:"Componentes que intervienen: HandGrabInteractor (mano), HandGrabInteractable (objeto), HandGrabPose y HandPose (hijos), GhostHand (visual). Opcional: un GrabSurface."},
+  {type:"multi", t:"El wrapper que no dispara",
+   prompt:"Pusiste un InteractorUnityEventWrapper en el objeto agarrable y conectaste un evento de particulas al Select. No pasa nada. Por que?",
+   opts:["Porque el objeto necesita mas poligonos","Porque ese wrapper escucha a un Interactor (la mano), y el objeto tiene un Interactable, no un interactor","Porque las particulas no andan en VR","Porque falta bakear la luz"],
+   correct:1, why:"El objeto lleva un Interactable. Va un InteractableUnityEventWrapper apuntando al HandGrabInteractable, y el evento en su When Select."},
+  {type:"multi", t:"Padre Grabbable, hijo Interactable",
+   prompt:"En tu objeto el Grabbable esta en el padre y el HandGrabInteractable en el hijo. Por que esa estructura?",
+   opts:["Es un bug, deberian ir juntos","Porque el Grabbable (con el Rigidbody) es el objeto que se mueve, y el interactable hijo maneja la deteccion y los puntos/poses de agarre","Para gastar mas memoria","Porque el SDK no deja ponerlos juntos"],
+   correct:1, why:"El Grabbable + Rigidbody van en la raiz (lo que se mueve). El interactable va en hijos para poder tener varios puntos y poses de agarre sin tocar la raiz."},
+  {type:"multi", t:"No atravesar paredes caminando",
+   prompt:"Queres que el jugador no atraviese paredes con su desplazamiento fisico, sin programar. Que integras?",
+   opts:["Solo un AudioSource","El Locomotor con FirstPersonLocomotor + CharacterController, y colliders en las paredes con su physics layer","Un atlas de texturas","Un PokeInteractable"],
+   correct:1, why:"El CharacterController castea una capsula y bloquea contra los colliders. El FirstPersonLocomotor reposiciona al jugador para que no entre a zonas no caminables. Sin codigo."},
+  {type:"multi", t:"Mecanica por ojo (la trampa)",
+   prompt:"Queres una mecanica segun el ojo derecho o izquierdo. Que building block usas y que problema tenes en Quest 3?",
+   opts:["Eye Gaze (OVREyeGaze), sin ningun problema","Eye Gaze (OVREyeGaze), pero Quest 3 y 3S no tienen hardware de eye tracking, solo el Quest Pro","Hand Tracking, anda en cualquier Quest","Passthrough, no necesita permisos"],
+   correct:1, why:"OVREyeGaze deja elegir ojo izquierdo o derecho, pero el eye tracking solo existe en Quest Pro. En Quest 3/3S no hay sensores: en tu target no funciona."},
+  {type:"orden", t:"Agarrar un palo de las dos puntas",
+   prompt:"Tenes un palo que queres agarrar de cualquiera de sus dos puntas. Orden el flujo.",
+   steps:["Poner Rigidbody + Grabbable en el palo (el padre)","Crear un hijo ubicado en la punta A","Ponerle Grab Interactable al hijo A, apuntando al Grabbable del padre","Crear otro hijo ubicado en la punta B","Ponerle Grab Interactable al hijo B, apuntando al mismo Grabbable"],
+   why:"Un solo objeto que se mueve (Grabbable + Rigidbody en el padre) y dos puntos de deteccion, cada uno su hijo con su posicion, los dos apuntando al mismo Grabbable. Por eso van en hijos: cada GameObject tiene un solo Transform."},
+  {type:"orden", t:"Objeto agarrable con controles desde cero",
+   prompt:"Orden el flujo para hacer un objeto agarrable con controles desde cero.",
+   steps:["Agregar un Rigidbody al objeto","Agregar un Collider (ej Box Collider)","Agregar el componente Grabbable","Agregar Grab Interactable (agarre con controles)","Verificar que el ControllerGrabInteractor este en el control del rig"],
+   why:"El objeto necesita fisica (Rigidbody), forma (Collider), el que lo mueve (Grabbable) y el que lo hace agarrable (Grab Interactable). Del otro lado, el interactor va en el control."},
+  {type:"orden", t:"Teleport a un punto fijo (hotspot)",
+   prompt:"Orden el flujo para teletransportarte a un punto fijo sin marearte.",
+   steps:["Crear un GameObject donde queres caer","Click derecho > Interaction SDK > Add Teleport Interaction","Se genera el Hotspot (destino absoluto)","El TeleportInteractor en la mano apunta al hotspot","El reticle marca el destino y al soltar te teletransporta"],
+   why:"El Hotspot es el destino fijo (interactable de locomocion). El TeleportInteractor apunta, el reticle confirma, y al seleccionar te mueve sin movimiento continuo, por eso no marea."},
+  {type:"orden", t:"Girar de a pasos (snap turning)",
+   prompt:"Orden el flujo para girar de a pasos con el control.",
+   steps:["Tener el rig con locomocion configurada","Ubicar el ControllerTurnerInteractor en el control","En el TurnerEventBroadcaster elegir el modo Snap","Setear los grados del giro (ej 45)","Probar: el joystick gira de golpe en pasos fijos"],
+   why:"El TurnerInteractor genera el input y el TurnerEventBroadcaster lo convierte en giros. En modo Snap dispara un giro instantaneo de los grados que definas, que marea menos que el giro continuo."},
+  {type:"orden", t:"Bakear la iluminacion del interior",
+   prompt:"Orden el flujo para bakear la iluminacion de tu escena de living.",
+   steps:["Marcar los objetos que no se mueven como Static (con ContributeGI)","Confirmar Generate Lightmap UVs en los FBX importados","Configurar las luces como Baked o Mixed","Guardar la escena","Abrir Window > Rendering > Lighting y darle Generate Lighting"],
+   why:"Las luces bakeadas son baratas en runtime. Sin Static + ContributeGI y sin Lightmap UVs el bake sale mal, y guardar antes de bakear evita resultados raros."},
+  {type:"multi", t:"Agarre con manos Y controles",
+   prompt:"Como haces para que un mismo objeto se pueda agarrar con manos Y con controles?",
+   opts:["Solo con HandGrabInteractable alcanza para todo","Le poned los dos interactables: Grab Interactable (controles) y HandGrabInteractable (manos)","Necesitas dos objetos separados","Con un atlas de texturas"],
+   correct:1, why:"Un objeto puede tener varios interactables. Para los dos modos de input le sumas el de controles y el de manos al mismo tiempo, cada uno con su interactor en el rig."},
+  {type:"multi", t:"El objeto no sale volando al soltar",
+   prompt:"Agarras el objeto pero al soltarlo no sale volando, queda muerto. Que activas para que tenga throw?",
+   opts:["Force Kinematic Disabled, asi al soltar el Rigidbody pasa a no-kinematico y la velocidad del lanzamiento tiene efecto","Mas poligonos","Un PokeInteractable","Bakear la luz"],
+   correct:0, why:"Si el objeto queda kinematico al soltarse, no responde a la velocidad. Force Kinematic Disabled lo pasa a no-kinematico en el release y ahi el throw funciona."},
+  {type:"multi", t:"Sonido al SOLTAR, no al agarrar",
+   prompt:"Ya tenes sonido al agarrar con InteractableUnityEventWrapper. Como haces que suene al SOLTAR en vez de al agarrar?",
+   opts:["Cambias el AudioSource por uno mas pesado","Usas el evento When Unselect del wrapper en lugar de When Select","Le sacas el Grabbable","Lo pasas a PNG"],
+   correct:1, why:"When Select dispara al agarrar, When Unselect dispara al soltar. Mismo wrapper, otro evento."},
+  {type:"multi", t:"Boton con dedo y con rayo",
+   prompt:"Queres un boton de menu que se pueda tocar con el dedo y tambien apretar con el rayo. Que le pones?",
+   opts:["Solo un Grabbable","Un PokeInteractable y un RayInteractable al mismo boton, cada uno con su interactor","Un Rigidbody nada mas","Eye tracking"],
+   correct:1, why:"Como un objeto puede tener varios interactables, le sumas Poke (dedo) y Ray (rayo) al mismo boton. Necesitas los interactores correspondientes en manos/controles."},
+  {type:"multi", t:"Encajar una pieza en su lugar",
+   prompt:"Queres que una pieza encaje sola en una posicion exacta, tipo rompecabezas. Que sistema usas?",
+   opts:["Occlusion culling","Positional Snap (SnapInteractor + SnapInteractable), cuidando bien las fisicas","Un atlas de texturas","Snap turning"],
+   correct:1, why:"El Positional Snap ubica el objeto en una posicion predefinida exacta. Ojo: snap turning es otra cosa (giros de camara), no te confundas por el nombre parecido."},
+  {type:"multi", t:"Por que escala 1 en el interactable",
+   prompt:"Por que conviene tener el HandGrabInteractable en un objeto con escala 1?",
+   opts:["Por estetica","Meta lo recomienda. Si necesitas otra escala, escalas un hijo con la malla y colliders y dejas el Rigidbody raiz en escala 1","Porque el eye tracking lo exige","Para gastar mas memoria"],
+   correct:1, why:"El agarre se porta mejor con el interactable en escala 1. Si el objeto necesita otro tamaño, escalas un hijo (mesh + colliders) y mantenes la raiz fisica en escala 1."},
+  {type:"multi", t:"Bajar draw calls",
+   prompt:"Tenes 10 objetos con 10 materiales distintos, o sea 10 draw calls. Como lo bajas?",
+   opts:["Agregando mas luces dinamicas","Usando un atlas de texturas: 10 objetos con 1 atlas = 1 draw call","Pasando todo a PNG","Subiendo la distancia de dibujado"],
+   correct:1, why:"Juntar las texturas en un atlas (potencia de 2) hace que compartan material y bajen los draw calls de 10 a 1."}
+];
+
+function startApplied(){
+  const order=APPLIED.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+  state.applied={idx:0,correct:0,cur:null,answered:false,order};
+  state.combo=0; state.zoneId=null; state.exam=null; renderApplied();
+}
+function renderApplied(){
+  const a=state.applied;
+  if(a.idx>=a.order.length) return appliedResult();
+  const c=APPLIED[a.order[a.idx]];
+  if(c.type==="orden") return renderOrden(c);
+  return renderAppliedMulti(c);
+}
+
+function renderOrden(c){
+  const a=state.applied;
+  if(!a.cur){
+    const order=c.steps.map((_,i)=>i);
+    for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}
+    a.cur={picked:[],pool:order,done:false,ok:false};
+  }
+  const cur=a.cur;
+  const seqHTML = cur.picked.length
+    ? cur.picked.map((s,i)=>`<div class="seq-item${cur.done&&s!==i?' seq-bad':''}"><span>${i+1}</span>${c.steps[s]}</div>`).join("")
+    : '<div class="seq-empty">Toca los pasos en orden de ejecucion...</div>';
+  const poolHTML = cur.done ? '' :
+    '<div class="seq-label">Pasos disponibles</div><div class="opts" id="pool">'+
+    cur.pool.filter(s=>!cur.picked.includes(s)).map(s=>`<button class="opt" data-s="${s}">${c.steps[s]}</button>`).join("")+'</div>';
+  app().innerHTML=`<div class="panel">
+    <div class="exam-prog">APLICADO ${a.idx+1}/${APPLIED.length} · Aciertos: ${a.correct} · Ordena el flujo</div>
+    <h2 class="cname" style="font-size:19px;margin-bottom:8px">${c.t}</h2>
+    <p class="body-txt" style="margin-bottom:4px">${c.prompt}</p>
+    <div class="seq-label">Tu secuencia</div>
+    <div class="seq">${seqHTML}</div>
+    ${poolHTML}
+    <div class="verdict ${cur.done?(cur.ok?'ok show':'no show'):''}" id="verdict">${cur.done?'<b>'+(cur.ok?'FLUJO CORRECTO!':'Orden equivocado')+'</b>'+c.why:''}</div>
+    <div class="nav-row" id="navRow"></div>
+  </div>`;
+  const nav=document.getElementById("navRow");
+  if(!cur.done){
+    document.querySelectorAll("#pool .opt").forEach(b=>b.onclick=()=>{
+      cur.picked.push(+b.dataset.s);
+      if(cur.picked.length===c.steps.length){
+        cur.done=true; cur.ok=cur.picked.every((s,i)=>s===i);
+        if(cur.ok){ state.combo++; state.maxCombo=Math.max(state.maxCombo,state.combo); state.score+=100*Math.min(state.combo,5); state.smashed++; a.correct++; }
+        else state.combo=0;
+        setHUD();
+      }
+      renderOrden(c);
+    });
+    nav.innerHTML = cur.picked.length?'<button class="btn ghost" id="resetSeq">Reiniciar</button>':'';
+    if(cur.picked.length) document.getElementById("resetSeq").onclick=()=>{cur.picked=[];renderOrden(c);};
+  } else {
+    nav.innerHTML = `${cur.ok?'':'<button class="btn ghost" id="retryOrden">Reintentar</button>'}<button class="btn" id="nextApplied">${a.idx+1<APPLIED.length?'Siguiente':'Ver resultado'}</button>`;
+    if(!cur.ok) document.getElementById("retryOrden").onclick=()=>{a.cur=null;renderOrden(c);};
+    document.getElementById("nextApplied").onclick=()=>{a.idx++;a.cur=null;renderApplied();};
+  }
+  setHUD();
+}
+
+function renderAppliedMulti(c){
+  const a=state.applied; a.answered=false;
+  app().innerHTML=`<div class="panel">
+    <div class="exam-prog">APLICADO ${a.idx+1}/${APPLIED.length} · Aciertos: ${a.correct} · Caso practico</div>
+    <h2 class="cname" style="font-size:19px;margin-bottom:8px">${c.t}</h2>
+    <p class="body-txt" style="margin-bottom:12px">${c.prompt}</p>
+    <div class="opts" id="opts">${c.opts.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join("")}</div>
+    <div class="verdict" id="verdict"></div>
+    <div class="nav-row" id="navRow"></div>
+  </div>`;
+  document.querySelectorAll("#opts .opt").forEach(b=>b.onclick=()=>{
+    if(a.answered) return; a.answered=true;
+    const btns=document.querySelectorAll("#opts .opt"); btns.forEach(x=>x.disabled=true);
+    const ok=(+b.dataset.k)===c.correct;
+    b.classList.add(ok?"correct":"wrong");
+    if(!ok) btns[c.correct].classList.add("correct");
+    const v=document.getElementById("verdict");
+    if(ok){ state.combo++; state.maxCombo=Math.max(state.maxCombo,state.combo); state.score+=100*Math.min(state.combo,5); state.smashed++; a.correct++; v.className="verdict ok show"; v.innerHTML="<b>CORRECTO"+(state.combo>1?' · Combo x'+Math.min(state.combo,5):'')+"</b>"+c.why; }
+    else { state.combo=0; v.className="verdict no show"; v.innerHTML="<b>No es esa</b>"+c.why; }
+    setHUD();
+    document.getElementById("navRow").innerHTML=`<button class="btn" id="nextApplied">${a.idx+1<APPLIED.length?'Siguiente':'Ver resultado'}</button>`;
+    document.getElementById("nextApplied").onclick=()=>{a.idx++;renderApplied();};
+  });
+  setHUD();
+}
+
+function appliedResult(){
+  const a=state.applied; const total=APPLIED.length; const pct=Math.round(a.correct/total*100);
+  let rank,col;
+  if(pct>=85){rank="LISTO PARA LA DEFENSA";col="var(--mint)";}
+  else if(pct>=60){rank="CASI A PUNTO";col="var(--gold)";}
+  else{rank="REPASA LOS FLUJOS";col="var(--impact)";}
+  app().innerHTML=`<div class="panel result">
+    <span class="eyebrow">Modo Aplicado</span>
+    <div class="big" style="color:${col}">${a.correct}/${total}</div>
+    <div class="rank" style="color:${col}">${rank}</div>
+    <p class="lead" style="margin:0 auto 18px">Estos son los que mas se parecen al parcial del profe: completar flujos, troubleshooting y elegir building blocks.</p>
+    <div class="nav-row" style="justify-content:center">
+      <button class="btn gold" id="againApplied">Otra vuelta</button>
+      <button class="btn ghost" id="mapApplied">Ir al mapa</button>
+    </div>
+  </div>`;
+  document.getElementById("againApplied").onclick=startApplied;
+  document.getElementById("mapApplied").onclick=renderMap;
+  setHUD();
+}
+
+// ============ INIT ============
+document.getElementById("homeBtn").onclick=renderMap;
+renderTitle();
+</script>
+</body>
+</html>

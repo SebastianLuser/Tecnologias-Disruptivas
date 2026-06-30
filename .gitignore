@@ -1,0 +1,10 @@
+# Local Claude settings
+.claude.bak/
+.claude/settings.local.json
+
+# Session state logs
+production/session-state/*.log
+
+# OS
+.DS_Store
+Thumbs.db
