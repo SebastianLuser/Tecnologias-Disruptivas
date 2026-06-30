@@ -135,7 +135,17 @@ const ZONES=[
   q:'¿Qué define el "Grab Type" de un Hand Grab Interactable?',
   mc:['Cuántos interactores pueden agarrar el objeto a la vez (Max Interactors)','Si el agarre es por Pinch (pellizco), Palm (palma) o ambos','Qué dedos son requeridos u opcionales en el agarre (Finger Rules)','Cuándo se libera el objeto: al soltar todos o cualquier dedo (Select Mode)'],correct:1,
   why:'Grab Type = tipo de agarre (Pinch/Palm/ambos). Otros parámetros: Max Interactors, Finger Rules por dedo y Select Mode.'}
-]},
+,
+ {tag:'Teleport Interactor vs Interactable',title:'Teleport Interactor vs Teleport Interactable',
+  body:`Aplica la regla de oro <strong>Interactor = la herramienta · Interactable = lo que la recibe</strong>.<br><strong>Teleport Interactable</strong>: la <strong>zona de destino</strong> donde el jugador puede aterrizar — un plano, un <strong>NavMesh Surface</strong> o un <strong>Collider</strong> en el piso. Es lo que preparás en el escenario para marcar dónde es válido teletransportarse.<br><strong>Teleport Interactor</strong>: el <strong>actor</strong> (tu mano/joystick) que <strong>dispara el rayo</strong>, calcula si el punto apuntado es válido o inválido y le ordena al controlador de locomoción mover tu cuerpo allí. Suele venir ya colocado dentro del prefab de interacción del jugador.`,
+  q:'En el sistema de teleport, ¿qué diferencia al Teleport Interactor del Teleport Interactable?',
+  mc:['El Interactable es la zona/superficie de destino (NavMesh o collider); el Interactor es el actor (rayo del joystick/mano) que apunta, valida y ordena el movimiento','El Interactor es la zona de aterrizaje y el Interactable es el rayo que la apunta','Ambos son zonas de destino: el Interactor para NavMesh y el Interactable para colliders','El Interactor define el color del rayo y el Interactable la velocidad del salto'],correct:0,
+  why:'Interactable = el piso/zona de destino (NavMesh o collider). Interactor = el actor en tu mano/joystick que dispara el rayo, valida el punto y manda mover el cuerpo.'},
+ {tag:'Locomoción',title:'¿Qué es la locomoción?',
+  body:`Es el término de diseño que engloba <strong>todos los sistemas y mecánicas que permiten al jugador desplazarse</strong> por el entorno virtual. Es crítico porque si la cámara se mueve de una forma que el cuerpo no siente, aparece el <strong>conflicto sensoriomotor</strong> y el jugador se marea. Por eso administra alternativas pensadas para el confort: <strong>teletransporte</strong>, <strong>snap turn</strong> (giro por pasos) y <strong>slide</strong> (desplazamiento continuo, normalmente con viñeta). Técnicamente controla la <strong>cápsula física</strong> del jugador para que no atraviese paredes.`,
+  q:'¿Qué es la locomoción en VR?',
+  mc:['El conjunto de sistemas y mecánicas que permiten al jugador desplazarse por el entorno evitando el mareo (teleport, snap turn, slide)','El sistema que renderiza las manos y los modelos de los joysticks','La técnica de agarrar objetos a distancia con un rayo (distance grab)','El componente que sincroniza el audio espacial con el giro de la cabeza'],correct:0,
+  why:'Locomoción = todo lo que permite desplazarse por el mundo sin generar conflicto sensoriomotor (mareo); administra teleport, snap turn y slide sobre la cápsula física del jugador.'}]},
 {id:'iluminacion',name:'Iluminación y Optimización',icon:'💡',color:'#EBD23C',desc:'Draw calls, batching, lightmaps, UV2, shadow maps, LOD, pooling, overdraw',qs:[
  {tag:'Draw call',title:'Draw call',
   body:`Una <strong>orden de la CPU a la GPU</strong> para dibujar un lote de geometría. Cada una tiene costo de CPU; demasiadas se vuelven un cuello de botella. En VR/mobile reducir draw calls es crítico para mantener FPS estables.`,
@@ -224,7 +234,12 @@ const ZONES=[
   q:'¿Cuál es uno de los criterios de planificación que exige el profe?',
   mc:['Maximizar la cantidad de mecánicas para enriquecer la experiencia','Diseñar para el sistema sensorial completo y que el usuario no tenga que adivinar','Priorizar la fidelidad gráfica como criterio principal de calidad','Usar siempre el Meta XR SDK por sus herramientas de rendimiento'],correct:1,
   why:'Criterios: diseñar para todos los sentidos, pensar en un usuario que no entiende nada, que no adivine, y documentar con justificación técnica.'}
-]},
+,
+ {tag:'Hand Grab Glow',title:'Hand Grab Glow: brillo y color de la mano',
+  body:`Para que la mano <strong>brille o tenga contorno</strong> (y cambie de color, p. ej. al acercarse a un objeto agarrable) se usa el componente <strong>Hand Grab Glow</strong>, que vive <strong>dentro del Hand Grab Interactor</strong> de la mano sintética, en la sección <strong>Visual</strong> — <em>no</em> en el OVR Controller (ese solo rastrea el joystick físico). Al lado está el Hand Grab Visual (poses). Para funcionar, el Glow necesita referenciar el modelo de la mano (Hand Mesh / Hand Renderer y su material). Permite elegir <strong>Glow</strong> (ilumina toda la mano) u <strong>Outline</strong> (contorno) y su color — un recurso de Game Feeling.`,
+  q:'¿Dónde se configura el brillo/contorno de la mano para cambiarle el color?',
+  mc:['En el componente Hand Grab Glow, dentro del Hand Grab Interactor de la mano sintética (sección Visual)','En el OVR Controller, que maneja las visuals de los joysticks','En el Locomotion Controller Group, junto a las reglas de movimiento','En el Snap Interactable de la zona de encaje'],correct:0,
+  why:'El color/brillo de la mano se configura en el Hand Grab Glow, dentro del Hand Grab Interactor (sección Visual) de la mano sintética — no en el OVR Controller.'}]},
 {id:'sdk',name:'Comparativa SDK',icon:'⚖️',color:'#7A33B5',desc:'★ MÁS IMPORTANTE ★  Meta XR SDK vs OpenXR vs SteamVR',qs:[
  {tag:'Meta XR — ventaja',title:'Ventaja del Meta XR SDK',
   body:`Acceso directo a las <strong>funcionalidades exclusivas del hardware Meta Quest</strong>: seguimiento de manos, passthrough para realidad mixta, tracking espacial avanzado, optimizaciones específicas y herramientas de rendimiento de Meta. También tiene excelente documentación y gran comunidad.`,
@@ -355,7 +370,23 @@ const ZONES=[
   q:'¿Qué permite el Passthrough?',
   mc:['Ver el mundo real dentro del visor (base de la realidad mixta)','Proyectar contenido virtual sobre una pared física por capas','Mezclar el audio del entorno real con el del juego','Detectar y anclar planos del entorno para colocar objetos'],correct:0,
   why:'Passthrough muestra el mundo real (video de cámaras por layers) en el visor: es la base de la realidad mixta.'}
-]},
+,
+ {tag:'Locomotion Controller Group',title:'Locomotion Controller Group',
+  body:`Es el <strong>agrupador o "handler"</strong> de la locomoción: administra y ordena todas las reglas de cómo el jugador se mueve y gira, funcionando como <strong>puente entre los joysticks y la cápsula física</strong> (Character Controller). Viene preconfigurado dentro del prefab <strong>OVR Camera Rig Interaction</strong>. Adentro conviven las alternativas de movimiento: <strong>Teleport</strong>, <strong>Snap Turn / Step</strong> y <strong>Slide</strong>. Se agrupan porque todas modifican la posición de la <strong>misma</strong> cápsula: el handler procesa las acciones de forma ordenada (p. ej. cómo frena el slide si se dispara un teleport) y comunica el movimiento final a la física.`,
+  q:'¿Qué es el Locomotion Controller Group dentro del OVR Camera Rig Interaction?',
+  mc:['Un agrupador/handler que administra las reglas de movimiento (Teleport, Snap Turn, Slide) y las comunica a la cápsula física del jugador','La zona del piso donde el jugador puede teletransportarse (Teleport Interactable)','El prefab que muestra los modelos 3D de los joysticks físicos','El componente que define las poses de los dedos al agarrar un objeto'],correct:0,
+  why:'Es el handler que agrupa y ordena las mecánicas de movimiento (Teleport/Snap/Slide) y traduce la orden final a la cápsula física, evitando conflictos entre mecánicas.'},
+ {tag:'OVR Rig vs Controllers vs Interaction',title:'OVR Camera Rig vs OVR Controllers vs OVR Camera Rig Interaction',
+  body:`Pensalo como armar un auto:<br><strong>OVR Camera Rig</strong>: el <strong>chasis básico</strong> — la cámara estéreo (un ojo por lente) + el <strong>OVR Manager</strong> que comunica el casco con Unity. Solo con esto mirás alrededor, pero no tenés manos, controles ni movimiento.<br><strong>OVR Controllers</strong>: el prefab que <strong>solo</strong> rastrea y muestra los modelos 3D de tus joysticks. Por sí solos no saben agarrar ni teletransportarse: hay que sumarles los interactores a mano.<br><strong>OVR Camera Rig Interaction</strong>: el <strong>"súper prefab" todo incluido</strong> — ya trae el Camera Rig, los Controllers, las manos, la locomoción y TODOS los interactores listos (Teleport, Grab, Ray, Poke). Es el que se usa en los tutoriales.`,
+  ej:`El Building Block Interactions Rig es el equivalente: inyecta de una sola vez todos los interactores estándar en el jugador.`,
+  q:'¿Qué diferencia al OVR Camera Rig, los OVR Controllers y el OVR Camera Rig Interaction?',
+  mc:['Camera Rig = cámara + OVR Manager (base); OVR Controllers = solo el tracking/modelo de los joysticks; Camera Rig Interaction = súper prefab con rig + controllers + locomotion + Grab/Ray/Poke/Teleport ya integrados','Los tres son equivalentes: cambia solo el nombre según la versión del SDK','Camera Rig trae las interacciones; OVR Controllers trae la locomoción; Camera Rig Interaction es solo la cámara','Camera Rig Interaction es la base mínima y los OVR Controllers el paquete completo con todo integrado'],correct:0,
+  why:'Camera Rig = base (cámara + OVR Manager). OVR Controllers = solo joysticks (sin lógica de agarrar/mover). OVR Camera Rig Interaction = todo integrado (rig + controllers + locomotion + interactores).'},
+ {tag:'Locomotor: a mano vs prefab',title:'Armar la locomoción: a mano o con prefab',
+  body:`Se puede de las <strong>dos formas</strong>.<br><strong>A mano</strong>: creás un controlador (p. ej. CharacterControllerLocomotor) con su <strong>cápsula</strong>, <strong>Rigidbody / Character Controller</strong> y el <strong>Locomotion Handler</strong>, configurando las reglas paso a paso. Sirve para entender el núcleo y para físicas muy personalizadas.<br><strong>Con prefab (recomendado)</strong>: arrastrás el <strong>OVR Camera Rig Interaction</strong> (o el Building Block <strong>Interactions Rig</strong>) y ya viene todo ensamblado. Tu único trabajo pasa a ser armar el escenario: crear los <strong>Teleport Interactable</strong> sobre un NavMesh/collider para marcar dónde puede aterrizar el jugador.`,
+  q:'¿Cómo se arma el controlador de locomoción del jugador?',
+  mc:['A mano (cápsula + Rigidbody/Character Controller + Locomotion Handler) o, recomendado, con el prefab OVR Camera Rig Interaction / Building Block Interactions Rig que ya lo trae ensamblado','Solo a mano: no existe ningún prefab que arme la locomoción por vos','Solo con el prefab: Unity no permite armar la cápsula y el handler manualmente','Se arma escribiendo un shader que calcula el desplazamiento del jugador'],correct:0,
+  why:'Las dos formas son válidas: a mano (cápsula + Rigidbody/Character Controller + Locomotion Handler) o con el prefab OVR Camera Rig Interaction / Interactions Rig, que es lo recomendado.'}]},
 {id:'event_wrappers',name:'Event Wrappers',icon:'🔗',color:'#7A33B5',desc:'Enlazar acciones sin código: cada wrapper expone los eventos del interactor o interactable en el Inspector',qs:[
  {tag:'Qué son',title:'¿Qué son los Event Wrappers?',
   body:`Son componentes que <strong>exponen los eventos</strong> de un interactor o interactable (Hover, Select, Unselect, Release...) <strong>en el Inspector</strong>, para enlazar acciones de otros objetos o scripts <strong>sin escribir código</strong> (reproducir audio, partículas, mover objetos, cargar escenas).`,
@@ -397,7 +428,13 @@ const ZONES=[
   q:'¿Qué detecta el Micro Gesture Unity Event Wrapper?',
   mc:['Grandes movimientos del brazo y la muñeca','Micro-gestos del pulgar sobre el índice (swipes/taps)','El encaje de un objeto en un slot (snap)','La orientación de la cabeza dentro del espacio'],correct:1,
   why:'El Micro Gesture Unity Event Wrapper expone micro-gestos del pulgar sobre el índice (swipes/taps) por hand tracking.'}
-]}
+,
+ {tag:'Pointable vs Interactable',title:'Pointable vs Interactable Unity Event Wrapper',
+  body:`Ambos exponen los eventos del interactuable en el Inspector (When Select, When Hover, When Release) para disparar acciones <strong>sin código</strong>. La diferencia es <strong>a qué tipo de interactuable escuchan</strong>.<br><strong>Pointable Unity Event Wrapper</strong>: objetos que el jugador <strong>agarra, suelta o apunta directamente</strong>; se enlaza referenciando un <strong>Grabbable</strong>. Ej.: una botella o un cubo que suena al ser agarrado (When Select) o soltado (When Release).<br><strong>Interactable Unity Event Wrapper</strong>: <strong>otros interactuables del entorno que no se agarran</strong>. Ej.: un <strong>Snap Interactable</strong> (zona de encaje) que enciende un cubo de ayuda, o un <strong>Teleport Interactable</strong> que cambia de color al apuntarlo (When Hover/Unhover).`,
+  ej:`Regla rápida: Pointable para lo que agarrás con la mano (taza, botella); Interactable para las zonas interactivas del nivel (piso de teleport, zonas de encaje).`,
+  q:'¿Cuál es la diferencia entre el Pointable y el Interactable Unity Event Wrapper?',
+  mc:['El Pointable escucha objetos agarrables/apuntables (referencia un Grabbable: botella, cubo); el Interactable escucha interactuables del entorno que no se agarran (Snap, Teleport Interactable)','El Pointable corre solo en el editor y el Interactable solo en runtime sobre el dispositivo','El Pointable expone eventos de UI (Canvas) y el Interactable expone eventos de físicas del Rigidbody','El Pointable solo dispara When Hover y el Interactable solo dispara When Select'],correct:0,
+  why:'Ambos exponen los eventos en el Inspector; el Pointable se enlaza a un Grabbable (cosas que agarrás), el Interactable a interactuables no-agarrables del entorno (Snap, Teleport Interactable).'}]}
 ];
 
 // ── V/F DATA (Simulacro Punto 2) ──────────────────────────────────────────────
@@ -568,9 +605,16 @@ function scoreWritten(text,keywords){
 // ── STATE ─────────────────────────────────────────────────────────────────────
 
 let seen=new Set(),currentZone=null,currentCard=0,mcAnswered=false;
+let curPerm=null,curId=null;   // orden barajado y id de la card en pantalla (para persistir la respuesta MC)
 
 function load(){try{seen=new Set(JSON.parse(localStorage.getItem('pd_seen')||'[]'))}catch{seen=new Set()}}
 function save(){localStorage.setItem('pd_seen',JSON.stringify([...seen]))}
+// Respuestas MC: { "<zoneId>_<card>": {o:[...orden barajado], c:<idx elegido en ese orden>} }
+function loadMC(){try{return JSON.parse(localStorage.getItem('pd_mc')||'{}')}catch{return{}}}
+function saveMC(o){localStorage.setItem('pd_mc',JSON.stringify(o))}
+// Última card vista, para el botón "Continuar" del home: {z:<zoneId>, c:<cardIndex>}
+function savePos(z,c){localStorage.setItem('pd_pos',JSON.stringify({z,c}))}
+function loadPos(){try{return JSON.parse(localStorage.getItem('pd_pos')||'null')}catch{return null}}
 function total(){return ZONES.reduce((s,z)=>s+z.qs.length,0)}
 function zonesDone(){return ZONES.filter(z=>z.qs.every((_,i)=>seen.has(z.id+'_'+i))).length}
 function exams(){return parseInt(localStorage.getItem('pd_exams')||'0')}
@@ -592,7 +636,21 @@ function updateHUD(){
 function resetAll(){
   if(!confirm('¿Resetear todo el progreso?'))return;
   localStorage.removeItem('pd_seen');localStorage.removeItem('pd_exams');localStorage.removeItem('pd_nota');localStorage.removeItem('pd_sims');
-  seen=new Set();updateHUD();renderZones();renderSimCards();
+  localStorage.removeItem('pd_pos');localStorage.removeItem('pd_mc');
+  seen=new Set();updateHUD();renderZones();renderSimCards();renderContinue();
+}
+
+// Botón "Continuá donde quedaste" en el home (lee pd_pos)
+function renderContinue(){
+  const el=document.getElementById('continue-cta');if(!el)return;
+  const pos=loadPos();
+  const zi=pos?ZONES.findIndex(z=>z.id===pos.z):-1;
+  if(zi<0||!pos||pos.c==null||pos.c>=ZONES[zi].qs.length){el.innerHTML='';return;}
+  const z=ZONES[zi];
+  el.innerHTML=`<button class="continue-btn" onclick="openZoneAt(${zi},${pos.c})">
+      <span class="continue-lbl">▸ Continuá donde quedaste</span>
+      <span class="continue-where" style="color:${z.color}">${z.icon} ${z.name} · card ${pos.c+1}/${z.qs.length}</span>
+    </button>`;
 }
 
 // ── SCREENS ───────────────────────────────────────────────────────────────────
@@ -625,10 +683,19 @@ function renderZones(){
     el.onclick=()=>openZone(zi);
     g.appendChild(el);
   });
+  renderContinue();
 }
 
 function openZone(zi){
-  currentZone=zi;currentCard=0;
+  load();
+  const z=ZONES[zi];
+  // retomar en la última card vista de esta zona (si no vio ninguna, la 0)
+  let last=0;for(let i=z.qs.length-1;i>=0;i--){if(seen.has(z.id+'_'+i)){last=i;break;}}
+  openZoneAt(zi,last);
+}
+
+function openZoneAt(zi,card){
+  currentZone=zi;currentCard=card||0;
   const z=ZONES[zi];
   document.getElementById('study-zone-name').textContent=z.name;
   document.getElementById('study-zone-name').style.color=z.color;
@@ -642,7 +709,7 @@ function renderCard(){
   const z=ZONES[currentZone],c=z.qs[currentCard];
   load();
   const id=z.id+'_'+currentCard;
-  seen.add(id);save();updateHUD();
+  seen.add(id);save();savePos(z.id,currentCard);updateHUD();
   mcAnswered=false;
 
   const tagEl=document.getElementById('concept-tag');
@@ -660,20 +727,25 @@ function renderCard(){
   document.getElementById('mc-feedback-area').innerHTML='';
 
   const letters='ABCD';
-  const perm=shuffleSteps(c.mc.length);          // barajar orden de opciones (anti-sesgo "siempre B")
-  const cPos=perm.indexOf(c.correct);             // posición del correcto en el orden mostrado
+  const saved=loadMC()[id];                        // respuesta previa de esta card (si la hubo)
+  // orden de opciones: el guardado (para verla igual que la dejaste) o uno nuevo barajado
+  const perm=(saved&&Array.isArray(saved.o)&&saved.o.length===c.mc.length)?saved.o:shuffleSteps(c.mc.length);
+  const cPos=perm.indexOf(c.correct);              // posición del correcto en el orden mostrado
+  curPerm=perm;curId=id;
   document.getElementById('mc-area').innerHTML=perm.map((orig,disp)=>
     `<button class="mc-opt" id="mc-opt-${disp}" onclick="selectMC(${disp},${cPos})"><span class="mc-letter">${letters[disp]}</span><span>${c.mc[orig]}</span></button>`
   ).join('');
+
+  // si ya la habías respondido, restaurar el estado marcado (sin re-barajar)
+  if(saved&&saved.c!=null){mcAnswered=true;showMCResult(saved.c,cPos,c);}
 
   window.scrollTo(0,0);
   renderZones();
 }
 
-function selectMC(chosen, correct){
-  if(mcAnswered)return;
-  mcAnswered=true;
-  const c=ZONES[currentZone].qs[currentCard];
+// Pinta el resultado de un MC (deshabilita, marca elegido/correcto, muestra feedback).
+// Lo usan selectMC (al responder) y renderCard (al restaurar una respuesta guardada).
+function showMCResult(chosen, correct, c){
   const isCorrect=chosen===correct;
   document.querySelectorAll('.mc-opt').forEach(b=>b.disabled=true);
   document.getElementById('mc-opt-'+chosen).classList.add(isCorrect?'correct':'wrong');
@@ -681,6 +753,22 @@ function selectMC(chosen, correct){
   document.getElementById('mc-feedback-area').innerHTML=
     `<div class="mc-feedback ${isCorrect?'ok':'ko'}" style="text-align:left;line-height:1.6">`+
     `<strong>${isCorrect?'✓ Correcto':'✗ Incorrecto'}</strong> — ${c.why||''}</div>`;
+}
+
+function selectMC(chosen, correct){
+  if(mcAnswered)return;
+  mcAnswered=true;
+  const c=ZONES[currentZone].qs[currentCard];
+  showMCResult(chosen,correct,c);
+  const mc=loadMC();mc[curId]={o:curPerm,c:chosen};saveMC(mc);   // persistir la respuesta
+}
+
+function resetCard(){
+  const z=ZONES[currentZone],id=z.id+'_'+currentCard;
+  if(!confirm('¿Resetear esta card? Se borra tu respuesta y vuelve a quedar sin responder.'))return;
+  load();seen.delete(id);save();
+  const mc=loadMC();delete mc[id];saveMC(mc);
+  renderCard();
 }
 
 function prevCard(){if(currentCard>0){currentCard--;renderCard()}}

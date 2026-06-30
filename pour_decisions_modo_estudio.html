@@ -29,6 +29,7 @@
     <div class="eyebrow">Segundo Parcial · VR con Meta SDK y Unity</div>
     <h1 class="home-title">Pour<br><span class="accent">Study</span></h1>
     <p class="home-lead">Herramienta de estudio para Tecnologías Disruptivas. Flashcards con multiple choice, simulacro interactivo y modo aplicado.</p>
+    <div id="continue-cta"></div>
     <div class="stats-bar">
       <div class="stat-card"><div class="val" id="stat-rev" style="color:var(--blue)">0/0</div><div class="label">Revisados</div></div>
       <div class="stat-card"><div class="val" id="stat-zones" style="color:var(--green)">0/9</div><div class="label">Zonas</div></div>
@@ -62,6 +63,9 @@
     <button class="nav-btn" id="btn-prev" onclick="prevCard()">← Anterior</button>
     <div class="card-counter" id="card-counter"></div>
     <button class="nav-btn" id="btn-next" onclick="nextCard()">Siguiente →</button>
+  </div>
+  <div class="card-nav" style="justify-content:center">
+    <button class="nav-btn" id="btn-reset-card" onclick="resetCard()">↺ Resetear esta card</button>
   </div>
 </div>
 
