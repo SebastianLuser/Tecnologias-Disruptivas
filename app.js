@@ -70,12 +70,7 @@ const ZONES=[
   body:`No se percibe como un bug técnico: se siente como <strong>incomodidad o mareo</strong>. Si los movimientos son forzados o la escala está mal calibrada, el cerebro rechaza la experiencia físicamente.`,
   q:'Si la corporalidad está mal diseñada, ¿cómo lo percibe el jugador?',
   mc:['Como un error de software visible (un objeto que no responde)','Como incomodidad o mareo físico, no como un bug','Como una caída de FPS o un tirón en la imagen','No lo percibe a menos que sea programador'],correct:1,
-  why:'Una corporalidad fallida no se lee como bug: se siente como incomodidad/mareo. El cuerpo rechaza la experiencia.'},
- {tag:'Caso límite',title:'Lone Echo: el cuerpo entero como UI',
-  body:`<strong>Lone Echo</strong> lleva al extremo "el cuerpo como UI": te movés literalmente con tus brazos en gravedad cero, sin ninguna UI tradicional. La interacción es completamente física. Llevado al extremo, <em>el cuerpo entero es la interfaz</em>.`,
-  q:'¿Qué juego lleva al extremo "el cuerpo como UI"?',
-  mc:['Beat Saber','Half-Life: Alyx','Lone Echo','Superhot VR'],correct:2,
-  why:'Lone Echo: te desplazás empujándote con los brazos en gravedad cero, sin UI tradicional. El cuerpo entero es la interfaz.'}
+  why:'Una corporalidad fallida no se lee como bug: se siente como incomodidad/mareo. El cuerpo rechaza la experiencia.'}
 ]},
 {id:'interacciones',name:'Interacciones Meta SDK',icon:'🤜',color:'#E8822E',desc:'Interactor/Interactable, Grab, Snap completo, Event Wrappers completos, poses y gizmos',qs:[
  {tag:'Interactor / Interactable',title:'Interactor vs Interactable',
