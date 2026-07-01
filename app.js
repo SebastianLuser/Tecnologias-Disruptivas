@@ -595,6 +595,141 @@ SIMULACROS[3].sample=6;
 SIMULACROS[3].questions=FLUJOS_CORE.map(f=>({type:'order',label:'Flujo · '+f.t,q:'<p>'+f.prompt+'</p>',steps:f.steps,why:'<p>'+f.why+'</p>'}));
 SIMULACROS[3].desc='Ordená los pasos de cada procedimiento. Toma 6 flujos al azar (de '+FLUJOS_CORE.length+') por intento; cambian cada vez.';
 
+// ── Simulacro 5: modelo REAL del Parcial N°2 (consignas calcadas del examen). ──
+// Respuestas modelo / V-F / fix de código derivados y validados contra los apuntes .md del repo.
+SIMULACROS[4]={id:5,title:'Simulacro 5 — Examen Parcial N°2',
+ desc:'Modelo real del Parcial N°2 (UADE · Depto. de Videojuegos · Prof. López Juan Ignacio). 10 consignas calcadas del examen: desarrollo, V/F con justificación y corrección de código. Se corrige al entregar.',
+ questions:[
+  {type:'written',label:'Corporalidad, memoria muscular, embodiment y affordance',
+   q:`<p>¿Cómo se relacionan los conceptos de corporalidad, memoria muscular, embodiment y affordance dentro de una experiencia de realidad virtual? Explica por qué es importante contemplarlos durante el diseño de un tutorial inicial.</p>`,
+   keywords:['corporalidad','cuerpo','embodiment','extensión','memoria muscular','hábitos','automática','affordance','comunica','tutorial','gradual','acciones básicas'],
+   answer:`<p><strong>Corporalidad:</strong> el cuerpo del jugador es la herramienta principal de interacción; hay que contemplar sus capacidades y limitaciones (alcance, altura, espacio) para que las acciones sean naturales. <strong>Embodiment:</strong> la sensación de que el cuerpo virtual es propio, que surge cuando las manos virtuales responden bien a los movimientos (una extensión de uno mismo → inmersión). <strong>Memoria muscular:</strong> al repetir movimientos se forman hábitos motores casi automáticos. <strong>Affordance:</strong> el objeto comunica visualmente cómo se usa (una palanca invita a accionarla). En un <strong>tutorial inicial</strong> importan porque hay que introducir las mecánicas <strong>de forma gradual</strong> (primero acciones básicas) para construir memoria muscular, con objetos que se expliquen solos (affordance) y una escala/corporalidad bien calibrada que sostenga el embodiment y evite incomodidad o mareo.</p>`},
+
+  {type:'vf',label:'Verdadero o Falso (10 afirmaciones, justificá las Falsas)',
+   q:`<p>Completa V o F según corresponda, justifica las F:</p>`,
+   statements:[
+    {text:'El uso de Interactors determina los objetos con los que de una u otra forma podremos interactuar.',answer:false,exp:'Son los Interactables los que definen qué objetos reciben la acción; los Interactors son quienes la realizan (manos, controles, rayos).'},
+    {text:'El sdk de meta se compone solo por los building block.',answer:false,exp:'Los Building Blocks son solo módulos pre-armados; el SDK incluye además Core, Interaction, Movement, Mixed Reality, Audio, Haptics, etc.'},
+    {text:'El SDK de Meta incluye prefabs y visualizaciones preconfiguradas para representar manos y controladores.',answer:true,exp:'Correcto: ofrece Synthetic/Virtual Hands y prefabs como OVR Controller Driven Hands.'},
+    {text:'Es necesario contemplar mecánicas auxiliares a nivel de diseño para evitar sensaciones extrañas y errores en la experiencia de usuario, como acompañar el desplazamiento con el teleport.',answer:true,exp:'Correcto: el diseño de confort (teleport, ayudas visuales) reduce el malestar en los desplazamientos.'},
+    {text:'El building block conocido como Positional Snap, nos facilita el colocar objetos en sitios con una configuración espacial predeterminada.',answer:false,exp:'No existe un building block llamado "Positional Snap": esa funcionalidad se logra con los componentes Snap Interactor y Snap Interactable.'},
+    {text:'El abuso de elementos de UI en Juegos de VR está correctamente estandarizado.',answer:false,exp:'Al contrario: el exceso de UI rompe la inmersión; se recomienda integrar la información en el entorno (UI diegética).'},
+    {text:'Para acceder a funcionalidades como el handTracking de los metaquest 2, 3 y 3s, podemos poner cualquier sdk y buscar el building block correspondiente.',answer:false,exp:'El hand tracking es una función propia del hardware Meta: requiere el Meta XR SDK, no cualquier SDK.'},
+    {text:'El Passtrought (que destaca para aplicaciones en realidad mixta) siempre es obligatorio de aplicar en desarrollos de VR.',answer:false,exp:'El passthrough es opcional y propio de la realidad mixta; no es obligatorio en VR.'},
+    {text:'La tasa de refresco a lograr en el juego es de 60 FPS.',answer:false,exp:'El objetivo es más de 75 FPS en todo momento; 60 FPS es insuficiente para VR.'},
+    {text:'Los componentes reticle data mesh y reticle data icon son indispensables para la detección de superficies de interacción en base a análisis de planos/mallas.',answer:false,exp:'Los reticle data son la representación VISUAL del retículo; la detección de superficies la hace el dispositivo, no los reticles.'}
+   ]},
+
+  {type:'written',label:'Problemas de un proyecto Meta Quest 3s',
+   q:`<p>Estoy haciendo un juego de realidad virtual para los Meta Quest 3s y el proyecto presenta algunos problemas que no logro terminar de comprender:</p>
+   <ol>
+    <li>Hay un objeto que quiero agarrar con las dos manos, al mismo le asigne un máximo de interacciones -1, un componente llamado move towards target provider, otro llamado grab, grab interactable y touch hand grab interactable. Asigne un evento para que haga ruido cuando lo agarro en base al touch hand grab interactable pero no se dispara, no hace nada.</li>
+    <li>Mi diseño de niveles proviene de archivos FBX de blender, El player tiene programado siempre que no puede caer al infinito, pues el Rigidbody del mismo esta frizeado en la posición de Y.</li>
+    <li>Al momento de probar el juego en el emulador MetaXR todo funciona bien pero al ponerme los Meta quest y probarlo el personaje ya no se mueve para nada, como si le hubiese frizado las posiciones en x y z.</li>
+    <li>Por ultimo tengo un objeto que posee el componente grabbable pero no lo puedo agarrar ni asociarle un gizmo de interacción ni nada. Quiero agarrarlo, pero no está funcionando.</li>
+    <li>El ultimo que no entiendo es el objeto del snap. Logre hacer un cubito que, si lo acerco a un objeto, se acomode de forma fija en una posición, pero al tratar de agarrarlo de nuevo y llevármelo, este se queda "orbitando" y rompe las físicas. No me sigue.</li>
+   </ol>
+   <p>Explica estos problemas y como solucionarlos.</p>`,
+   keywords:['pointable unity event wrapper','grabbable','when select','vulkan','opengl','collider','hand grab interactable','interactor','is trigger','is kinematic','use gravity','freeze','gravedad'],
+   answer:`<p><strong>1.</strong> El sonido no suena porque el evento está en el <em>Touch Hand Grab Interactable</em>, que no dispara ese evento. Para feedback de agarre se usa un <strong>Pointable Unity Event Wrapper</strong> referenciando el Grabbable; en <strong>When Select</strong> se llama a AudioSource.Play().</p>
+   <p><strong>2.</strong> Freezar la posición Y del Rigidbody es un parche: enmascara errores de diseño (caídas, plataformas mal puestas) porque nunca se aplica la gravedad real. Conviene no freezar Y y controlar las caídas con NavMesh/zonas seguras o colliders, para que el error se note.</p>
+   <p><strong>3.</strong> Es un problema de build/plataforma: en Player Settings la API gráfica suele estar en <strong>OpenGL ES3</strong> y hay que pasarla a <strong>Vulkan</strong> (y aplicar el Project Setup Tool) para que funcione en el dispositivo real.</p>
+   <p><strong>4.</strong> El Grabbable solo no alcanza: falta el <strong>Hand Grab Interactable</strong> (o Grab Interactable para controles), un <strong>Collider</strong> que defina la zona de agarre y tener los <strong>Interactors</strong> (Hand/Controller Grab Interactor) en las manos/controles del rig.</p>
+   <p><strong>5.</strong> El objeto "orbita" por físicas mal configuradas en el Snap. En el <strong>Snap Interactable</strong>: Collider con <strong>Is Trigger = true</strong> y Rigidbody con <strong>Is Kinematic = true</strong> y <strong>Use Gravity = false</strong>, para que no pelee con el Move Towards Target Provider al re-agarrarlo.</p>`},
+
+  {type:'code',label:'Corregir el código del interaction manager',
+   q:`<p>El siguiente fragmento de código pertenece a un interaction manager:</p>
+   <pre>using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[RequiredComponent(typeof(InteractableUnityEventWrapper))]
+public class manager : MonoBehaviour
+{   public int score=0;
+    public float timer=60f;
+    AudioSource lvlAudioSource;
+    public AudioClip dataCommonSound;
+
+    void Start()
+    {lvlAudioSource=GameObject.Find("LvlAudioSource");}
+
+    void SaveScore()
+    {PlayerPrefs.SetInt("Score",score);
+    print("scoreGuardado");
+    lvlAudioSource.clip=dataCommonSound;
+    lvlAudioSource.Play();}
+
+    void LoadScore()
+    {score=PlayerPrefs.GetInt("Score");
+    print("scoreCargado");
+    lvlAudioSource.clip=dataCommonSound;
+    lvlAudioSource.Play();}
+}</pre>
+   <p>El mismo está pensado para usarse siguiendo este flujo de trabajo:</p>
+   <p><strong>Guardado de datos:</strong> Toco un objeto de guardado ➔ Se dispara el método SaveScore ➔ Se elimina el objeto</p>
+   <p><strong>Carga de datos:</strong> Cuando inicio el nivel ➔ Se dispara el método LoadScore</p>
+   <p>El problema es que no llegue a programar la destrucción del objeto de guardado ni a asignarlo porque hay un error en el código que no me deja visualizar en el inspector de unity nada. Además, me dijeron que por como está ahora programado tampoco podría usar un event wrapper.</p>
+   <p>Corrige el código, el esquema del flujo de trabajo y explica con tus palabras en base a lo que el sdk ofrece como corregir esta situación. (se lo más específico y técnico posible)</p>`,
+   keywords:['requirecomponent','getcomponent','audiosource','public','interactable unity event wrapper','when select','destroy','compila'],
+   check:{must:['RequireComponent','GetComponent','public\\s+void\\s+SaveScore','public\\s+void\\s+LoadScore'],forbid:['RequiredComponent'],order:[]},
+   answer:`<p><strong>Error 1:</strong> <code>RequiredComponent</code> no existe → es <code>[RequireComponent(typeof(InteractableUnityEventWrapper))]</code>. Ese error de compilación es el que deja el <strong>inspector en blanco</strong>: mientras el script no compila, Unity no puede serializar el componente.</p>
+   <p><strong>Error 2:</strong> <code>GameObject.Find("LvlAudioSource")</code> devuelve un GameObject, no un AudioSource → <code>GameObject.Find("LvlAudioSource").GetComponent&lt;AudioSource&gt;()</code>.</p>
+   <p><strong>Error 3 (por qué no se puede usar el event wrapper):</strong> <code>SaveScore()</code> y <code>LoadScore()</code> son privados; un <strong>Interactable/Pointable Unity Event Wrapper</strong> solo puede invocar métodos <strong>públicos</strong> desde el Inspector → <code>public void SaveScore()</code> y <code>public void LoadScore()</code>.</p>
+   <pre>[RequireComponent(typeof(InteractableUnityEventWrapper))]
+public class manager : MonoBehaviour {
+  public int score = 0;
+  public float timer = 60f;
+  AudioSource lvlAudioSource;
+  public AudioClip dataCommonSound;
+
+  void Start(){
+    lvlAudioSource = GameObject.Find("LvlAudioSource").GetComponent&lt;AudioSource&gt;();
+  }
+  public void SaveScore(){
+    PlayerPrefs.SetInt("Score", score);
+    lvlAudioSource.clip = dataCommonSound; lvlAudioSource.Play();
+  }
+  public void LoadScore(){
+    score = PlayerPrefs.GetInt("Score");
+    lvlAudioSource.clip = dataCommonSound; lvlAudioSource.Play();
+  }
+}</pre>
+   <p><strong>Flujo (corregido):</strong> Toco el objeto de guardado ➔ el <strong>Interactable Unity Event Wrapper</strong> dispara <strong>When Select</strong> ➔ llama a <code>SaveScore()</code> ➔ <code>Destroy(gameObject)</code> elimina el objeto. Al iniciar el nivel ➔ <code>LoadScore()</code> (desde Start o un evento de inicio).</p>`},
+
+  {type:'written',label:'Componentes tipo Event Wrapper',
+   q:`<p>Hay muchos tipos de componentes del tipo event wrapper. ¿Cita 3 de ellos y explica para que sirven y que opciones me ofrecen? Dá un ejemplo de uso de cada uno.</p>`,
+   keywords:['pointable unity event wrapper','interactable unity event wrapper','interactor unity event wrapper','when select','when unselect','when hover','grabbable','interactor'],
+   answer:`<p><strong>Pointable Unity Event Wrapper:</strong> expone los eventos de un elemento agarrable/pointable (When Select, Unselect, Hover, Unhover, Release, Move, Cancel) referenciando el Grabbable. Ej.: reproducir un sonido al agarrar un objeto.</p>
+   <p><strong>Interactable Unity Event Wrapper:</strong> misma idea pero sobre un Interactable (Snap, Teleport, etc.). Ej.: ocultar el visual de una zona de Snap en When Select y mostrarlo en When Unselect.</p>
+   <p><strong>Interactor Unity Event Wrapper:</strong> dispara eventos desde el lado del interactor (la mano o el control), no del objeto. Ej.: activar un efecto en la mano cuando empieza a interactuar. En todos, los eventos se enlazan desde el Inspector a métodos públicos de otros objetos, sin escribir código.</p>`},
+
+  {type:'written',label:'Dos formas de crear zonas de teletransporte',
+   q:`<p>Existen dos maneras de crear zonas de teletransporte. Escribe en un esquema de trabajo los componentes asociados para que funcione el teleport y explica con tus palabras como aplicarlo.</p>`,
+   keywords:['teleport interactable','navmesh surface','bake','collider surface','box collider','reticle data teleport','superficie'],
+   answer:`<p><strong>Forma 1 — NavMesh:</strong> Teleport Interactable ➔ NavMesh Surface (en el piso) ➔ ajustar el agente en Window → AI → Navigation ➔ Bake (genera la zona navegable) ➔ referenciar el NavMesh en el Teleport Interactable ➔ Reticle Data Teleport. Ideal para pisos/zonas amplias: detecta automáticamente por dónde se puede caminar.</p>
+   <p><strong>Forma 2 — Collider Surface:</strong> Teleport Interactable (superficie = Collider Surface) ➔ un vacío con Box Collider alineado a la zona (ej. una escalera) ➔ Collider Surface referenciando ese collider ➔ Reticle Data Teleport. Ideal para superficies inclinadas o formas puntuales donde el NavMesh no encaja.</p>`},
+
+  {type:'written',label:'Color de los gizmos de las manos al agarrar',
+   q:`<p>¿Cómo podemos programar que el color de los gizmos de las manos predefinidas por meta en los meta quest 3 y 3s cambien de color al agarrar un objeto?</p>`,
+   keywords:['pointable unity event wrapper','interactable unity event wrapper','when select','when unselect','material','color','mano sintética','hand grab glow'],
+   answer:`<p>Se resuelve con eventos, sin lógica de agarre propia: sobre el objeto agarrable se agrega un <strong>Pointable/Interactable Unity Event Wrapper</strong> y en <strong>When Select</strong> se llama a un método (público) que cambia el <strong>material/color</strong> de la mano sintética (Synthetic Hands), y en <strong>When Unselect</strong> se vuelve al color original. El SDK también trae el <strong>Hand Grab Glow</strong>, que aplica brillo/contorno a la mano al acercarse o agarrar, y sirve como base visual del efecto.</p>`},
+
+  {type:'written',label:'Canvas que solo responde a los rayos de los controles',
+   q:`<p>Si el juego que estoy programando con este SDK es low profile y compatible con dispositivos limitados (al menos en redimiento) quiero producirlo y publicarlo para meta quest 2, 3 y 3s. Pero tengo un problema con el canvas. El mismo solo funciona con rayos desde los controles, pero si voy con las manos, no hace nada.</p><p>Tengo instalado el interaction rig y hand tracking y real hands. Pero no funciona. ¿Cómo puedo solucionarlo?</p>`,
+   keywords:['add poke','poke interaction','add ray','interaction sdk','world space','fix','create','manos','dedo'],
+   answer:`<p>El Canvas tiene Ray (rayo, que usan los controles) pero le falta la interacción directa con la mano. Hay que agregar <strong>Add Poke Interaction</strong>: clic derecho sobre el Canvas → <strong>Interaction SDK → Add Poke Interaction</strong> → Fix (si hace falta, lo pasa a World Space y agrega el módulo) → Create. Poke habilita el toque directo con el dedo; con Ray + Poke el Canvas responde tanto a los controles como a las manos. (El Canvas debe estar en World Space.)</p>`},
+
+  {type:'written',label:'Game feeling en VR',
+   q:`<p>Describe que es el game feeling y por qué es importante en diseño aplicado en VR.</p>`,
+   keywords:['calidad de las sensaciones','respuesta clara','coherente','inmediata','habita','feedback','positivo','negativo','mareo','visual','audio'],
+   answer:`<p>El <strong>game feeling</strong> es la calidad de las sensaciones durante la interacción: cada acción debe producir una respuesta <strong>clara y coherente</strong> (animación, sonido, háptica, cambios visuales, física), y cuanto más inmediata y consistente, más satisfactoria. En VR importa especialmente porque el jugador <strong>habita el juego con su cuerpo</strong>: sin feedback el mundo se siente muerto. Hay que cuidar sobre todo el <strong>feedback negativo</strong>, que se vive físico e intenso (frustración, mareo) y puede romper la presencia o hacer que se saquen el visor. Además el feedback <strong>no puede depender solo del audio</strong>: debe entenderse también de forma <strong>visual</strong>.</p>`},
+
+  {type:'written',label:'Tangibilidad del trabajo',
+   q:`<p>¿De qué hablamos al decir que las actividades de un videojuego deben reflejar TANGIBILIDAD DEL TRABAJO? Dar 3 ejemplos de esto.</p>`,
+   keywords:['consecuencias visibles','comprensibles','realmente hizo','esfuerzo','impacto','inmersión','armar','recargar','colocar objetos'],
+   answer:`<p>La <strong>tangibilidad del trabajo</strong> es que las acciones del jugador produzcan <strong>consecuencias visibles y comprensibles</strong>: que perciba que <strong>realmente hizo algo</strong> y que su esfuerzo tuvo impacto sobre el mundo, lo que refuerza la inmersión. <strong>3 ejemplos:</strong> (1) armar un mecanismo pieza por pieza; (2) recargar un arma manualmente; (3) colocar objetos en posiciones específicas (ej. Positional Snap).</p>`}
+ ]};
+
 function normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
 // Granularidad de cuartos: 0 · 0.25 · 0.5 · 0.75 · 1 (para todo menos multiple choice).
 function q4(x){x=Math.round((x||0)*4)/4;return x<0?0:x>1?1:x;}
