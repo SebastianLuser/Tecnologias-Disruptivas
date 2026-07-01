@@ -632,24 +632,28 @@ function total(){return ZONES.reduce((s,z)=>s+z.qs.length,0)}
 function zonesDone(){return ZONES.filter(z=>z.qs.every((_,i)=>seen.has(z.id+'_'+i))).length}
 function exams(){return parseInt(localStorage.getItem('pd_exams')||'0')}
 function lastNota(){return localStorage.getItem('pd_nota')||'—'}
+function notas(){try{const a=JSON.parse(localStorage.getItem('pd_notas')||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
+function avgNota(){const a=notas();if(!a.length)return'—';return(Math.round(a.reduce((s,x)=>s+x,0)/a.length*10)/10)+'/10';}
 
 function updateHUD(){
   load();
-  const r=seen.size,t=total(),z=zonesDone(),e=exams(),n=lastNota();
+  const r=seen.size,t=total(),z=zonesDone(),e=exams(),n=lastNota(),p=avgNota();
   document.getElementById('hud-rev').textContent=r+'/'+t;
   document.getElementById('hud-zones').textContent=z+'/9';
   document.getElementById('hud-exams').textContent=e;
   document.getElementById('hud-nota').textContent=n;
+  document.getElementById('hud-prom').textContent=p;
   document.getElementById('stat-rev').textContent=r+'/'+t;
   document.getElementById('stat-zones').textContent=z+'/9';
   document.getElementById('stat-exams').textContent=e;
   document.getElementById('stat-nota').textContent=n;
+  document.getElementById('stat-prom').textContent=p;
 }
 
 function resetAll(){
   showModal({title:'¿Resetear todo el progreso?',msg:'Se borran revisadas, respuestas y notas de todos los simulacros. No se puede deshacer.',
     okLabel:'Resetear todo',cancelLabel:'Cancelar',danger:true,onOk:()=>{
-      localStorage.removeItem('pd_seen');localStorage.removeItem('pd_exams');localStorage.removeItem('pd_nota');localStorage.removeItem('pd_sims');
+      localStorage.removeItem('pd_seen');localStorage.removeItem('pd_exams');localStorage.removeItem('pd_nota');localStorage.removeItem('pd_notas');localStorage.removeItem('pd_sims');
       localStorage.removeItem('pd_pos');localStorage.removeItem('pd_mc');
       seen=new Set();updateHUD();renderZones();renderSimCards();renderContinue();
     }});
@@ -1190,6 +1194,7 @@ async function submitExam(){
   const score=exam.questions.length?Math.round(total/exam.questions.length*100)/10:0;
   localStorage.setItem('pd_exams',(parseInt(localStorage.getItem('pd_exams')||'0')+1));
   localStorage.setItem('pd_nota',score+'/10');
+  {const h=notas();h.push(score);localStorage.setItem('pd_notas',JSON.stringify(h));}
   const done=simsDone();if(!done.includes(exam.simId)){done.push(exam.simId);localStorage.setItem('pd_sims',JSON.stringify(done));}
   updateHUD();renderSimCards();
   renderResults(sim,detail,score);
@@ -1530,6 +1535,9 @@ function toggleFlowWhy(){if(fp){fp.showWhy=!fp.showWhy;renderDiagrams();}}
 
 function selectDgTab(tab){dgTab=tab;flowMode='ver';fp=null;renderDiagrams();}
 function selectDgItem(i){dgSel[dgTab]=i;if(dgTab==='flow'){flowMode='ver';fp=null;}renderDiagrams();}
+function dgLen(){return (dgTab==='jer'?DIAGRAMS:FLUJOS_DIAG).length;}
+function dgPrev(){const s=(dgSel[dgTab]||0)-1;if(s>=0)selectDgItem(s);}
+function dgNext(){const s=(dgSel[dgTab]||0)+1;if(s<dgLen())selectDgItem(s);}
 
 function renderDiagrams(){
   const jer=dgTab==='jer';
@@ -1541,9 +1549,16 @@ function renderDiagrams(){
   document.getElementById('dg-desc').textContent=jer
     ? 'Qué contiene cada prefab y dónde va cada cosa. Elegí una jerarquía.'
     : `Aprendé el orden razonándolo: "Ver" explica por qué cada paso va donde va, "Practicar" te lo toma. Dominados ${FLUJOS_DIAG.filter(f=>mastered.has(f.t)).length}/${FLUJOS_DIAG.length}.`;
-  document.getElementById('dg-chips').innerHTML=items.map((it,i)=>
-    `<button class="dg-chip${i===sel?' active':''}" onclick="selectDgItem(${i})">${jer?it.chip:((mastered.has(it.t)?'✓ ':'')+it.t)}</button>`
+  const opts=items.map((it,i)=>
+    `<option value="${i}"${i===sel?' selected':''}>${jer?it.chip:((mastered.has(it.t)?'✓ ':'')+it.t)}</option>`
   ).join('');
+  document.getElementById('dg-chips').innerHTML=
+    `<div class="dg-nav">
+       <button class="dg-arrow" onclick="dgPrev()"${sel<=0?' disabled':''} aria-label="Anterior">←</button>
+       <select class="dg-select" onchange="selectDgItem(+this.value)" aria-label="Elegir">${opts}</select>
+       <button class="dg-arrow" onclick="dgNext()"${sel>=items.length-1?' disabled':''} aria-label="Siguiente">→</button>
+       <span class="dg-count">${sel+1}/${items.length}</span>
+     </div>`;
   document.getElementById('diagrams-content').innerHTML=
     jer?dgBlock(items[sel]):((flowMode==='practicar'&&fp)?dgFlowPractice(items[sel]):dgFlowView(items[sel]));
 }
