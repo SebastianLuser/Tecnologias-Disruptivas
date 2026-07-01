@@ -161,7 +161,13 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .punto-answer pre{font-family:monospace;font-size:12px;background:rgba(0,0,0,.35);padding:14px;border-radius:10px;overflow-x:auto;line-height:1.7;border-left:3px solid var(--green);margin:10px 0;color:var(--text)}
 /* V/F INTERACTIVE */
 .vf-list{list-style:none;margin:14px 0 0}
-.vf-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;line-height:1.5;color:var(--text)}
+.vf-item{display:flex;flex-direction:column;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;line-height:1.5;color:var(--text)}
+.vf-row{display:flex;align-items:flex-start;gap:10px;width:100%}
+.vf-just{width:100%;background:rgba(0,0,0,.22);border:1px solid var(--border);border-left:3px solid var(--pink);border-radius:8px;padding:8px 12px;color:var(--text);font-family:system-ui;font-size:13px;line-height:1.55;resize:vertical;min-height:52px}
+.vf-just:focus{outline:none;border-color:var(--border-h);border-left-color:var(--pink)}
+.vf-just::placeholder{color:var(--muted)}
+.vf-just-r{display:block;margin-top:2px;color:var(--muted);font-size:13px}
+.vf-just-r em{color:var(--pink);font-style:normal}
 .vf-item:last-child{border-bottom:none}
 .vf-num{font-family:'Pixelify Sans',monospace;font-size:12px;color:var(--muted);min-width:18px;margin-top:2px}
 .vf-text{flex:1}

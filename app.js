@@ -458,6 +458,7 @@ public class manager : MonoBehaviour
     }
 }</pre>`,
    keywords:['requirecomponent','getcomponent','audiosource','find'],
+   check:{must:['RequireComponent','GetComponent','AudioSource'],forbid:['RequiredComponent'],order:[]},
    answer:`<p><strong>Error 1:</strong> <code>RequiredComponent</code> → <code>RequireComponent</code> (sin la "d").</p><p><strong>Error 2:</strong> <code>GameObject.Find()</code> devuelve un GameObject; falta encadenar <code>.GetComponent&lt;AudioSource&gt;()</code>.</p><pre>[RequireComponent(typeof(InteractableUnityEventWrapper))]
 public class manager : MonoBehaviour {
   AudioSource lvlAudioSource;
@@ -481,14 +482,14 @@ public class manager : MonoBehaviour {
    q:`<p>¿Qué es la Tangibilidad del Trabajo y por qué los simuladores la cumplen siempre? Dá un ejemplo.</p>`,
    keywords:['consecuencias visibles','esfuerzo','impacto','paso a paso','tarea real','simulador','observable'],
    answer:`<p>Las acciones deben producir consecuencias visibles y comprensibles: el usuario percibe que realmente hizo algo y que su esfuerzo tuvo impacto. Los simuladores la cumplen porque replican tareas reales paso a paso con resultado observable (ej: ensamblar pieza por pieza).</p>`},
-  {type:'mc',label:'Gizmos en el editor',
-   q:`<p>Querés colorear en la Vista de Escena si un asiento está ocupado/libre, sin afectar el runtime. ¿Qué usás?</p>`,
-   opts:['Un método público invocado desde un botón del Inspector','El callback OnDrawGizmos(), que corre solo en el editor, con Gizmos.color','Un shader que pinta el objeto durante el juego','Update() con un condicional que dibuja sobre la pantalla'],
-   correct:1},
-  {type:'mc',label:'Canvas y el wizard del SDK',
-   q:`<p>El Canvas responde al dedo pero no al rayo del control, aunque el Ray Interactor está activo. ¿Por qué?</p>`,
-   opts:['El Canvas quedó en Screen Space en vez de World Space','Solo se corrió Add Poke Interaction; falta Add Ray Interaction','La versión del paquete de interacciones es inferior a la 62','El Graphic Raycaster del Canvas está desactivado'],
-   correct:1}
+  {type:'written',label:'Gizmos en el editor',
+   q:`<p>Querés colorear en la Vista de Escena si un asiento está ocupado/libre, sin afectar el runtime. ¿Qué usás y cómo?</p>`,
+   keywords:['ondrawgizmos','editor','gizmos.color','antes'],
+   answer:`<p>El callback <code>OnDrawGizmos()</code>, que corre <strong>solo en el editor</strong> (no en el build/runtime). Asignás <code>Gizmos.color</code> <strong>antes</strong> del draw call (ej. DrawWireSphere) y conviene envolverlo en <code>#if UNITY_EDITOR</code>.</p>`},
+  {type:'written',label:'Canvas y el wizard del SDK',
+   q:`<p>El Canvas responde al dedo pero no al rayo del control, aunque el Ray Interactor está activo. ¿Por qué pasa y cómo se soluciona?</p>`,
+   keywords:['add ray','poke','world space','fix','create'],
+   answer:`<p>Solo se corrió <strong>Add Poke Interaction</strong>; falta <strong>Add Ray Interaction</strong> (Poke y Ray son interactables separados). Clic derecho en el Canvas → Interaction SDK → Add Ray Interaction → Fix (lo pasa a World Space y agrega el módulo) → Create. El Canvas debe estar en World Space.</p>`}
  ]},
  {id:2,title:'Simulacro 2',desc:'10 preguntas de formato mixto: relacionar conceptos, verdadero/falso, opción múltiple, respuestas escritas, una de código y una de ordenar pasos. Las respuestas se revelan recién al entregar.',questions:[
   {type:'match',label:'Relacionar conceptos de iluminación',
@@ -524,6 +525,7 @@ public class manager : MonoBehaviour {
     }
 }</pre>`,
    keywords:['gizmos.color','antes'],
+   check:{must:['Gizmos\\.color'],forbid:[],order:[['Gizmos\\.color','DrawWireSphere']]},
    answer:`<p><strong>Error 1:</strong> <code>color = ...</code> no existe en ese contexto; es <code>Gizmos.color = ...</code>.</p><p><strong>Error 2:</strong> hay que asignar <code>Gizmos.color</code> <strong>antes</strong> de dibujar, no después (si no, no afecta a ese DrawWireSphere).</p><pre>void OnDrawGizmos(){
   Gizmos.color = ocupado ? Color.red : Color.green;
   Gizmos.DrawWireSphere(transform.position, 0.2f);
@@ -544,14 +546,14 @@ public class manager : MonoBehaviour {
    q:`<p>¿Qué causa el mareo (motion sickness) en VR y cómo se mitiga?</p>`,
    keywords:['conflicto','sensoriomotor','cuerpo','teletransporte','snap turning','viñeta','fps'],
    answer:`<p>Aparece por el <strong>conflicto sensoriomotor</strong>: lo que ves no coincide con lo que siente tu cuerpo. Se mitiga con teletransporte, snap turning, viñeta al moverse, dando control de cámara al jugador y manteniendo <strong>72–90 FPS</strong> estables.</p>`},
-  {type:'mc',label:'¿Qué es OpenXR?',
-   q:`<p>¿Qué es OpenXR?</p>`,
-   opts:['Un SDK propietario de Meta exclusivo para Quest','Un estándar abierto de Khronos para VR/AR multiplataforma','La plataforma de distribución de apps VR de Steam','Una capa de compatibilidad solo para visores de PC'],
-   correct:1},
-  {type:'mc',label:'Reticles',
-   q:`<p>¿Para qué sirven los Reticles?</p>`,
-   opts:['Para representar las manos virtuales del jugador','Para comunicar visualmente si una superficie u objetivo es válido para una acción','Para acelerar el renderizado descartando objetos lejanos','Para marcar el punto exacto donde mira el usuario'],
-   correct:1}
+  {type:'written',label:'¿Qué es OpenXR?',
+   q:`<p>¿Qué es OpenXR y qué ventaja da?</p>`,
+   keywords:['estandar abierto','khronos','multiplataforma','interoperabilidad','fabricantes'],
+   answer:`<p>Es un <strong>estándar abierto</strong> del grupo <strong>Khronos</strong> para VR/AR. Su ventaja es la <strong>interoperabilidad</strong>: una app bien hecha sobre OpenXR corre en visores de distintos fabricantes con mínimos cambios (multiplataforma), sin atarse a un ecosistema.</p>`},
+  {type:'written',label:'Reticles',
+   q:`<p>¿Para qué sirven los Reticles? Dá un ejemplo.</p>`,
+   keywords:['indicador visual','valido','superficie','teletransporte','apuntar'],
+   answer:`<p>Son <strong>indicadores visuales</strong> que comunican si una superficie u objetivo es <strong>válido</strong> para una acción. Ej.: en el teletransporte el reticle cambia (válido/inválido) según el destino; también al apuntar objetos o anclar planos en AR.</p>`}
  ]},
  {id:3,title:'Simulacro 3 — Repaso Integral',desc:'Examen integral: cubre TODO el temario con opción múltiple.',questions:[]}
 ];
@@ -929,9 +931,9 @@ function startExam(id){
   const qs=(sim.sample&&sim.questions.length>sim.sample)
     ? shuffleSteps(sim.questions.length).slice(0,sim.sample).map(k=>sim.questions[k])
     : sim.questions;
-  exam={simId:id,questions:qs,answers:{},shuf:{},submitted:false,warned:false};
+  exam={simId:id,questions:qs,answers:{},vfjust:{},shuf:{},submitted:false,warned:false};
   qs.forEach((q,i)=>{
-    if(q.type==='vf')exam.answers[i]={};
+    if(q.type==='vf'){exam.answers[i]={};exam.vfjust[i]={};}
     else if(q.type==='order')exam.answers[i]={picked:[],pool:shuffleSteps(q.steps.length)};
     else if(q.type==='mc'){
       exam.answers[i]=null;
@@ -974,10 +976,11 @@ function renderQuestion(q,i){
   } else if(q.type==='vf'){
     inner='<ul class="vf-list">'+q.statements.map((s,k)=>{
       const v=exam.answers[i][k];
-      return `<li class="vf-item"><span class="vf-num">${k+1}.</span><span class="vf-text">${s.text}</span><span class="vf-btns">
+      const just=v===false?`<textarea class="vf-just" data-q="${i}" data-st="${k}" placeholder="Justificá por qué es falsa…">${escapeHtml((exam.vfjust[i]||{})[k]||'')}</textarea>`:'';
+      return `<li class="vf-item"><div class="vf-row"><span class="vf-num">${k+1}.</span><span class="vf-text">${s.text}</span><span class="vf-btns">
         <button class="vf-btn${v===true?' sel':''}" data-q="${i}" data-st="${k}" data-val="t">V</button>
         <button class="vf-btn${v===false?' sel':''}" data-q="${i}" data-st="${k}" data-val="f">F</button>
-      </span></li>`;
+      </span></div>${just}</li>`;
     }).join('')+'</ul>';
   } else if(q.type==='order'){
     const st=exam.answers[i];
@@ -1014,17 +1017,23 @@ function bindExam(){
     exam.answers[+b.dataset.q].picked=[];renderExam();
   });
   document.querySelectorAll('.exam-ta').forEach(t=>t.oninput=()=>{exam.answers[+t.dataset.q]=t.value;updateExamProg();});
+  document.querySelectorAll('.vf-just').forEach(t=>t.oninput=()=>{(exam.vfjust[+t.dataset.q]||(exam.vfjust[+t.dataset.q]={}))[+t.dataset.st]=t.value;updateExamProg();});
 }
 
-function isAnswered(q,a){
+function isAnswered(q,a,i){
   if(q.type==='mc')return a!==null&&a!==undefined;
-  if(q.type==='vf')return Object.keys(a).length===q.statements.length;
+  if(q.type==='vf'){
+    if(Object.keys(a).length!==q.statements.length)return false;
+    // hay que justificar las que se marcaron Falsas
+    const j=exam.vfjust[i]||{};
+    return q.statements.every((s,k)=>a[k]!==false||(j[k]||'').trim().length>0);
+  }
   if(q.type==='order')return a.picked.length===q.steps.length;
   return (a||'').trim().length>0;
 }
 
 function updateExamProg(){
-  const n=exam.questions.filter((q,i)=>isAnswered(q,exam.answers[i])).length;
+  const n=exam.questions.filter((q,i)=>isAnswered(q,exam.answers[i],i)).length;
   document.getElementById('exam-prog').textContent=n+'/'+exam.questions.length+' respondidas';
 }
 
@@ -1077,16 +1086,67 @@ async function ensureSemModel(){
 async function _semEmbed(t){const o=await _semExtractor(t,{pooling:'mean',normalize:true});return o.data;}
 function _semCos(a,b){let s=0;for(let i=0;i<a.length;i++)s+=a[i]*b[i];return s;}
 function stripHtml(h){const d=document.createElement('div');d.innerHTML=h||'';return (d.textContent||'').replace(/\s+/g,' ').trim();}
-async function _semRef(q){if(_semRefCache.has(q))return _semRefCache.get(q);const v=await _semEmbed(stripHtml(q.answer));_semRefCache.set(q,v);return v;}
+// Referencia por pregunta: embedding de la respuesta modelo + de cada keyword (anclas de concepto).
+async function _semRef(q){
+  if(_semRefCache.has(q))return _semRefCache.get(q);
+  const ans=await _semEmbed(stripHtml(q.answer));
+  const concepts=[];
+  for(const k of (q.keywords||[]))concepts.push(await _semEmbed(k));
+  const v={ans,concepts};_semRefCache.set(q,v);return v;
+}
 async function scoreSemantic(text,q){
   const kw=scoreWritten(text,q.keywords);              // piso/fallback léxico
   if(!_semReady||!normalize(text)||!q.answer)return kw;
   try{
-    const sim=_semCos(await _semEmbed(text),await _semRef(q));
-    const sem=sim>=0.70?1:(sim>=0.50?0.5:0);           // umbrales (validados)
-    if(sem<=kw.score)return kw;                        // máx(léxico, semántico)
+    const emb=await _semEmbed(text);
+    const ref=await _semRef(q);
+    // (a) similitud global vs respuesta modelo
+    const g=_semCos(emb,ref.ans);
+    const gScore=g>=0.70?1:(g>=0.50?0.5:0);
+    // (b) cobertura de conceptos: cuántas ideas clave aparecen (semánticamente)
+    let cScore=0;
+    if(ref.concepts.length){
+      const cov=ref.concepts.filter(c=>_semCos(emb,c)>=0.55).length/ref.concepts.length;
+      cScore=cov>=0.7?1:(cov>=0.4?0.5:0);
+    }
+    const sem=Math.max(gScore,cScore);
+    if(sem<=kw.score)return kw;                        // máx(léxico, global, cobertura)
     return {score:sem,label:sem===1?'✅ Correcto':'⚡ Parcialmente correcto'};
   }catch(e){return kw;}
+}
+
+// Corrección estructural de código: valida el fix real, no keywords sueltos.
+// q.check = {must:[regex], forbid:[regex], order:[[a,b]]} (a debe aparecer antes que b).
+function scoreCode(text,q){
+  const t=text||'';
+  if(!t.trim())return {score:0,label:'❌ Sin responder'};
+  const c=q.check||{};
+  const must=c.must||[],forbid=c.forbid||[],order=c.order||[];
+  const mustHit=must.filter(m=>new RegExp(m).test(t)).length;
+  const noForbid=forbid.every(f=>!new RegExp(f).test(t));
+  const orderOk=order.every(([a,b])=>{const ia=t.search(new RegExp(a)),ib=t.search(new RegExp(b));return ia>-1&&ib>-1&&ia<ib;});
+  if(mustHit===must.length&&noForbid&&orderOk)return {score:1,label:'✅ Correcto'};
+  if(noForbid&&mustHit>=Math.ceil(must.length*0.6))return {score:0.5,label:'⚡ Parcialmente correcto'};
+  return {score:0,label:'❌ Necesita repaso'};
+}
+
+// V/F con justificación de las falsas: marca correcta + justificación (semántica vs la explicación).
+async function scoreVF(q,marks,just){
+  const tot=q.statements.length;let sum=0;
+  for(let k=0;k<tot;k++){
+    const s=q.statements[k],mark=marks[k];
+    if(s.answer===true){sum+=(mark===true)?1:0;continue;}   // verdadera: solo importa la marca
+    if(mark!==false)continue;                                // falsa no identificada → 0
+    const j=((just||{})[k]||'').trim();
+    if(!_semReady||!j){sum+=j?1:0.5;continue;}               // fallback sin modelo
+    try{
+      const sim=_semCos(await _semEmbed(j),await _semEmbed(stripHtml(s.exp||'')));
+      sum+=sim>=0.6?1:(sim>=0.4?0.75:(j?0.6:0.5));
+    }catch(e){sum+=j?1:0.5;}
+  }
+  let hit=0;q.statements.forEach((s,k)=>{if(marks[k]===s.answer)hit++;});
+  const score=tot?sum/tot:0,norm=score>=0.999?1:(score>=0.5?0.5:0);
+  return {score:norm,label:(norm===1?'✅':norm===0.5?'⚡':'❌')+' '+hit+'/'+tot+' V/F + justificación'};
 }
 function semOverlay(show){
   let el=document.getElementById('sem-overlay');
@@ -1103,20 +1163,26 @@ function semOverlay(show){
 
 async function submitExam(){
   const sim=getSim(exam.simId);
-  const pend=exam.questions.filter((q,i)=>!isAnswered(q,exam.answers[i])).length;
+  const pend=exam.questions.filter((q,i)=>!isAnswered(q,exam.answers[i],i)).length;
   if(pend>0&&!exam.warned){
-    document.getElementById('exam-warn').textContent='Quedan '+pend+' pregunta(s) sin responder. Tocá "Entregar examen" otra vez para entregar igual (cuentan 0).';
-    exam.questions.forEach((q,i)=>{const el=document.getElementById('exam-q-'+i);if(el)el.classList.toggle('warn',!isAnswered(q,exam.answers[i]));});
+    document.getElementById('exam-warn').textContent='Quedan '+pend+' pregunta(s) sin responder (o falta justificar una Falsa). Tocá "Entregar examen" otra vez para entregar igual (cuentan 0).';
+    exam.questions.forEach((q,i)=>{const el=document.getElementById('exam-q-'+i);if(el)el.classList.toggle('warn',!isAnswered(q,exam.answers[i],i));});
     exam.warned=true;
     return;
   }
   exam.submitted=true;
-  const TEXT=new Set(['written','code','match']);
-  if(exam.questions.some(q=>TEXT.has(q.type))){semOverlay(true);await ensureSemModel();}
+  const SEM=new Set(['written','match']);
+  // El modelo se necesita para escritas/relacionar y para justificar las Falsas de V/F.
+  const needsModel=exam.questions.some(q=>SEM.has(q.type)||(q.type==='vf'&&q.statements.some(s=>s.answer===false)));
+  if(needsModel){semOverlay(true);await ensureSemModel();}
   let total=0;const detail=[];
   for(let i=0;i<exam.questions.length;i++){
     const q=examQ(i);                              // mc: opciones/correct en espacio de display
-    const r=TEXT.has(q.type)?await scoreSemantic(exam.answers[i],q):scoreQuestion(q,exam.answers[i]);
+    let r;
+    if(q.type==='vf')r=await scoreVF(q,exam.answers[i],exam.vfjust[i]);
+    else if(q.type==='code'&&q.check)r=scoreCode(exam.answers[i],q);   // estructural
+    else if(SEM.has(q.type))r=await scoreSemantic(exam.answers[i],q);
+    else r=scoreQuestion(q,exam.answers[i]);
     total+=r.score;detail.push({q,i,r});
   }
   semOverlay(false);
@@ -1146,19 +1212,25 @@ function renderResults(sim,detail,score){
         <span class="res-qlabel">${i+1}. ${q.label}</span>
         <span class="res-pts">${r.score} pt</span>
       </div>
-      <div class="res-body">${resultBody(q,exam.answers[i])}</div>
+      <div class="res-body">${resultBody(q,exam.answers[i],i)}</div>
     </div>`;
   }).join('');
 }
 
-function resultBody(q,a){
+function resultBody(q,a,idx){
   const letters='ABCD';
   let your='',correct='';
   if(q.type==='mc'){
     your=(a!=null)?letters[a]+'. '+q.opts[a]:'(sin responder)';
     correct='<span class="ans-correct">'+letters[q.correct]+'. '+q.opts[q.correct]+'</span>';
   } else if(q.type==='vf'){
-    correct=q.statements.map((s,k)=>{const ok=a[k]===s.answer;return (k+1)+'. '+(ok?'✅':'❌')+' <strong>'+(s.answer?'V':'F')+'</strong> — '+s.exp;}).join('<br>');
+    const jj=(exam.vfjust||{})[idx]||{};
+    correct=q.statements.map((s,k)=>{
+      const ok=a[k]===s.answer;
+      let line=(k+1)+'. '+(ok?'✅':'❌')+' <strong>'+(s.answer?'V':'F')+'</strong> — '+s.exp;
+      if(s.answer===false){const j=(jj[k]||'').trim();line+='<br><span class="vf-just-r"><em>Tu justificación:</em> '+(j?escapeHtml(j):'(sin justificar)')+'</span>';}
+      return line;
+    }).join('<br>');
   } else if(q.type==='order'){
     your=a.picked.length?a.picked.map((s,k)=>(k+1)+'. '+q.steps[s]+(s===k?' ✅':' ❌')).join('<br>'):'(sin responder)';
     correct='<div class="flow">'+q.steps.map((s,k)=>(k+1)+'. '+s).join('<br>')+'</div>'+(q.why||'');
