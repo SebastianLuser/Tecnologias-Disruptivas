@@ -579,9 +579,7 @@ SIMULACROS[3] = {id:4, title:'Simulacro 4 — Flujos paso a paso', desc:'Solo ej
 
 // Core de flujos "principales" (sin sub-flujos ni variantes). Se usa en Simulacro 4 y en Diagramas.
 const CORE_FLUJOS_TITLES=new Set([
-  'Agregar funcionalidades con Building Blocks',
   'Hacer un objeto agarrable con el Grab Wizard',
-  'Hacer un objeto agarrable paso a paso (manual)',
   'Sonido al agarrar y soltar (Pointable Event Wrapper)',
   'Manos y controles simultáneos (multimodal)',
   'Crear una pose de agarre (Hand Grab Pose)',
@@ -1315,8 +1313,8 @@ function dgPairs(rows){
   ).join('');
 }
 
-// Flujos "orden de pasos" para Diagramas: los 11 del core + el de baking (único en _flujosIntegral).
-const FLUJOS_DIAG=FLUJOS_CORE.concat(_flujosIntegral.filter(f=>/^bakear la iluminaci/i.test(f.t)));
+// Flujos "orden de pasos" para Diagramas: el mismo core que usa el Simulacro 4.
+const FLUJOS_DIAG=FLUJOS_CORE;
 
 // Razón por paso: explica "esto va acá por esta razón" (para entender el orden, no memorizarlo).
 // Clave = título del flujo (f.t); array paralelo a f.steps.
