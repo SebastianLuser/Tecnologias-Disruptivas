@@ -1221,7 +1221,142 @@ function dgPairs(rows){
 // Flujos "orden de pasos" para Diagramas: los 19 de FLUJOS_SIM4 + el de baking (único en _flujosIntegral).
 const FLUJOS_DIAG=FLUJOS_SIM4.concat(_flujosIntegral.filter(f=>/^bakear la iluminaci/i.test(f.t)));
 
-let dgTab='jer',dgSel={jer:0,flow:0};
+// Razón por paso: explica "esto va acá por esta razón" (para entender el orden, no memorizarlo).
+// Clave = título del flujo (f.t); array paralelo a f.steps.
+const FLOW_REASONS={
+ 'Agregar funcionalidades con Building Blocks':[
+  `Abrís el panel de Building Blocks primero: es de donde se arrastran todos los módulos.`,
+  `El Camera Rig va antes que nada: es la base del jugador (cámara + OVR Manager); sin él lo demás no tiene dónde vivir.`,
+  `El Passthrough temprano si querés Realidad Mixta, sobre la base ya puesta.`,
+  `Con la base lista agregás Hand Tracking: aporta el input de manos.`,
+  `Las Synthetic Hands después del tracking: son la representación visual que ese tracking mueve.`,
+  `El objeto agarrable al final: necesita que ya existan manos/interactores que lo agarren.`],
+ 'Hacer un objeto agarrable con el Grab Wizard':[
+  `Primero tiene que existir el objeto (el cubo) para poder hacerlo agarrable.`,
+  `Abrís el Grab Wizard sobre ese objeto: es el asistente que arma la interacción.`,
+  `Definís interactor y gesto antes de crear: el wizard necesita saber con qué se agarra.`,
+  `Fix va antes de Create: agrega el Rigidbody que falta; sin él el agarre no funciona.`,
+  `Create al final: recién ahí inyecta todos los componentes ya configurados.`,
+  `Ajustás y probás último, cuando la interacción ya está armada.`],
+ 'Hacer un objeto agarrable paso a paso (manual)':[
+  `Armás la jerarquía primero: define dónde vivirá cada componente (visual, colliders, agarres).`,
+  `El Rigidbody antes que todo lo demás: es la física que hace que el objeto se pueda mover.`,
+  `El Grabbable después del Rigidbody, porque toma su referencia para mover el objeto.`,
+  `Los Colliders a continuación: definen la zona física donde se detecta el agarre.`,
+  `El Hand Grab Interactable después, apuntando al Grabbable y Rigidbody ya creados.`,
+  `El Controller Grab al final: el mismo objeto agarrable, ahora también con controles.`],
+ 'Sonido al agarrar y soltar (Pointable Event Wrapper)':[
+  `El Pointable Wrapper primero: es quien expone los eventos Select/Release del objeto.`,
+  `Creás los vacíos Select/Release para tener dónde colgar cada Audio Source.`,
+  `Play On Awake OFF antes de conectar: si no, el sonido suena solo al arrancar, no en el evento.`,
+  `Asignás los clips a cada Audio Source antes de disparar nada.`,
+  `When Select → Play: enganchás el evento de agarrar al sonido correspondiente.`,
+  `When Release → Play al final: mismo esquema para el evento de soltar.`],
+ 'Manos y controles simultáneos (multimodal)':[
+  `Preparás la escena base (sin Main Camera) para arrancar limpio.`,
+  `Agregás los Building Blocks (Camera Rig, Hand Tracking, Virtual Hands, Grab): la base multimodal.`,
+  `El OVR Manager antes que los ajustes finos: ahí se habilita "Simultaneous Hands and Controllers".`,
+  `Show State = Always en el OVR Hand, para que las manos no se oculten al usar el control.`,
+  `Enlazás la mano sintética con el data source del control después de habilitar el modo.`,
+  `El prefab de controles sintéticos al final, también en Always, para que convivan mano y joystick.`],
+ 'Crear una pose de agarre (Hand Grab Pose)':[
+  `Add Hand Grab Pose primero: la pose se genera desde el Hand Grab Interactable existente.`,
+  `Abrís el hijo generado para poder editar la pose.`,
+  `Posicionás/rotás la mano sobre el punto de agarre antes de tocar los dedos.`,
+  `Ajustás cada dedo una vez que la mano ya está bien ubicada.`,
+  `Configurás mano y Fingers Freedom al final para fijar cómo queda la pose.`],
+ 'Crear la pose espejo para la otra mano':[
+  `Create Mirror primero: refleja la pose ya hecha sin rehacerla dedo por dedo.`,
+  `Verificás que se creó el objeto "mirror" ya configurado para la otra mano.`,
+  `Ajustás la rotación solo si hace falta que calce desde el mismo ángulo.`],
+ 'Agregar múltiples puntos de agarre a un objeto':[
+  `Creás un nuevo vacío para el segundo punto de agarre.`,
+  `Le ponés otro Hand Grab Interactable: cada zona de agarre es un interactable propio.`,
+  `Verificás que referencie el mismo Grabbable/Rigidbody del objeto.`,
+  `Agregás y posicionás la pose sobre la nueva zona.`,
+  `Pose espejo y colliders que cubran la zona, para que el agarre se detecte ahí.`],
+ 'Configurar el Snap Interactor en el objeto que se mueve':[
+  `Is Trigger en el collider del objeto: para que detecte el encaje sin pelear con la física.`,
+  `Creás un vacío Snap Interactor dentro del objeto que se mueve.`,
+  `Le ponés el componente Snap Interactor.`,
+  `Referenciás el Grabbable como Pointable Element: así sabe cuándo se agarra/suelta.`,
+  `Referenciás el Rigidbody para poder mover el objeto al encajar.`],
+ 'Crear el Snap Interactable (destino del Snap)':[
+  `Creás y ubicás el vacío donde querés que el objeto encaje.`,
+  `Box Collider: define la zona donde se activa el Snap.`,
+  `Rigidbody con Use Gravity off + Is Kinematic: para que el destino no caiga ni lo empuje la física.`,
+  `Recién ahí el componente Snap Interactable, con la zona y el rigidbody ya listos.`],
+ 'Crear el visual de la zona del Snap':[
+  `Creás el cubo visual que marca la zona de encaje.`,
+  `Material transparente verde para que se vea como guía sin tapar.`,
+  `Le sacás el collider al cubo visual: es solo visual, no debe interferir con la física.`,
+  `Interactable Unity Event Wrapper referenciando el Snap Interactable: expone sus eventos.`,
+  `When Select → SetActive(false): oculta el visual cuando el objeto encaja.`,
+  `When Unselect → SetActive(true): lo vuelve a mostrar cuando sacás el objeto.`],
+ 'Varios Snaps con punto por defecto y retorno por tiempo':[
+  `Duplicás los Snaps y los ubicás: primero tenés que tener los destinos.`,
+  `Abrís Options del Snap Interactor: ahí se configura el comportamiento.`,
+  `Snap Pose Transform: define el pivote del objeto al encajar.`,
+  `Default Interactable: el Snap donde arranca el objeto.`,
+  `Time Out Interactable: a cuál Snap vuelve solo.`,
+  `Time Out: los segundos que tarda en volver.`],
+ 'Filtrar con qué Snaps encaja el objeto (Tags)':[
+  `Tag Set en los Snaps primero: hay que etiquetar los destinos antes de filtrarlos.`,
+  `Asignás una etiqueta a cada Snap (ej. cube/sphere).`,
+  `Tag Set Filter en el interactor: es quien decide con qué tags puede encajar.`,
+  `Definís Required/Excluded Tags: la regla concreta del filtro.`,
+  `Referenciás el filtro en Interactable Filters para que el interactor lo use.`],
+ 'Crear un Canvas y habilitar interacción (Ray y Poke)':[
+  `Creás un vacío contenedor (UI) para ordenar el Canvas.`,
+  `Creás el Canvas dentro.`,
+  `Add Ray Interaction + Fix: pasa el Canvas a World Space (obligatorio en VR) y agrega el módulo.`,
+  `Elegís manos/controles y creás: define quién interactúa a distancia.`,
+  `Add Poke Interaction al final: suma el toque directo con el dedo (interactable aparte del Ray).`],
+ 'Crear una zona de teleport con NavMesh':[
+  `Creás el vacío del piso y hacés Reset del Transform para partir de cero.`,
+  `Teleport Interactable: marca ese objeto como zona de destino.`,
+  `NavMesh Surface + config del agente: define automáticamente por dónde se puede caminar.`,
+  `Bake antes de referenciar: genera la superficie navegable.`,
+  `Referenciás el NavMesh Surface en el Teleport Interactable, ya horneado.`,
+  `Reticle Data Teleport: define qué se muestra al final del rayo (válido/inválido).`],
+ 'Crear una zona de teleport con Collider (escalera)':[
+  `Creás el vacío de la escalera y Reset del Transform.`,
+  `Teleport Interactable con Collider Surface: para superficies inclinadas se usa collider, no NavMesh.`,
+  `Creás un vacío Collider con Box Collider que represente la escalera.`,
+  `Alineás el collider con la escalera (posición y rotación) antes de referenciarlo.`,
+  `Referenciás ese Collider en el Collider Surface, o la zona no funciona.`,
+  `Reticle Data Teleport para mostrar el destino al apuntar.`],
+ 'Crear una zona de teleport inválida':[
+  `Creás el vacío de la zona inválida y Reset del Transform.`,
+  `Teleport Interactable con Allow Teleport OFF: define que ahí NO se puede caer.`,
+  `Bajás el Score en Options para que pierda contra las zonas válidas.`,
+  `Agregás y referenciás una Surface horizontal para cubrir el área.`,
+  `Reticle Data Teleport en modo inválido: muestra el rayo en rojo al apuntar.`],
+ 'Teleport a un punto fijo (hotspot)':[
+  `Creás el GameObject donde querés caer: el destino fijo.`,
+  `Add Teleport Interaction sobre él para armar la interacción.`,
+  `Se genera el Hotspot: el destino absoluto ya configurado.`,
+  `El Teleport Interactor (en la mano) apunta a ese hotspot.`,
+  `El reticle confirma y al soltar te teletransporta (instantáneo, no marea).`],
+ 'Girar de a pasos (snap turning)':[
+  `Partís de un rig con locomoción ya configurada: es la base del movimiento.`,
+  `Ubicás el Controller Turner Interactor en el control: genera el input de giro.`,
+  `En el Turner Event Broadcaster elegís modo Snap: convierte el input en giros por pasos.`,
+  `Seteás los grados del giro (ej. 45).`,
+  `Probás: el giro instantáneo por pasos marea menos que el continuo.`],
+ 'Bakear la iluminación del interior':[
+  `Marcás los objetos quietos como Static (Contribute GI): solo esos entran al bake.`,
+  `Confirmás Generate Lightmap UVs en los FBX: sin UV2 la luz horneada sale mal.`,
+  `Configurás las luces como Baked o Mixed para que se pre-calculen.`,
+  `Guardás la escena antes de bakear: evita resultados raros.`,
+  `Generate Lighting al final: recién ahí se hornea todo lo preparado.`]
+};
+
+let dgTab='jer',dgSel={jer:0,flow:0},flowMode='ver',fp=null;   // fp = práctica actual del flujo
+
+function flowReasons(f){return FLOW_REASONS[f.t]||[];}
+function loadFlows(){try{return new Set(JSON.parse(localStorage.getItem('pd_flows')||'[]'))}catch{return new Set()}}
+function markFlow(t){const s=loadFlows();s.add(t);localStorage.setItem('pd_flows',JSON.stringify([...s]));}
 
 // Render de UNA jerarquía (lo que antes hacía el .map inline).
 function dgBlock(d){
@@ -1233,33 +1368,89 @@ function dgBlock(d){
     <div class="dg-body">${body}</div>${foot}</div>`;
 }
 
-// Render de UN flujo como pasos numerados + el "por qué".
-// Los steps ya vienen con entidades escapadas (ej. "Oculus &gt; Tools") → van como HTML tal cual.
-function dgFlow(f){
-  const steps=f.steps.map((s,i)=>`<div class="dg-step"><span class="dg-step-n">${i+1}</span><span>${s}</span></div>`).join('');
-  const why=f.why?`<div class="dg-why"><b>Por qué</b>${f.why}</div>`:'';
+function flowModeToggle(){
+  return `<div class="flow-mode">
+    <button class="flow-mode-btn${flowMode==='ver'?' active':''}" onclick="setFlowMode('ver')">📖 Ver</button>
+    <button class="flow-mode-btn${flowMode==='practicar'?' active':''}" onclick="setFlowMode('practicar')">🧠 Practicar</button>
+  </div>`;
+}
+
+// Modo VER: memo que explica por qué cada paso va donde va.
+// Los steps ya traen entidades escapadas (ej. "Oculus &gt; Tools") → van como HTML tal cual.
+function dgFlowView(f){
+  const r=flowReasons(f);
+  const steps=f.steps.map((s,i)=>
+    `<div class="dg-step"><span class="dg-step-n">${i+1}</span><span>${s}${r[i]?`<span class="dg-step-why">${r[i]}</span>`:''}</span></div>`).join('');
+  const why=f.why?`<div class="dg-why"><b>La lógica del orden</b>${f.why}</div>`:'';
   return `<div class="diagram-block">
     <h3 class="dg-title" style="color:var(--purple)">${f.t}</h3>
+    ${flowModeToggle()}
     <p class="dg-desc">${f.prompt}</p>
     <div class="dg-flow">${steps}</div>${why}</div>`;
 }
 
-function selectDgTab(tab){dgTab=tab;renderDiagrams();}
-function selectDgItem(i){dgSel[dgTab]=i;renderDiagrams();}
+// Modo PRACTICAR: ordenás los pasos con feedback inmediato + la razón de cada posición.
+function dgFlowPractice(f){
+  const r=flowReasons(f),n=f.steps.length,picked=fp.picked;
+  const done=picked.length===n,allOk=done&&picked.every((v,k)=>v===k);
+  const seq=picked.length?picked.map((s,k)=>{
+    const ok=s===k;
+    const fix=ok?'':` — <em>acá va:</em> ${f.steps[k]}`;
+    const why=r[k]?`<span class="dg-step-why">${r[k]}</span>`:'';
+    return `<div class="seq-item ${ok?'seq-ok':'seq-bad'}"><span>${k+1}</span><span>${f.steps[s]}${fix}${why}</span></div>`;
+  }).join(''):'<div class="seq-empty">Tocá los pasos en el orden correcto de ejecución…</div>';
+  const avail=fp.pool.filter(s=>!picked.includes(s));
+  const pool=avail.map(s=>`<button data-pick="${s}" onclick="flowPick(${s})">${f.steps[s]}</button>`).join('');
+  const banner=done?(allOk
+    ?`<div class="mc-feedback ok">✓ ¡Orden correcto! Entendiste la lógica de este flujo.</div>`
+    :`<div class="mc-feedback ko">✗ Hay pasos fuera de lugar — mirá los rojos y el "acá va".</div>`):'';
+  const why=(fp.showWhy||done)&&f.why?`<div class="dg-why"><b>La lógica del orden</b>${f.why}</div>`:'';
+  return `<div class="diagram-block">
+    <h3 class="dg-title" style="color:var(--purple)">${f.t}</h3>
+    ${flowModeToggle()}
+    <div class="seq-label">Tu secuencia</div><div class="seq">${seq}</div>
+    ${avail.length?`<div class="seq-label">Pasos disponibles</div><div class="seq-pool">${pool}</div>`:''}
+    <div class="flow-actions">
+      <button class="seq-reset" onclick="flowRetry()">↺ Reintentar</button>
+      <button class="seq-reset" onclick="flowReveal()">👁 Revelar orden</button>
+      <button class="seq-reset" onclick="toggleFlowWhy()">💡 Lógica</button>
+    </div>${banner}${why}</div>`;
+}
+
+function setFlowMode(m){
+  flowMode=m;
+  if(m==='practicar'){const f=FLUJOS_DIAG[dgSel.flow];fp={pool:shuffleSteps(f.steps.length),picked:[],revealed:false,showWhy:false};}
+  renderDiagrams();
+}
+function flowPick(s){
+  if(!fp||fp.picked.includes(s))return;
+  fp.picked.push(s);
+  const f=FLUJOS_DIAG[dgSel.flow];
+  if(fp.picked.length===f.steps.length&&!fp.revealed&&fp.picked.every((v,k)=>v===k))markFlow(f.t);
+  renderDiagrams();
+}
+function flowRetry(){const f=FLUJOS_DIAG[dgSel.flow];fp={pool:shuffleSteps(f.steps.length),picked:[],revealed:false,showWhy:false};renderDiagrams();}
+function flowReveal(){const f=FLUJOS_DIAG[dgSel.flow];fp.picked=f.steps.map((_,i)=>i);fp.revealed=true;renderDiagrams();}
+function toggleFlowWhy(){if(fp){fp.showWhy=!fp.showWhy;renderDiagrams();}}
+
+function selectDgTab(tab){dgTab=tab;flowMode='ver';fp=null;renderDiagrams();}
+function selectDgItem(i){dgSel[dgTab]=i;if(dgTab==='flow'){flowMode='ver';fp=null;}renderDiagrams();}
 
 function renderDiagrams(){
   const jer=dgTab==='jer';
   document.getElementById('dgtab-jer').classList.toggle('active',jer);
   document.getElementById('dgtab-flow').classList.toggle('active',!jer);
-  document.getElementById('dg-desc').textContent=jer
-    ? 'Qué contiene cada prefab y dónde va cada cosa. Elegí una jerarquía.'
-    : 'El orden de pasos de cada procedimiento del curso. Elegí un flujo para ver su secuencia.';
   const items=jer?DIAGRAMS:FLUJOS_DIAG;
   let sel=dgSel[dgTab];if(sel==null||sel>=items.length)sel=dgSel[dgTab]=0;
+  const mastered=jer?null:loadFlows();
+  document.getElementById('dg-desc').textContent=jer
+    ? 'Qué contiene cada prefab y dónde va cada cosa. Elegí una jerarquía.'
+    : `Aprendé el orden razonándolo: "Ver" explica por qué cada paso va donde va, "Practicar" te lo toma. Dominados ${FLUJOS_DIAG.filter(f=>mastered.has(f.t)).length}/${FLUJOS_DIAG.length}.`;
   document.getElementById('dg-chips').innerHTML=items.map((it,i)=>
-    `<button class="dg-chip${i===sel?' active':''}" onclick="selectDgItem(${i})">${jer?it.chip:it.t}</button>`
+    `<button class="dg-chip${i===sel?' active':''}" onclick="selectDgItem(${i})">${jer?it.chip:((mastered.has(it.t)?'✓ ':'')+it.t)}</button>`
   ).join('');
-  document.getElementById('diagrams-content').innerHTML=jer?dgBlock(items[sel]):dgFlow(items[sel]);
+  document.getElementById('diagrams-content').innerHTML=
+    jer?dgBlock(items[sel]):((flowMode==='practicar'&&fp)?dgFlowPractice(items[sel]):dgFlowView(items[sel]));
 }
 
 // ── INIT ────────────────────────────────────────────────────────
