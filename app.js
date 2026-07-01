@@ -596,14 +596,17 @@ SIMULACROS[3].questions=FLUJOS_CORE.map(f=>({type:'order',label:'Flujo · '+f.t,
 SIMULACROS[3].desc='Ordená los pasos de cada procedimiento. Toma 6 flujos al azar (de '+FLUJOS_CORE.length+') por intento; cambian cada vez.';
 
 function normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
+// Granularidad de cuartos: 0 · 0.25 · 0.5 · 0.75 · 1 (para todo menos multiple choice).
+function q4(x){x=Math.round((x||0)*4)/4;return x<0?0:x>1?1:x;}
+function scIco(sc){return sc>=1?'✅':(sc<=0?'❌':'⚡');}
+function scWord(sc){return sc>=1?'Correcto':(sc<=0?'Necesita repaso':'Parcialmente correcto');}
 function scoreWritten(text,keywords){
   const t=normalize(text);
   if(!t)return {score:0,label:'❌ Sin responder'};
   const hits=keywords.filter(k=>t.includes(normalize(k)));
   const ratio=hits.length/keywords.length;
-  if(ratio>=0.65)return {score:1,label:'✅ Correcto'};
-  if(ratio>=0.35)return {score:0.5,label:'⚡ Parcialmente correcto'};
-  return {score:0,label:'❌ Necesita repaso'};
+  const sc=ratio>=0.85?1:(ratio>=0.6?0.75:(ratio>=0.35?0.5:(ratio>=0.15?0.25:0)));
+  return {score:sc,label:scIco(sc)+' '+scWord(sc)};
 }
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -1052,17 +1055,18 @@ function confirmExitExam(){
 // ── SCORING + RESULTS ───────────────────────────────────────────────────────────
 
 function scoreQuestion(q,a){
-  if(q.type==='mc')return {score:a===q.correct?1:0,label:a===q.correct?'✅ Correcto':'❌ Incorrecto'};
-  if(q.type==='vf'){
+  if(q.type==='mc')return {score:a===q.correct?1:0,label:a===q.correct?'✅ Correcto':'❌ Incorrecto'};   // MC: binario 0/1
+  if(q.type==='vf'){   // fallback (el camino normal es scoreVF); crédito parcial por proporción de aciertos
     const tot=q.statements.length;
     let hit=0;q.statements.forEach((s,k)=>{if(a[k]===s.answer)hit++;});
-    const ratio=hit/tot;
-    const sc=ratio===1?1:(ratio>=0.5?0.5:0);
-    return {score:sc,label:(sc===1?'✅':sc===0.5?'⚡':'❌')+' '+hit+'/'+tot+' correctas'};
+    const sc=hit===tot?1:q4(hit/tot);
+    return {score:sc,label:scIco(sc)+' '+hit+'/'+tot+' correctas'};
   }
   if(q.type==='order'){
     const ok=a.picked.length===q.steps.length&&a.picked.every((s,i)=>s===i);
-    return {score:ok?1:0,label:ok?'✅ Orden correcto':'❌ Orden incorrecto'};
+    const inPos=a.picked.filter((s,i)=>s===i).length;   // pasos en su posición correcta
+    const sc=ok?1:Math.min(0.75,q4(inPos/q.steps.length));
+    return {score:sc,label:ok?'✅ Orden correcto':(sc>0?'⚡ Orden parcialmente correcto ('+inPos+'/'+q.steps.length+')':'❌ Orden incorrecto')};
   }
   return scoreWritten(a,q.keywords);
 }
@@ -1104,18 +1108,18 @@ async function scoreSemantic(text,q){
     const ref=await _semRef(q);
     // (a) similitud global vs respuesta modelo (nunca baja la nota: entra por max)
     const g=_semCos(emb,ref.ans);
-    const gScore=g>=0.70?1:(g>=0.50?0.5:0);
+    const gScore=g>=0.70?1:(g>=0.60?0.75:(g>=0.50?0.5:(g>=0.40?0.25:0)));
     // (b) cobertura de conceptos: cuántas ideas clave aparecen (semánticamente).
     // Es el criterio dominante (recall): si cubrís los conceptos, correcto —
     // aunque te explayes más que la respuesta modelo o lo redactes distinto.
     let cScore=0;
     if(ref.concepts.length){
       const cov=ref.concepts.filter(c=>_semCos(emb,c)>=0.55).length/ref.concepts.length;
-      cScore=cov>=0.6?1:(cov>=0.35?0.5:0);
+      cScore=cov>=0.6?1:(cov>=0.475?0.75:(cov>=0.35?0.5:(cov>=0.2?0.25:0)));
     }
     const sem=Math.max(gScore,cScore);
     if(sem<=kw.score)return kw;                        // máx(léxico, global, cobertura); explayarse nunca resta
-    return {score:sem,label:sem===1?'✅ Correcto':'⚡ Parcialmente correcto'};
+    return {score:sem,label:scIco(sem)+' '+scWord(sem)};
   }catch(e){return kw;}
 }
 
@@ -1130,7 +1134,9 @@ function scoreCode(text,q){
   const noForbid=forbid.every(f=>!new RegExp(f).test(t));
   const orderOk=order.every(([a,b])=>{const ia=t.search(new RegExp(a)),ib=t.search(new RegExp(b));return ia>-1&&ib>-1&&ia<ib;});
   if(mustHit===must.length&&noForbid&&orderOk)return {score:1,label:'✅ Correcto'};
+  if(noForbid&&orderOk&&mustHit>=Math.ceil(must.length*0.8))return {score:0.75,label:'⚡ Parcialmente correcto'};
   if(noForbid&&mustHit>=Math.ceil(must.length*0.6))return {score:0.5,label:'⚡ Parcialmente correcto'};
+  if(noForbid&&mustHit>=Math.ceil(must.length*0.4))return {score:0.25,label:'⚡ Parcialmente correcto'};
   return {score:0,label:'❌ Necesita repaso'};
 }
 
@@ -1150,8 +1156,9 @@ async function scoreVF(q,marks,just){
     }catch(e){sum+=j?1:0.5;}
   }
   let hit=0;q.statements.forEach((s,k)=>{if(marks[k]===s.answer)hit++;});
-  const score=tot?sum/tot:0,norm=score>=0.999?1:(score>=0.5?0.5:0);
-  return {score:norm,label:(norm===1?'✅':norm===0.5?'⚡':'❌')+' '+hit+'/'+tot+' V/F + justificación'};
+  // Cada afirmación vale 1/tot: si están todas bien (marca + justificación), suma 1 punto.
+  const score=tot?Math.round(sum/tot*100)/100:0;
+  return {score,label:scIco(score)+' '+hit+'/'+tot+' V/F + justificación'};
 }
 function semOverlay(show){
   let el=document.getElementById('sem-overlay');
@@ -1211,7 +1218,7 @@ function renderResults(sim,detail,score){
   document.getElementById('res-rank').textContent=rank;
   document.getElementById('res-sub').textContent=sub;
   document.getElementById('res-content').innerHTML=detail.map(({q,i,r})=>{
-    const cls=r.score===1?'ok':(r.score>=0.5?'half':'no');
+    const cls=r.score>=1?'ok':(r.score>0?'half':'no');
     return `<div class="res-item">
       <div class="res-head" onclick="this.nextElementSibling.classList.toggle('show')">
         <span class="res-badge ${cls}">${r.label}</span>
