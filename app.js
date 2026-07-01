@@ -1116,7 +1116,7 @@ function resultBody(q,a){
 // tree:  {type:'tree', root:{label,note?,color?,children:[...]}}
 // pairs: {type:'pairs', head?, rows:[{interactor,interactable,wrapper?}]}
 const DIAGRAMS=[
- {id:'rig',title:'Jerarquía del OVR Camera Rig Interaction',color:'#1F66F2',
+ {id:'rig',chip:'Camera Rig',title:'Jerarquía del OVR Camera Rig Interaction',color:'#1F66F2',
   desc:'El "súper prefab" todo-incluido del jugador: qué trae adentro y dónde encaja cada cosa.',
   type:'tree',root:{label:'OVR Camera Rig Interaction',note:'súper prefab: todo el jugador listo',color:'#1F66F2',children:[
     {label:'OVR Camera Rig',note:'cámara estéreo (un ojo por lente) + OVR Manager — la base'},
@@ -1129,7 +1129,7 @@ const DIAGRAMS=[
   ]},
   foot:'No confundir: <b>OVR Camera Rig</b> pelado = solo mirás alrededor (sin manos ni movimiento). <b>OVR Controllers</b> sueltos = solo joysticks, sin lógica de agarrar/teletransportarse.'},
 
- {id:'rule',title:'Regla de oro: Interactor ↔ Interactable',color:'#E8822E',
+ {id:'rule',chip:'Interactor ↔ Interactable',title:'Regla de oro: Interactor ↔ Interactable',color:'#E8822E',
   desc:'Interactor = la herramienta que actúa · Interactable = el objeto que la recibe. Y qué Event Wrapper escucha a cada par.',
   type:'pairs',rows:[
     {interactor:'Hand Grab / Controller Grab Interactor',interactable:'Grabbable + Hand Grab Interactable',wrapper:'Pointable Unity Event Wrapper'},
@@ -1139,7 +1139,7 @@ const DIAGRAMS=[
     {interactor:'Poke Interactor (dedo)',interactable:'Canvas / Poke Interactable',wrapper:'—'}
   ]},
 
- {id:'grab',title:'Anatomía de un objeto agarrable',color:'#2FB57A',
+ {id:'grab',chip:'Objeto agarrable',title:'Anatomía de un objeto agarrable',color:'#2FB57A',
   desc:'La jerarquía del Root Grab Object armado a mano y qué componente vive en cada hijo.',
   type:'tree',root:{label:'Root Grab Object',note:'Rigidbody + Grabbable (físicas del objeto)',color:'#2FB57A',children:[
     {label:'Visual',note:'el modelo 3D que se ve'},
@@ -1150,7 +1150,7 @@ const DIAGRAMS=[
   ]},
   foot:'Atajo: el <b>Grab Wizard</b> (Add Grab Interaction) arma todo esto solo — pero primero hay que hacer <b>Fix</b> para que agregue el Rigidbody que falta.'},
 
- {id:'loco',title:'Stack de Locomoción + tipos de Teleport',color:'#7A33B5',
+ {id:'loco',chip:'Locomoción + Teleport',title:'Stack de Locomoción + tipos de Teleport',color:'#7A33B5',
   desc:'Cómo se mueve el cuerpo del jugador respetando físicas, y las variantes de zona de teleport.',
   type:'tree',root:{label:'Player Controller / Camera Rig',note:'el "cuerpo" del jugador',color:'#7A33B5',children:[
     {label:'Rigidbody / Character Controller',note:'colisiones: no atraviesa paredes ni cae al vacío'},
@@ -1180,15 +1180,48 @@ function dgPairs(rows){
   ).join('');
 }
 
+// Flujos "orden de pasos" para Diagramas: los 19 de FLUJOS_SIM4 + el de baking (único en _flujosIntegral).
+const FLUJOS_DIAG=FLUJOS_SIM4.concat(_flujosIntegral.filter(f=>/^bakear la iluminaci/i.test(f.t)));
+
+let dgTab='jer',dgSel={jer:0,flow:0};
+
+// Render de UNA jerarquía (lo que antes hacía el .map inline).
+function dgBlock(d){
+  const body=d.type==='pairs'?dgPairs(d.rows):dgTree(d.root);
+  const foot=d.foot?`<div class="dg-foot">${d.foot}</div>`:'';
+  return `<div class="diagram-block">
+    <h3 class="dg-title" style="color:${d.color}">${d.title}</h3>
+    <p class="dg-desc">${d.desc}</p>
+    <div class="dg-body">${body}</div>${foot}</div>`;
+}
+
+// Render de UN flujo como pasos numerados + el "por qué".
+// Los steps ya vienen con entidades escapadas (ej. "Oculus &gt; Tools") → van como HTML tal cual.
+function dgFlow(f){
+  const steps=f.steps.map((s,i)=>`<div class="dg-step"><span class="dg-step-n">${i+1}</span><span>${s}</span></div>`).join('');
+  const why=f.why?`<div class="dg-why"><b>Por qué</b>${f.why}</div>`:'';
+  return `<div class="diagram-block">
+    <h3 class="dg-title" style="color:var(--purple)">${f.t}</h3>
+    <p class="dg-desc">${f.prompt}</p>
+    <div class="dg-flow">${steps}</div>${why}</div>`;
+}
+
+function selectDgTab(tab){dgTab=tab;renderDiagrams();}
+function selectDgItem(i){dgSel[dgTab]=i;renderDiagrams();}
+
 function renderDiagrams(){
-  document.getElementById('diagrams-content').innerHTML=DIAGRAMS.map(d=>{
-    const body=d.type==='pairs'?dgPairs(d.rows):dgTree(d.root);
-    const foot=d.foot?`<div class="dg-foot">${d.foot}</div>`:'';
-    return `<div class="diagram-block">
-      <h3 class="dg-title" style="color:${d.color}">${d.title}</h3>
-      <p class="dg-desc">${d.desc}</p>
-      <div class="dg-body">${body}</div>${foot}</div>`;
-  }).join('');
+  const jer=dgTab==='jer';
+  document.getElementById('dgtab-jer').classList.toggle('active',jer);
+  document.getElementById('dgtab-flow').classList.toggle('active',!jer);
+  document.getElementById('dg-desc').textContent=jer
+    ? 'Qué contiene cada prefab y dónde va cada cosa. Elegí una jerarquía.'
+    : 'El orden de pasos de cada procedimiento del curso. Elegí un flujo para ver su secuencia.';
+  const items=jer?DIAGRAMS:FLUJOS_DIAG;
+  let sel=dgSel[dgTab];if(sel==null||sel>=items.length)sel=dgSel[dgTab]=0;
+  document.getElementById('dg-chips').innerHTML=items.map((it,i)=>
+    `<button class="dg-chip${i===sel?' active':''}" onclick="selectDgItem(${i})">${jer?it.chip:it.t}</button>`
+  ).join('');
+  document.getElementById('diagrams-content').innerHTML=jer?dgBlock(items[sel]):dgFlow(items[sel]);
 }
 
 // ── INIT ────────────────────────────────────────────────────────

@@ -114,7 +114,12 @@
     <button class="back-btn" onclick="showScreen('screen-home')">← Volver</button>
     <div class="study-zone-name">Diagramas · Mapas visuales</div>
   </div>
-  <p class="mode-desc">Qué contiene cada prefab y dónde va cada cosa. Repaso visual rápido de las jerarquías del Meta XR SDK.</p>
+  <div class="dg-tabs">
+    <button class="dg-tab active" id="dgtab-jer" onclick="selectDgTab('jer')">🗺️ Jerarquías</button>
+    <button class="dg-tab" id="dgtab-flow" onclick="selectDgTab('flow')">🧩 Flujos paso a paso</button>
+  </div>
+  <p class="mode-desc" id="dg-desc"></p>
+  <div class="dg-chips" id="dg-chips"></div>
   <div id="diagrams-content"></div>
 </div>
 
