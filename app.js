@@ -591,7 +591,16 @@ function scoreWritten(text,keywords){
 let seen=new Set(),currentZone=null,currentCard=0,mcAnswered=false;
 let curPerm=null,curId=null;   // orden barajado y id de la card en pantalla (para persistir la respuesta MC)
 
-function load(){try{seen=new Set(JSON.parse(localStorage.getItem('pd_seen')||'[]'))}catch{seen=new Set()}}
+// Set con TODOS los ids de cards que existen hoy (z.id + '_' + índice).
+function validCardIds(){const s=new Set();ZONES.forEach(z=>z.qs.forEach((_,i)=>s.add(z.id+'_'+i)));return s;}
+function load(){
+  try{seen=new Set(JSON.parse(localStorage.getItem('pd_seen')||'[]'))}catch{seen=new Set()}
+  // Purga ids obsoletos: cards que se borraron/reordenaron en versiones anteriores.
+  // Sin esto, "Revisados" puede superar el total (ej. 80/77) por entradas fantasma.
+  const valid=validCardIds();let changed=false;
+  for(const id of seen){if(!valid.has(id)){seen.delete(id);changed=true;}}
+  if(changed)save();
+}
 function save(){localStorage.setItem('pd_seen',JSON.stringify([...seen]))}
 // Respuestas MC: { "<zoneId>_<card>": {o:[...orden barajado], c:<idx elegido en ese orden>} }
 function loadMC(){try{return JSON.parse(localStorage.getItem('pd_mc')||'{}')}catch{return{}}}
