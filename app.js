@@ -686,6 +686,88 @@ function openZoneAt(zi,card){
   showScreen('screen-study');
 }
 
+// ── BUSCADOR DE TEMAS (solo lectura sobre las cards teóricas de ZONES) ───────────
+// Navega con openZoneAt → NO resetea progreso (seen / pd_mc quedan intactos).
+let _stripEl=null;
+function stripHTML(html){if(!html)return'';_stripEl=_stripEl||document.createElement('div');_stripEl.innerHTML=html;return _stripEl.textContent||'';}
+function escapeHTML(s){return (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+function escapeRegExp(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+
+// Ubica el término (ya normalizado) dentro de `raw`, insensible a acentos/mayúsculas.
+// Devuelve {start,end} en índices de raw para poder resaltarlo, o null.
+function findMatchSpan(raw,q){
+  let norm='',map=[];
+  for(let i=0;i<raw.length;i++){
+    const dec=raw[i].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    for(const cc of dec){norm+=(/[a-z0-9]/.test(cc)?cc:' ');map.push(i);}
+  }
+  const parts=q.split(' ').filter(Boolean).map(escapeRegExp);
+  if(!parts.length)return null;
+  const m=new RegExp(parts.join('\\s+')).exec(norm);
+  if(!m)return null;
+  return {start:map[m.index],end:map[m.index+m[0].length-1]};
+}
+
+function makeSnippet(raw,span){
+  const pad=60;
+  const s=Math.max(0,span.start-pad),e=Math.min(raw.length,span.end+1+pad);
+  return (s>0?'… ':'')+escapeHTML(raw.slice(s,span.start))
+    +'<mark>'+escapeHTML(raw.slice(span.start,span.end+1))+'</mark>'
+    +escapeHTML(raw.slice(span.end+1,e))+(e<raw.length?' …':'');
+}
+
+function searchCards(query){
+  const q=normalize(query);
+  if(q.length<2)return [];
+  const tokens=q.split(' ').filter(t=>t.length>=2);
+  if(!tokens.length)return [];
+  const phrase=tokens.join(' ');
+  const out=[];
+  ZONES.forEach((z,zi)=>{
+    z.qs.forEach((c,ci)=>{
+      const titleTag=[c.title||'',c.tag||''];
+      const ordered=[c.title||'',c.tag||'',stripHTML(c.body),stripHTML(c.ej),stripHTML(c.q),stripHTML(c.why)];
+      // Una card matchea si TODAS las palabras buscadas aparecen (no exige frase contigua):
+      // así "pointable event wrapper" encuentra "Pointable Unity Event Wrapper".
+      const combined=normalize(ordered.join('  '));
+      if(!tokens.every(t=>combined.includes(t)))return;
+      // Ranking: frase/palabras en el título o tag pesan más.
+      const normTT=normalize(titleTag.join('  '));
+      let score=tokens.filter(t=>normTT.includes(t)).length;   // palabras en título/tag
+      const inTitle=tokens.every(t=>normTT.includes(t));
+      if(inTitle)score+=5;
+      if(findMatchSpan(normTT,phrase))score+=10;               // frase contigua en título
+      // Snippet: resaltar la frase contigua si existe; si no, la primera palabra encontrada.
+      let raw='',span=null;
+      for(const txt of ordered){if(!txt)continue;const sp=findMatchSpan(txt,phrase);if(sp){raw=txt;span=sp;break;}}
+      if(!span){
+        outer:for(const txt of ordered){if(!txt)continue;
+          for(const t of tokens){const sp=findMatchSpan(txt,t);if(sp){raw=txt;span=sp;break outer;}}}
+      }
+      if(!raw)raw=c.title||stripHTML(c.body);
+      out.push({zi,ci,zone:z,
+        title:c.title||stripHTML(c.q).slice(0,60),
+        snippet:span?makeSnippet(raw,span):escapeHTML(raw.slice(0,140))+(raw.length>140?' …':''),
+        inTitle,score});
+    });
+  });
+  out.sort((a,b)=>b.score-a.score);        // más relevantes (título/tag) arriba
+  return out;
+}
+
+function renderSearch(){
+  const box=document.getElementById('search-results'),input=document.getElementById('topic-search');
+  if(!box||!input)return;
+  const query=input.value;
+  if(normalize(query).length<2){box.innerHTML='';return;}
+  const res=searchCards(query);
+  if(!res.length){box.innerHTML=`<div class="search-empty">Sin coincidencias para «${escapeHTML(query.trim())}»</div>`;return;}
+  box.innerHTML=`<div class="search-count">${res.length} resultado${res.length>1?'s':''}</div>`+
+    res.map(r=>`<button class="search-result" style="border-left-color:${r.zone.color}" onclick="openZoneAt(${r.zi},${r.ci})">`
+      +`<span class="sr-zone">${r.zone.icon} <b>${escapeHTML(r.zone.name)}</b> · ${escapeHTML(r.title)}</span>`
+      +`<span class="sr-snippet">${r.snippet}</span></button>`).join('');
+}
+
 // ── CONCEPT (modo estudio: contenido + multiple choice) ─────────────────────────
 
 function renderCard(){

@@ -47,6 +47,20 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .zone-prog{margin-top:12px;height:3px;background:rgba(255,255,255,.1);border-radius:99px}
 .zone-prog-fill{height:100%;border-radius:99px;transition:width .3s}
 .zone-sub{font-size:11px;color:var(--muted);margin-top:6px}
+/* BUSCADOR DE TEMAS (home) */
+.search-box{margin:0 0 14px}
+.topic-search-input{width:100%;background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:13px 16px;color:var(--text);font-family:'Pixelify Sans',monospace;font-size:15px;transition:.15s}
+.topic-search-input::placeholder{color:var(--muted)}
+.topic-search-input:focus{outline:none;border-color:var(--blue);background:var(--panel-h)}
+.search-results:not(:empty){margin-top:10px;display:grid;gap:6px}
+.search-count{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'Pixelify Sans',monospace;padding:2px 2px 4px}
+.search-result{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:.15s}
+.search-result:hover{background:var(--panel-h);border-color:var(--border-h);transform:translateX(2px)}
+.search-result .sr-zone{font-family:'Pixelify Sans',monospace;font-size:13px;color:var(--text);display:block;line-height:1.3}
+.search-result .sr-zone b{font-weight:600}
+.search-result .sr-snippet{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:4px;display:block}
+.search-result mark{background:rgba(235,210,60,.25);color:var(--gold);border-radius:3px;padding:0 2px}
+.search-empty{font-size:13px;color:var(--muted);font-style:italic;padding:10px 4px}
 .mode-btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
 .mode-btn{font-family:'Pixelify Sans',monospace;font-size:14px;padding:14px 24px;border-radius:var(--r);border:none;cursor:pointer;transition:.15s;line-height:1}
 .mode-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}

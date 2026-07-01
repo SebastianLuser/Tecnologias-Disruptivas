@@ -41,6 +41,12 @@
       <span><span class="diagrams-cta-t">Mapas visuales / Diagramas</span><span class="diagrams-cta-s">Jerarquías del SDK: Camera Rig, interactors, objeto agarrable y locomoción</span></span>
     </button>
     <div class="sec-head"><h2>Zonas de Estudio</h2></div>
+    <div class="search-box">
+      <input id="topic-search" type="search" class="topic-search-input"
+             placeholder="🔍 Buscar tema… (ej. Pointable Event Wrapper)"
+             oninput="renderSearch()" autocomplete="off">
+      <div id="search-results" class="search-results"></div>
+    </div>
     <div class="zones-grid" id="zones-grid"></div>
     <div class="sec-head" style="margin-top:34px"><h2>Simulacros de Examen</h2></div>
     <p class="home-lead" style="margin-bottom:18px">Exámenes completos de 10 preguntas con el formato del parcial. No ves ninguna respuesta hasta entregar: al final obtenés tu nota y la corrección completa.</p>
