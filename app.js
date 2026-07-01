@@ -1705,6 +1705,31 @@ function renderDiagrams(){
     jer?dgBlock(items[sel]):((flowMode==='practicar'&&fp)?dgFlowPractice(items[sel]):dgFlowView(items[sel]));
 }
 
+// ── SOLUCIONARIO SIMULACRO 5 ─────────────────────────────────────
+// Muestra la resolución modelo de las 10 consignas (lee los datos ya cargados en SIMULACROS).
+function renderSoluciones(){
+  const sim=getSim(5);if(!sim)return;
+  const cont=document.getElementById('soluciones-content');if(!cont)return;
+  cont.innerHTML=sim.questions.map((q,i)=>{
+    let body;
+    if(q.type==='vf'){
+      body='<div class="sol-vf">'+q.statements.map((s,k)=>
+        `<div class="sol-vf-item"><span class="sol-vf-mark ${s.answer?'v':'f'}">${s.answer?'V':'F'}</span>`+
+        `<div class="sol-vf-body"><div class="sol-vf-text">${k+1}. ${escapeHtml(s.text)}</div>`+
+        (s.exp?`<div class="sol-vf-exp">${s.exp}</div>`:'')+`</div></div>`
+      ).join('')+'</div>';
+    }else{
+      body=`<div class="sol-ans">${q.answer||''}</div>`;
+    }
+    return `<div class="sol-item">
+      <div class="sol-head"><span class="sol-n">${i+1}</span><span class="sol-type">${typeLabel(q.type)}</span></div>
+      <div class="sol-consigna">${q.q}</div>
+      <div class="sol-label">Resolución</div>
+      ${body}
+    </div>`;
+  }).join('');
+}
+
 // ── INIT ────────────────────────────────────────────────────────
 
-load();updateHUD();renderZones();renderSimCards();renderDiagrams();
+load();updateHUD();renderZones();renderSimCards();renderDiagrams();renderSoluciones();

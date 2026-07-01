@@ -256,6 +256,24 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .diagrams-cta-i{font-size:26px;line-height:1}
 .diagrams-cta-t{font-family:'Pixelify Sans',monospace;font-size:15px;color:var(--text);display:block}
 .diagrams-cta-s{font-size:12px;color:var(--muted);display:block;margin-top:2px}
+/* Solucionario Simulacro 5 */
+.sol-item{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+.sol-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sol-n{flex:0 0 auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-family:'Pixelify Sans',monospace;font-weight:700;color:#fff;background:var(--purple);border-radius:8px}
+.sol-type{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border:1px solid var(--border);border-radius:99px;padding:3px 10px}
+.sol-consigna{color:var(--text);line-height:1.5}
+.sol-consigna pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;font-size:12.5px;white-space:pre}
+.sol-label{margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--green);font-weight:700}
+.sol-ans{color:var(--text);line-height:1.55;background:rgba(60,180,120,.08);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px}
+.sol-ans pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;font-size:12.5px;white-space:pre;margin-top:8px}
+.sol-vf{display:flex;flex-direction:column;gap:8px}
+.sol-vf-item{display:flex;gap:10px;align-items:flex-start;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.sol-vf-mark{flex:0 0 auto;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:6px;color:#fff}
+.sol-vf-mark.v{background:var(--green)}
+.sol-vf-mark.f{background:#d9534f}
+.sol-vf-body{flex:1 1 auto;min-width:0}
+.sol-vf-text{color:var(--text);line-height:1.45}
+.sol-vf-exp{margin-top:5px;font-size:13px;color:var(--muted);line-height:1.45}
 /* Diagramas: tabs + chips selector */
 .dg-tabs{display:flex;gap:8px;margin:4px 0 14px}
 .dg-tab{flex:0 0 auto;font-family:'Pixelify Sans',monospace;font-size:14px;color:var(--muted);background:var(--panel);border:1px solid var(--border);padding:9px 18px;border-radius:99px;cursor:pointer;transition:.15s}
