@@ -597,7 +597,7 @@ SIMULACROS[3].desc='Ordená los pasos de cada procedimiento. Toma 6 flujos al az
 
 // ── Modelo de examen 1: modelo REAL del Parcial N°2 (consignas calcadas del examen). ──
 // Respuestas modelo / V-F / fix de código derivados y validados contra los apuntes .md del repo.
-SIMULACROS[4]={id:5,sn:'Modelo de examen 1',title:'Modelo de examen 1 — Examen Parcial N°2',
+SIMULACROS[4]={id:5,sn:'Modelo 1',title:'Modelo de examen 1',
  desc:'Modelo real del Parcial N°2 (UADE · Depto. de Videojuegos · Prof. López Juan Ignacio). 10 consignas calcadas del examen: desarrollo, V/F con justificación y corrección de código. Se corrige al entregar.',
  questions:[
   {type:'written',label:'Corporalidad, memoria muscular, embodiment y affordance',
@@ -733,7 +733,7 @@ public class manager : MonoBehaviour {
 // ── Modelo de examen 2: variante de práctica (mismas reglas, consignas nuevas). ──
 // Mantiene el punto 3; cambia algunos V/F; consigna práctica a elección (pose o snap);
 // código sin esquema de flujo (corregir + explicar); teóricas reformuladas (game feel vs tangibilidad).
-SIMULACROS[5]={id:6,sn:'Modelo de examen 2',title:'Modelo de examen 2',
+SIMULACROS[5]={id:6,sn:'Modelo 2',title:'Modelo de examen 2',
  desc:'Segundo modelo de práctica con el formato del Parcial N°2: desarrollo, V/F con justificación y corrección de código. Consignas nuevas sobre el mismo temario. Se corrige al entregar.',
  questions:[
   {type:'written',label:'Affordance, embodiment, corporalidad y memoria muscular',
