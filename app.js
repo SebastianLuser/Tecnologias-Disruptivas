@@ -575,6 +575,26 @@ SIMULACROS[2].desc = 'Examen integral: '+SIMULACROS[2].questions.length+' pregun
 const FLUJOS_SIM4=[{"t": "Agregar funcionalidades con Building Blocks", "prompt": "Ordená el flujo para agregar funcionalidades a la escena con Building Blocks.", "steps": ["Abrir Oculus &gt; Tools &gt; Building Blocks", "Arrastrar Camera Rig a la escena (indispensable: incluye OVR Camera Rig y OVR Manager)", "Arrastrar Pass Through si se quiere Realidad Mixta", "Arrastrar Hand Tracking y configurar la frecuencia en Alta", "Arrastrar Synthetic Hands para la representación visual de las manos", "Arrastrar Grabbable Item como objeto agarrable"], "why": "Los Building Blocks son módulos pre-armados; el Camera Rig es la base del jugador y el resto suma input de manos e interacciones."}, {"t": "Hacer un objeto agarrable con el Grab Wizard", "prompt": "Ordená el flujo para hacer un objeto agarrable usando el asistente automático Grab Wizard.", "steps": ["Crear un cubo con clic derecho &gt; 3D Object &gt; Cube", "Seleccionarlo y hacer clic derecho &gt; Interaction SDK &gt; Add Grab Interaction", "En la ventana Grab Wizard elegir el tipo de interactor (manos, controles o ambos) y el gesto", "En los componentes requeridos, hacer clic en Fix para agregar el Rigidbody que falta", "Hacer clic en Create para que se agreguen automáticamente todos los componentes", "Ajustar escala y posición del cubo para probarlo en Play"], "why": "El Grab Wizard arma toda la interacción, pero antes necesita el Rigidbody (Fix) y la definición del interactor/gesto; recién con Create inyecta los componentes."}, {"t": "Hacer un objeto agarrable paso a paso (manual)", "prompt": "Ordená el flujo manual para hacer un objeto agarrable con manos y controles.", "steps": ["Crear la jerarquía: Root Grab Object con hijos Visual, Colliders, Hand Grab, Controller Grab y SFX, y poner el modelo 3D en Visual", "En Root Grab Object agregar el componente Rigidbody (características físicas)", "Agregar el componente Grabbable (toma la referencia del Rigidbody) y definir las físicas", "En Colliders definir los colliders que cubren la zona de agarre", "En Hand Grab agregar Hand Grab Interactable y asignar referencias a Grabbable y Rigidbody", "En Controller Grab agregar Grab Interactable y asignar manualmente las referencias"], "why": "Primero la jerarquía y la física (Rigidbody + Grabbable), después los colliders detectan el agarre, y por último los interactables de mano y control conectan con el Grabbable."}, {"t": "Sonido al agarrar y soltar (Pointable Event Wrapper)", "prompt": "Ordená el flujo para reproducir sonidos al agarrar y soltar un objeto, sin programar.", "steps": ["En Root Grab Object agregar el componente Pointable Unity Event Wrapper y referenciar el Grabbable", "En el objeto SFX crear dos vacíos: Select y Release", "En ambos agregar un Audio Source y desactivar Play On Awake", "Asignar el audio de agarrar en Select y el de soltar en Release", "Conectar When Select al Audio Source Play del objeto Select", "Conectar When Release al Audio Source Play del objeto Release"], "why": "El Pointable Unity Event Wrapper expone los eventos Select/Release que se enganchan a los Audio Source, que deben tener Play On Awake desactivado para sonar solo en el evento."}, {"t": "Manos y controles simultáneos (multimodal)", "prompt": "Ordená el flujo para habilitar manos y controles al mismo tiempo.", "steps": ["Crear la escena Basic, guardarla como Hands Controllers Interaction y eliminar la Main Camera", "En Building Blocks agregar Camera Rig, Hand Tracking, Virtual Hands y Grab Interaction", "En Camera Rig &gt; OVR Manager activar Simultaneous Hands and Controllers y poner Hand Tracking Support en Controllers and Hands", "En el OVR Hand de cada mano cambiar Show State a Always", "En el Hand Grab Interactor configurar el Hand Grab Visual con la Synthetic Hand y el data source del control", "Agregar el prefab OVR Controller Driven Hands y poner Show State en Always en los controles sintéticos"], "why": "El modo multimodal exige primero configurar el OVR Manager y el Show State Always, y luego enlazar la mano sintética con el data source del control para que convivan."}, {"t": "Crear una pose de agarre (Hand Grab Pose)", "prompt": "Ordená el flujo para crear una pose de agarre personalizada.", "steps": ["En el objeto Hand Grab (que tiene el Hand Grab Interactable) hacer clic en Add Hand Grab Pose", "Abrir el objeto generado y buscar el hijo Hand Grab Pose", "Mover y rotar ese objeto hacia el punto de agarre", "Ajustar cada dedo usando los círculos de cada falange", "Configurar en el script Hand Grab Pose el tipo de mano y el Fingers Freedom (Bloqueado/Restringido/Libre) de cada dedo"], "why": "La pose se genera desde el Hand Grab Interactable; después se posiciona la mano virtual sobre el punto de agarre y se ajustan dedos y libertad para que calce."}, {"t": "Crear la pose espejo para la otra mano", "prompt": "Ordená el flujo para reflejar una pose de agarre a la otra mano.", "steps": ["En el script Hand Grab Interactable hacer clic en Create Mirror Hand Grab Interactable", "Verificar que se crea el objeto con el sufijo mirror, ya configurado para la otra mano", "Ajustar la rotación si hace falta (por ejemplo Y: 180) para que calce desde el mismo ángulo"], "why": "El botón de mirror evita rehacer la pose dedo por dedo: refleja la pose existente y solo puede requerir corregir la rotación."}, {"t": "Agregar múltiples puntos de agarre a un objeto", "prompt": "Ordená el flujo para sumar un segundo punto de agarre (ej. agarrar un palo de las dos puntas).", "steps": ["Dentro del objeto crear un nuevo vacío (por ejemplo Hand Grab)", "Agregar el componente Hand Grab Interactable", "Verificar que las referencias al Grabbable y al Rigidbody estén correctas", "Añadir la pose y posicionar la mano sobre la nueva zona de agarre", "Crear la pose espejo y asegurar que los colliders cubran cada zona de agarre"], "why": "Cada punto de agarre es otro Hand Grab Interactable con sus referencias y su pose; los colliders deben cubrir cada zona para que el agarre se detecte."}, {"t": "Configurar el Snap Interactor en el objeto que se mueve", "prompt": "Ordená el flujo para agregar el Snap Interactor a un objeto agarrable.", "steps": ["En el objeto padre activar Is Trigger en su Collider", "Dentro del objeto crear un vacío llamado Snap Interactor", "Agregar el componente Snap Interactor", "Referenciar en Pointable Element el Grabbable (el ISDK Hand Grab Interaction)", "Referenciar el Rigidbody del objeto"], "why": "El Snap Interactor vive en el objeto móvil y necesita el Grabbable como Pointable Element y el Rigidbody para saber que se agarra/suelta y mover el objeto."}, {"t": "Crear el Snap Interactable (destino del Snap)", "prompt": "Ordená el flujo para crear el destino donde encaja el objeto.", "steps": ["Fuera del objeto crear un vacío llamado Snap Interactable y ubicarlo donde debe encajar", "Agregar un Box Collider que define la zona donde se activa el Snap", "Agregar un Rigidbody, desactivar Use Gravity y activar Is Kinematic", "Agregar el componente Snap Interactable"], "why": "El destino se ubica donde se quiere que encaje; el collider define la zona de activación y el Rigidbody kinematico evita que caiga, antes de sumar el Snap Interactable."}, {"t": "Crear el visual de la zona del Snap", "prompt": "Ordená el flujo para mostrar y ocultar un visual de la zona de Snap.", "steps": ["Dentro de Snap Interactable crear un cubo un poco más grande llamado Snap Visual", "Crear un material transparente (Rendering Mode Transparent, color verde) y asignarlo al cubo", "Eliminar el collider del cubo visual", "Agregar el componente Interactable Unity Event Wrapper y referenciar el Snap Interactable", "Conectar When Select al SetActive(false) del cubo visual (ocultarlo al encajar)", "Conectar When Unselect al SetActive(true) (mostrarlo al sacar el objeto)"], "why": "El visual transparente marca la zona; el Interactable Unity Event Wrapper usa Select/Unselect para ocultar el cubo cuando el objeto encaja y mostrarlo cuando se saca."}, {"t": "Varios Snaps con punto por defecto y retorno por tiempo", "prompt": "Ordená el flujo para manejar varios Snaps con default y time out.", "steps": ["Duplicar el Snap las veces necesarias y ubicar cada uno en su posición", "Seleccionar el Snap Interactor y abrir Options", "En Snap Pose Transform definir el pivote del objeto al moverse al Snap", "En Default Interactable referenciar el Snap predeterminado", "En Time Out Interactable referenciar el Snap al que el objeto regresa", "En Time Out poner el tiempo de regreso (ej. 3 segundos)"], "why": "Con varios Snaps, las Options del Snap Interactor definen el pivote, el punto inicial (Default) y a cuál vuelve el objeto tras un tiempo (Time Out)."}, {"t": "Filtrar con qué Snaps encaja el objeto (Tags)", "prompt": "Ordená el flujo para limitar con qué Snaps encaja un objeto usando tags.", "steps": ["Seleccionar todos los Snaps y agregar el componente Tag Set", "Asignar una etiqueta a cada Snap (por ejemplo cube o sphere)", "En el Snap Interactor agregar el componente Tag Set Filter", "En Options definir Required Tags y Excluded Tags", "Referenciar el Tag Set Filter dentro del Snap Interactor en Options &gt; Interactable Filters"], "why": "El filtrado por tags requiere un Tag Set en los Snaps y un Tag Set Filter en el Interactor con Required/Excluded Tags, enganchado en Interactable Filters."}, {"t": "Crear un Canvas y habilitar interacción (Ray y Poke)", "prompt": "Ordená el flujo para crear un Canvas e interactuar con él desde el Interaction SDK.", "steps": ["Crear un vacío con Create Empty llamado UI y posicionarlo", "Clic derecho sobre UI &gt; UI &gt; Canvas", "Clic derecho sobre el Canvas &gt; Interaction SDK &gt; Add Ray Interaction y hacer Fix (pasa a World Space y agrega el módulo)", "En Settings elegir manos, controles o ambos y crear", "Clic derecho sobre el Canvas &gt; Interaction SDK &gt; Add Poke Interaction y crear"], "why": "Desde la versión 62 Meta automatiza el Canvas; Ray habilita interacción a distancia y Poke interacción directa, y el Canvas debe estar en World Space."}, {"t": "Crear una zona de teleport con NavMesh", "prompt": "Ordená el flujo para definir una zona de teletransportación mediante NavMesh.", "steps": ["Crear un vacío llamado Teleport First Floor y hacer Reset en el Transform", "Add Component &gt; Teleport Interactable", "En el objeto del piso agregar NavMesh Surface y ajustar el agente en Window &gt; AI &gt; Navigation (Radius 0.15, Collect Objects = Current Object Hierarchy)", "Hacer Bake para generar solo esa zona", "Referenciar el NavMesh Surface en el Teleport Interactable", "Add Component &gt; Reticle Data Teleport"], "why": "El NavMesh define automáticamente por dónde puede desplazarse el jugador; el Teleport Interactable toma esa zona y el Reticle Data Teleport cambia lo que se muestra al final del rayo."}, {"t": "Crear una zona de teleport con Collider (escalera)", "prompt": "Ordená el flujo para crear una zona de teletransportación usando un Collider Surface.", "steps": ["Crear un vacío llamado Teleport Stairs y hacer Reset en el Transform", "Add Component &gt; Teleport Interactable y elegir Collider Surface como superficie", "Dentro crear un vacío Collider y Add Component &gt; Box Collider", "Alinear el collider con la escalera (posición y rotación)", "Referenciar el Collider en el Collider Surface", "Add Component &gt; Reticle Data Teleport"], "why": "Cuando la superficie es inclinada (escalera) se usa un Box Collider alineado como Collider Surface; hay que referenciarlo o la zona no funciona."}, {"t": "Crear una zona de teleport inválida", "prompt": "Ordená el flujo para definir una zona donde NO se puede teletransportar.", "steps": ["Crear un vacío llamado Invalid Teleport y hacer Reset en el Transform", "Add Component &gt; Teleport Interactable y desactivar Allow Teleport", "En Options bajar el Score (ej. -10) para que pierda contra las otras zonas", "Agregar una Surface, rotarla a horizontal y referenciarla", "Add Component &gt; Reticle Data Teleport y cambiar el modo a inválido"], "why": "Para bloquear una zona se desactiva el teleport y se baja el score; el reticle en modo inválido muestra el rayo en rojo al apuntar al vacío."}, {"t": "Teleport a un punto fijo (hotspot)", "prompt": "Ordená el flujo para teletransportarte a un punto fijo (hotspot) sin marearte.", "steps": ["Crear un GameObject donde querés caer", "Clic derecho &gt; Interaction SDK &gt; Add Teleport Interaction", "Se genera el Hotspot (destino absoluto)", "El Teleport Interactor en la mano apunta al hotspot", "El reticle marca el destino y al soltar te teletransporta"], "why": "El Hotspot es el destino fijo; el Teleport Interactor apunta, el reticle confirma y al seleccionar te mueve sin movimiento continuo (por eso no marea)."}, {"t": "Girar de a pasos (snap turning)", "prompt": "Ordená el flujo para girar de a pasos con el control.", "steps": ["Tener el rig con locomoción configurada", "Ubicar el Controller Turner Interactor en el control", "En el Turner Event Broadcaster elegir el modo Snap", "Setear los grados del giro (ej. 45)", "Probar: el joystick gira de golpe en pasos fijos"], "why": "El Turner Interactor genera el input y el Turner Event Broadcaster lo convierte en giros. En modo Snap el giro instantáneo marea menos que el continuo."}];
 SIMULACROS[3] = {id:4, title:'Simulacro 4 — Flujos paso a paso', desc:'Solo ejercicios de armar flujos: orden\u00e1 los pasos de cada procedimiento del curso. 19 flujos extra\u00eddos de todos los apuntes.', questions: FLUJOS_SIM4.map(f => ({type:'order', label:'Flujo \u00b7 '+f.t, q:'<p>'+f.prompt+'</p>', steps:f.steps, why:'<p>'+f.why+'</p>'}))};
 
+// Core de flujos "principales" (sin sub-flujos ni variantes). Se usa en Simulacro 4 y en Diagramas.
+const CORE_FLUJOS_TITLES=new Set([
+  'Agregar funcionalidades con Building Blocks',
+  'Hacer un objeto agarrable con el Grab Wizard',
+  'Hacer un objeto agarrable paso a paso (manual)',
+  'Sonido al agarrar y soltar (Pointable Event Wrapper)',
+  'Manos y controles simultáneos (multimodal)',
+  'Crear una pose de agarre (Hand Grab Pose)',
+  'Configurar el Snap Interactor en el objeto que se mueve',
+  'Crear el Snap Interactable (destino del Snap)',
+  'Crear un Canvas y habilitar interacción (Ray y Poke)',
+  'Crear una zona de teleport con NavMesh',
+  'Girar de a pasos (snap turning)'
+]);
+const FLUJOS_CORE=FLUJOS_SIM4.filter(f=>CORE_FLUJOS_TITLES.has(f.t));
+// Simulacro 4 podado + muestreo: 6 flujos al azar del core por intento (ver startExam).
+SIMULACROS[3].sample=6;
+SIMULACROS[3].questions=FLUJOS_CORE.map(f=>({type:'order',label:'Flujo · '+f.t,q:'<p>'+f.prompt+'</p>',steps:f.steps,why:'<p>'+f.why+'</p>'}));
+SIMULACROS[3].desc='Ordená los pasos de cada procedimiento. Toma 6 flujos al azar (de '+FLUJOS_CORE.length+') por intento; cambian cada vez.';
+
 function normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
 function scoreWritten(text,keywords){
   const t=normalize(text);
@@ -905,8 +925,12 @@ function shuffleSteps(n){
 
 function startExam(id){
   const sim=getSim(id);
-  exam={simId:id,answers:{},shuf:{},submitted:false,warned:false};
-  sim.questions.forEach((q,i)=>{
+  // Si el sim declara "sample", toma esa cantidad al azar del pool (subconjunto por intento).
+  const qs=(sim.sample&&sim.questions.length>sim.sample)
+    ? shuffleSteps(sim.questions.length).slice(0,sim.sample).map(k=>sim.questions[k])
+    : sim.questions;
+  exam={simId:id,questions:qs,answers:{},shuf:{},submitted:false,warned:false};
+  qs.forEach((q,i)=>{
     if(q.type==='vf')exam.answers[i]={};
     else if(q.type==='order')exam.answers[i]={picked:[],pool:shuffleSteps(q.steps.length)};
     else if(q.type==='mc'){
@@ -929,14 +953,13 @@ function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 // Devuelve la pregunta tal como se presenta: para mc, con las opciones barajadas
 // (espacio de display). Para el resto, la pregunta sin cambios.
 function examQ(i){
-  const q=getSim(exam.simId).questions[i];
+  const q=exam.questions[i];
   if(q.type==='mc'&&exam.shuf&&exam.shuf[i])return {...q,opts:exam.shuf[i].opts,correct:exam.shuf[i].correct};
   return q;
 }
 
 function renderExam(){
-  const sim=getSim(exam.simId);
-  document.getElementById('exam-content').innerHTML=sim.questions.map((q,i)=>renderQuestion(examQ(i),i)).join('');
+  document.getElementById('exam-content').innerHTML=exam.questions.map((q,i)=>renderQuestion(examQ(i),i)).join('');
   bindExam();
   updateExamProg();
 }
@@ -1001,9 +1024,8 @@ function isAnswered(q,a){
 }
 
 function updateExamProg(){
-  const sim=getSim(exam.simId);
-  const n=sim.questions.filter((q,i)=>isAnswered(q,exam.answers[i])).length;
-  document.getElementById('exam-prog').textContent=n+'/'+sim.questions.length+' respondidas';
+  const n=exam.questions.filter((q,i)=>isAnswered(q,exam.answers[i])).length;
+  document.getElementById('exam-prog').textContent=n+'/'+exam.questions.length+' respondidas';
 }
 
 function confirmExitExam(){
@@ -1081,24 +1103,24 @@ function semOverlay(show){
 
 async function submitExam(){
   const sim=getSim(exam.simId);
-  const pend=sim.questions.filter((q,i)=>!isAnswered(q,exam.answers[i])).length;
+  const pend=exam.questions.filter((q,i)=>!isAnswered(q,exam.answers[i])).length;
   if(pend>0&&!exam.warned){
     document.getElementById('exam-warn').textContent='Quedan '+pend+' pregunta(s) sin responder. Tocá "Entregar examen" otra vez para entregar igual (cuentan 0).';
-    sim.questions.forEach((q,i)=>{const el=document.getElementById('exam-q-'+i);if(el)el.classList.toggle('warn',!isAnswered(q,exam.answers[i]));});
+    exam.questions.forEach((q,i)=>{const el=document.getElementById('exam-q-'+i);if(el)el.classList.toggle('warn',!isAnswered(q,exam.answers[i]));});
     exam.warned=true;
     return;
   }
   exam.submitted=true;
   const TEXT=new Set(['written','code','match']);
-  if(sim.questions.some(q=>TEXT.has(q.type))){semOverlay(true);await ensureSemModel();}
+  if(exam.questions.some(q=>TEXT.has(q.type))){semOverlay(true);await ensureSemModel();}
   let total=0;const detail=[];
-  for(let i=0;i<sim.questions.length;i++){
+  for(let i=0;i<exam.questions.length;i++){
     const q=examQ(i);                              // mc: opciones/correct en espacio de display
     const r=TEXT.has(q.type)?await scoreSemantic(exam.answers[i],q):scoreQuestion(q,exam.answers[i]);
     total+=r.score;detail.push({q,i,r});
   }
   semOverlay(false);
-  const score=sim.questions.length?Math.round(total/sim.questions.length*100)/10:0;
+  const score=exam.questions.length?Math.round(total/exam.questions.length*100)/10:0;
   localStorage.setItem('pd_exams',(parseInt(localStorage.getItem('pd_exams')||'0')+1));
   localStorage.setItem('pd_nota',score+'/10');
   const done=simsDone();if(!done.includes(exam.simId)){done.push(exam.simId);localStorage.setItem('pd_sims',JSON.stringify(done));}
@@ -1218,8 +1240,8 @@ function dgPairs(rows){
   ).join('');
 }
 
-// Flujos "orden de pasos" para Diagramas: los 19 de FLUJOS_SIM4 + el de baking (único en _flujosIntegral).
-const FLUJOS_DIAG=FLUJOS_SIM4.concat(_flujosIntegral.filter(f=>/^bakear la iluminaci/i.test(f.t)));
+// Flujos "orden de pasos" para Diagramas: los 11 del core + el de baking (único en _flujosIntegral).
+const FLUJOS_DIAG=FLUJOS_CORE.concat(_flujosIntegral.filter(f=>/^bakear la iluminaci/i.test(f.t)));
 
 // Razón por paso: explica "esto va acá por esta razón" (para entender el orden, no memorizarlo).
 // Clave = título del flujo (f.t); array paralelo a f.steps.
