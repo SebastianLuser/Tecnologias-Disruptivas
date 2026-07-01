@@ -595,9 +595,9 @@ SIMULACROS[3].sample=6;
 SIMULACROS[3].questions=FLUJOS_CORE.map(f=>({type:'order',label:'Flujo · '+f.t,q:'<p>'+f.prompt+'</p>',steps:f.steps,why:'<p>'+f.why+'</p>'}));
 SIMULACROS[3].desc='Ordená los pasos de cada procedimiento. Toma 6 flujos al azar (de '+FLUJOS_CORE.length+') por intento; cambian cada vez.';
 
-// ── Simulacro 5: modelo REAL del Parcial N°2 (consignas calcadas del examen). ──
+// ── Modelo de examen 1: modelo REAL del Parcial N°2 (consignas calcadas del examen). ──
 // Respuestas modelo / V-F / fix de código derivados y validados contra los apuntes .md del repo.
-SIMULACROS[4]={id:5,title:'Simulacro 5 — Examen Parcial N°2',
+SIMULACROS[4]={id:5,sn:'Modelo de examen 1',title:'Modelo de examen 1 — Examen Parcial N°2',
  desc:'Modelo real del Parcial N°2 (UADE · Depto. de Videojuegos · Prof. López Juan Ignacio). 10 consignas calcadas del examen: desarrollo, V/F con justificación y corrección de código. Se corrige al entregar.',
  questions:[
   {type:'written',label:'Corporalidad, memoria muscular, embodiment y affordance',
@@ -1049,8 +1049,8 @@ function renderSimCards(){
   const g=document.getElementById('sim-grid');
   g.innerHTML=SIMULACROS.map(s=>`
     <div class="sim-card">
-      <div class="sim-n">Simulacro ${s.id}</div>
-      <h3>${s.title.replace(/^Simulacro \d+ — /,'')}</h3>
+      <div class="sim-n">${s.sn||('Simulacro '+s.id)}</div>
+      <h3>${s.title.replace(/^(?:Simulacro \d+|Modelo de examen \d+) — /,'')}</h3>
       <p>${s.desc}</p>
       <div class="sim-foot">
         <button class="sim-start" onclick="startExam(${s.id})">${done.includes(s.id)?'Repetir':'Empezar'}</button>
