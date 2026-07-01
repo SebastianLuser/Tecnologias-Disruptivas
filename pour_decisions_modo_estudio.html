@@ -46,6 +46,10 @@
       <span class="diagrams-cta-i">📝</span>
       <span><span class="diagrams-cta-t">Respuestas del Modelo de examen 1</span><span class="diagrams-cta-s">Resolución a mano de las 10 consignas del examen modelo (Parcial N°2)</span></span>
     </button>
+    <button class="diagrams-cta" onclick="showScreen('screen-soluciones2')">
+      <span class="diagrams-cta-i">📝</span>
+      <span><span class="diagrams-cta-t">Respuestas del Modelo de examen 2</span><span class="diagrams-cta-s">Resolución a mano de las 10 consignas del segundo modelo de práctica</span></span>
+    </button>
     <div class="sec-head"><h2>Zonas de Estudio</h2></div>
     <div class="search-box">
       <input id="topic-search" type="search" class="topic-search-input"
@@ -140,6 +144,18 @@
   <span class="mode-badge badge-simulacro">Solucionario · Examen Parcial N°2</span>
   <p class="mode-desc">Resolución a mano de las 10 consignas del Modelo de examen 1, según los apuntes del curso. Es la respuesta modelo — usala para estudiar o corregirte.</p>
   <div id="soluciones-content"></div>
+  <button class="mark-done-btn" onclick="showScreen('screen-home')">← Volver al inicio</button>
+</div>
+
+<!-- SOLUCIONARIO MODELO DE EXAMEN 2 -->
+<div id="screen-soluciones2" class="screen">
+  <div class="study-header">
+    <button class="back-btn" onclick="showScreen('screen-home')">← Volver</button>
+    <div class="study-zone-name">Respuestas · Modelo de examen 2</div>
+  </div>
+  <span class="mode-badge badge-simulacro">Solucionario · Segundo modelo de práctica</span>
+  <p class="mode-desc">Resolución a mano de las 10 consignas del Modelo de examen 2, según los apuntes del curso. Es la respuesta modelo — usala para estudiar o corregirte.</p>
+  <div id="soluciones2-content"></div>
   <button class="mark-done-btn" onclick="showScreen('screen-home')">← Volver al inicio</button>
 </div>
 

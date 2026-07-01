@@ -730,6 +730,128 @@ public class manager : MonoBehaviour {
    answer:`<p>La <strong>tangibilidad del trabajo</strong> es que las acciones del jugador produzcan <strong>consecuencias visibles y comprensibles</strong>: que perciba que <strong>realmente hizo algo</strong> y que su esfuerzo tuvo impacto sobre el mundo, lo que refuerza la inmersión. <strong>3 ejemplos:</strong> (1) armar un mecanismo pieza por pieza; (2) recargar un arma manualmente; (3) colocar objetos en posiciones específicas (ej. Positional Snap).</p>`}
  ]};
 
+// ── Modelo de examen 2: variante de práctica (mismas reglas, consignas nuevas). ──
+// Mantiene el punto 3; cambia algunos V/F; consigna práctica a elección (pose o snap);
+// código sin esquema de flujo (corregir + explicar); teóricas reformuladas (game feel vs tangibilidad).
+SIMULACROS[5]={id:6,sn:'Modelo de examen 2',title:'Modelo de examen 2',
+ desc:'Segundo modelo de práctica con el formato del Parcial N°2: desarrollo, V/F con justificación y corrección de código. Consignas nuevas sobre el mismo temario. Se corrige al entregar.',
+ questions:[
+  {type:'written',label:'Affordance, embodiment, corporalidad y memoria muscular',
+   q:`<p>Definí <strong>affordance</strong> y <strong>embodiment</strong>. ¿Cómo se apoyan en la corporalidad y la memoria muscular? Explicá por qué un affordance mal diseñado (un objeto que no comunica cómo se usa) arruina el tutorial inicial en VR.</p>`,
+   keywords:['affordance','comunica','cómo se usa','embodiment','extensión','cuerpo virtual','corporalidad','cuerpo','memoria muscular','hábitos','tutorial','gradual'],
+   answer:`<p><strong>Affordance:</strong> la capacidad de un objeto de comunicar visualmente cómo se usa (una palanca invita a accionarla, un botón a presionarlo). <strong>Embodiment:</strong> la sensación de que el cuerpo virtual es propio, que aparece cuando las manos virtuales responden bien a los movimientos (se percibe como una extensión de uno). Ambos se apoyan en la <strong>corporalidad</strong> (el cuerpo como interfaz principal) y en la <strong>memoria muscular</strong> (repetir movimientos hasta volverlos automáticos). En un <strong>tutorial inicial</strong>, si el affordance es malo el jugador no entiende qué puede agarrar o accionar, no forma memoria muscular y se rompe el embodiment → frustración e incomodidad. Por eso hay que introducir las mecánicas de forma gradual y con objetos que se expliquen solos.</p>`},
+
+  {type:'vf',label:'Verdadero o Falso (10 afirmaciones, justificá las Falsas)',
+   q:`<p>Completa V o F según corresponda, justifica las F:</p>`,
+   statements:[
+    {text:'El uso de Interactors determina los objetos con los que de una u otra forma podremos interactuar.',answer:false,exp:'Son los Interactables los que definen qué objetos reciben la acción; los Interactors son quienes la realizan (manos, controles, rayos).'},
+    {text:'El SDK de Meta se compone solo por los building blocks.',answer:false,exp:'Los Building Blocks son solo módulos pre-armados; el SDK incluye además Core, Interaction, Movement, Mixed Reality, Audio, Haptics, etc.'},
+    {text:'El SDK de Meta incluye prefabs y visualizaciones preconfiguradas para representar manos y controladores.',answer:true,exp:'Correcto: ofrece Synthetic/Virtual Hands y prefabs como OVR Controller Driven Hands.'},
+    {text:'OpenXR es un estándar abierto desarrollado por el grupo Khronos para unificar el desarrollo de VR/AR.',answer:true,exp:'Correcto: su ventaja es la interoperabilidad entre fabricantes.'},
+    {text:'El passthrough es una función propia de la realidad mixta y no es obligatorio en desarrollos de VR.',answer:true,exp:'Correcto: el passthrough (ver el entorno real) es opcional y se usa para realidad mixta.'},
+    {text:'La tasa de refresco a lograr en el juego es de más de 75 FPS.',answer:true,exp:'Correcto: el objetivo de rendimiento es más de 75 FPS en todo momento.'},
+    {text:'Los reticles son indicadores visuales que comunican si una superficie u objetivo es válido para una acción.',answer:true,exp:'Correcto: son feedback visual (ej. destino de teleport válido/inválido); la detección la hace el dispositivo.'},
+    {text:'En VR alcanza con el feedback de audio; no es necesario reforzarlo de forma visual.',answer:false,exp:'El jugador puede jugar sin sonido: el feedback y las marcas clave deben entenderse también visualmente.'},
+    {text:'El Canvas en VR puede estar en Screen Space para que los rayos del SDK lo detecten.',answer:false,exp:'Debe estar en World Space; en Screen Space no funciona con las interacciones del SDK de Meta.'},
+    {text:'El Object Pooling reutiliza objetos en lugar de crear y destruir en runtime, ayudando a mantener FPS estables.',answer:true,exp:'Correcto: evita los picos de Instantiate/Destroy reutilizando un pool de objetos.'}
+   ]},
+
+  {type:'written',label:'Problemas de un proyecto Meta Quest 3s',
+   q:`<p>Estoy haciendo un juego de realidad virtual para los Meta Quest 3s y el proyecto presenta algunos problemas que no logro terminar de comprender:</p>
+   <ol>
+    <li>Hay un objeto que quiero agarrar con las dos manos, al mismo le asigne un máximo de interacciones -1, un componente llamado move towards target provider, otro llamado grab, grab interactable y touch hand grab interactable. Asigne un evento para que haga ruido cuando lo agarro en base al touch hand grab interactable pero no se dispara, no hace nada.</li>
+    <li>Mi diseño de niveles proviene de archivos FBX de blender, El player tiene programado siempre que no puede caer al infinito, pues el Rigidbody del mismo esta frizeado en la posición de Y.</li>
+    <li>Al momento de probar el juego en el emulador MetaXR todo funciona bien pero al ponerme los Meta quest y probarlo el personaje ya no se mueve para nada, como si le hubiese frizado las posiciones en x y z.</li>
+    <li>Por ultimo tengo un objeto que posee el componente grabbable pero no lo puedo agarrar ni asociarle un gizmo de interacción ni nada. Quiero agarrarlo, pero no está funcionando.</li>
+    <li>El ultimo que no entiendo es el objeto del snap. Logre hacer un cubito que, si lo acerco a un objeto, se acomode de forma fija en una posición, pero al tratar de agarrarlo de nuevo y llevármelo, este se queda "orbitando" y rompe las físicas. No me sigue.</li>
+   </ol>
+   <p>Explica estos problemas y como solucionarlos.</p>`,
+   keywords:['pointable unity event wrapper','grabbable','when select','vulkan','opengl','collider','hand grab interactable','interactor','is trigger','is kinematic','use gravity','freeze','gravedad'],
+   answer:`<p><strong>1.</strong> El sonido no suena porque el evento está en el <em>Touch Hand Grab Interactable</em>, que no dispara ese evento. Para feedback de agarre se usa un <strong>Pointable Unity Event Wrapper</strong> referenciando el Grabbable; en <strong>When Select</strong> se llama a AudioSource.Play().</p>
+   <p><strong>2.</strong> Freezar la posición Y del Rigidbody es un parche: enmascara errores de diseño (caídas, plataformas mal puestas) porque nunca se aplica la gravedad real. Conviene no freezar Y y controlar las caídas con NavMesh/zonas seguras o colliders, para que el error se note.</p>
+   <p><strong>3.</strong> Es un problema de build/plataforma: en Player Settings la API gráfica suele estar en <strong>OpenGL ES3</strong> y hay que pasarla a <strong>Vulkan</strong> (y aplicar el Project Setup Tool) para que funcione en el dispositivo real.</p>
+   <p><strong>4.</strong> El Grabbable solo no alcanza: falta el <strong>Hand Grab Interactable</strong> (o Grab Interactable para controles), un <strong>Collider</strong> que defina la zona de agarre y tener los <strong>Interactors</strong> (Hand/Controller Grab Interactor) en las manos/controles del rig.</p>
+   <p><strong>5.</strong> El objeto "orbita" por físicas mal configuradas en el Snap. En el <strong>Snap Interactable</strong>: Collider con <strong>Is Trigger = true</strong> y Rigidbody con <strong>Is Kinematic = true</strong> y <strong>Use Gravity = false</strong>, para que no pelee con el Move Towards Target Provider al re-agarrarlo.</p>`},
+
+  {type:'code',label:'Corregir el código y explicar la mecánica',
+   q:`<p>El siguiente código busca reproducir un sonido cada vez que el jugador suma un punto (por ejemplo, al agarrar un objeto de puntaje), disparado desde un evento del Meta XR SDK. Tiene errores y, además, tal como está no podría invocarse desde un event wrapper.</p>
+   <pre>using UnityEngine;
+
+public class puntajeManager : MonoBehaviour
+{
+    public int puntos = 0;
+    AudioSource fuenteAudio;
+    public AudioClip sonidoPunto;
+
+    void Start()
+    {
+        fuenteAudio = GetComponent&lt;AudioSource&gt;;
+    }
+
+    void SumarPunto()
+    {
+        puntos++;
+        fuenteAudio.clip = sonidoPunto;
+        fuenteAudio.Play;
+    }
+}</pre>
+   <p>Corregí el código y explicá con tus palabras: <strong>¿cómo lo harías?</strong>, <strong>¿cómo implementás dicha mecánica</strong> (que suene al agarrar / al disparar el evento) con lo que ofrece el SDK, y <strong>¿qué cambiarías?</strong> (se lo más específico y técnico posible)</p>`,
+   keywords:['getcomponent','paréntesis','play()','public','pointable unity event wrapper','when select','audiosource','play on awake'],
+   check:{must:['GetComponent\\s*<\\s*AudioSource\\s*>\\s*\\(\\)','Play\\(\\)','public\\s+void\\s+SumarPunto'],forbid:[],order:[]},
+   answer:`<p><strong>Errores:</strong></p>
+   <p>1. <code>GetComponent&lt;AudioSource&gt;</code> sin paréntesis → es una llamada a método: <code>GetComponent&lt;AudioSource&gt;()</code>.</p>
+   <p>2. <code>fuenteAudio.Play</code> sin paréntesis → <code>Play</code> es un método, hay que invocarlo: <code>fuenteAudio.Play()</code>.</p>
+   <p>3. <code>SumarPunto()</code> es privado: un Event Wrapper solo puede invocar métodos <strong>públicos</strong> desde el Inspector → <code>public void SumarPunto()</code>.</p>
+   <pre>public class puntajeManager : MonoBehaviour {
+  public int puntos = 0;
+  AudioSource fuenteAudio;
+  public AudioClip sonidoPunto;
+
+  void Start(){
+    fuenteAudio = GetComponent&lt;AudioSource&gt;();
+  }
+  public void SumarPunto(){
+    puntos++;
+    fuenteAudio.clip = sonidoPunto;
+    fuenteAudio.Play();
+  }
+}</pre>
+   <p><strong>Cómo implementaría la mecánica:</strong> le pongo un <strong>AudioSource</strong> al objeto (con Play On Awake desactivado), le agrego un <strong>Pointable Unity Event Wrapper</strong> referenciando el Grabbable y en el evento <strong>When Select</strong> conecto <code>SumarPunto()</code> (o directamente el Play del AudioSource). Así el sonido se dispara al agarrar sin escribir lógica de input. <strong>Qué cambiaría:</strong> hacer público el método, invocar bien los métodos con paréntesis y resolver la referencia del AudioSource en Start (o serializarla en el Inspector).</p>`},
+
+  {type:'written',label:'Componentes tipo Event Wrapper',
+   q:`<p>Citá 3 componentes tipo <strong>Event Wrapper</strong> del Meta XR SDK, explicá qué eventos ofrecen y dá un ejemplo de uso de cada uno. ¿Cuál es la diferencia entre un wrapper asociado a un <em>Interactable</em> y uno asociado a un <em>Interactor</em>?</p>`,
+   keywords:['pointable unity event wrapper','interactable unity event wrapper','interactor unity event wrapper','when select','when unselect','when hover','grabbable','interactor','interactable'],
+   answer:`<p><strong>Pointable Unity Event Wrapper:</strong> expone eventos de un elemento agarrable/pointable (When Select, Unselect, Hover, Release, Cancel) referenciando el Grabbable. Ej.: sonido al agarrar. <strong>Interactable Unity Event Wrapper:</strong> sobre un Interactable (Snap, Teleport). Ej.: ocultar el visual de una zona de Snap en When Select. <strong>Interactor Unity Event Wrapper:</strong> dispara eventos desde el lado del interactor (mano/control). Ej.: efecto en la mano al empezar a interactuar. <strong>Diferencia:</strong> el wrapper de <em>Interactable</em> responde a lo que le pasa al <strong>objeto</strong>; el de <em>Interactor</em> responde a lo que hace <strong>quien interactúa</strong> (la mano o el control).</p>`},
+
+  {type:'written',label:'Pose de mano (Hand Grab Pose) o Snap — elegí una',
+   q:`<p>Elegí <strong>UNA</strong> de estas dos y explicala paso a paso, detallando los componentes y su configuración:</p>
+   <p><strong>(a)</strong> Cómo crear una <strong>pose de agarre</strong> personalizada para la mano (Hand Grab Pose).</p>
+   <p><strong>(b)</strong> Cómo configurar un <strong>Snap</strong> para que un objeto se acomode en una posición fija.</p>`,
+   keywords:['add hand grab pose','hand grab interactable','fingers freedom','mirror','mano virtual','snap interactor','snap interactable','is trigger','is kinematic','use gravity','grabbable'],
+   answer:`<p><strong>(a) Hand Grab Pose:</strong> en el objeto con Hand Grab Interactable → <strong>Add Hand Grab Pose</strong>; se genera el hijo Hand Grab Pose → mover/rotar la mano virtual hacia el punto de agarre → ajustar cada dedo con <strong>Fingers Freedom</strong> (Libre/Restringido/Bloqueado) → definir el tipo de mano → <strong>Create Mirror</strong> para la otra mano.</p>
+   <p><strong>(b) Snap:</strong> en el objeto que se mueve, Collider con <strong>Is Trigger</strong> y un <strong>Snap Interactor</strong> que referencia el Grabbable y el Rigidbody. El destino es un <strong>Snap Interactable</strong> con Box Collider (zona) y Rigidbody con <strong>Is Kinematic = true</strong> y <strong>Use Gravity = false</strong>. Opcional: un visual transparente que se oculta con un Interactable Unity Event Wrapper en When Select.</p>`},
+
+  {type:'written',label:'Color de las manos al agarrar',
+   q:`<p>¿Cómo programarías que las manos predefinidas por Meta (Quest 3 / 3s) cambien de color al agarrar un objeto y vuelvan al color original al soltarlo?</p>`,
+   keywords:['pointable unity event wrapper','interactable unity event wrapper','when select','when unselect','material','color','mano sintética','hand grab glow'],
+   answer:`<p>Con eventos, sin lógica de agarre propia: sobre el objeto agarrable se agrega un <strong>Pointable/Interactable Unity Event Wrapper</strong>; en <strong>When Select</strong> se llama a un método público que cambia el <strong>material/color</strong> de la mano sintética (Synthetic Hands) y en <strong>When Unselect</strong> se vuelve al color original. El SDK también trae el <strong>Hand Grab Glow</strong> (brillo/contorno de la mano al acercarse o agarrar) como base visual del efecto.</p>`},
+
+  {type:'written',label:'Canvas que solo responde a los rayos de los controles',
+   q:`<p>Tengo un juego low profile para Meta Quest 2, 3 y 3s con interaction rig, hand tracking y real hands. El Canvas funciona con los rayos de los controles, pero con las manos no hace nada. ¿Cómo lo soluciono?</p>`,
+   keywords:['add poke','poke interaction','add ray','interaction sdk','world space','fix','create','manos','dedo'],
+   answer:`<p>Falta la interacción directa con la mano: hay que agregar <strong>Add Poke Interaction</strong> → clic derecho sobre el Canvas → <strong>Interaction SDK → Add Poke Interaction</strong> → Fix (si hace falta, lo pasa a World Space y agrega el módulo) → Create. Poke habilita el toque directo con el dedo; con Ray + Poke el Canvas responde a controles y a manos. (El Canvas debe estar en World Space.)</p>`},
+
+  {type:'written',label:'Game feeling vs. tangibilidad del trabajo',
+   q:`<p>¿Qué es el <strong>game feeling</strong>? Diferencialo claramente de la <strong>tangibilidad del trabajo</strong> (no son lo mismo). Además, ¿por qué en VR hay que cuidar especialmente el feedback negativo y por qué no alcanza con el audio?</p>`,
+   keywords:['calidad de las sensaciones','respuesta clara','coherente','feedback','negativo','físico','mareo','visual','audio','tangibilidad','no es lo mismo','consecuencias'],
+   answer:`<p>El <strong>game feeling</strong> es la calidad de las sensaciones durante la interacción: cada acción produce una respuesta clara, coherente e inmediata (animación, sonido, háptica, física). La <strong>tangibilidad del trabajo</strong> es distinta: es que las acciones tengan <strong>consecuencias visibles y comprensibles</strong>, que el jugador sienta que realmente hizo algo con impacto. En resumen: el game feeling es el <em>cómo se siente</em> responder a cada acción; la tangibilidad es la <em>sensación de trabajo logrado</em>. En VR hay que cuidar el <strong>feedback negativo</strong> porque el jugador habita el juego con su cuerpo y lo desagradable se vive físico e intenso (frustración, mareo) y puede expulsarlo. Y no alcanza con el audio: el jugador puede jugar sin sonido, así que el feedback debe entenderse también de forma visual.</p>`},
+
+  {type:'written',label:'Tangibilidad del trabajo',
+   q:`<p>¿Qué es la <strong>tangibilidad del trabajo</strong> y en qué se diferencia del game feeling? Dá 3 ejemplos de actividades que la reflejen.</p>`,
+   keywords:['consecuencias visibles','comprensibles','realmente hizo','esfuerzo','impacto','game feeling','diferencia','armar','recargar','colocar objetos'],
+   answer:`<p>La <strong>tangibilidad del trabajo</strong> es que las acciones del jugador produzcan <strong>consecuencias visibles y comprensibles</strong>: que perciba que realmente hizo algo y que su esfuerzo tuvo impacto sobre el mundo. Se <strong>diferencia del game feeling</strong> en que el game feeling es la calidad/respuesta de la interacción (cómo se siente cada acción), mientras que la tangibilidad es la sensación de haber hecho un trabajo real y con resultado. <strong>3 ejemplos:</strong> (1) armar un mecanismo pieza por pieza; (2) recargar un arma manualmente; (3) colocar objetos en posiciones específicas (ej. un Snap).</p>`}
+ ]};
+
 function normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
 // Granularidad de cuartos: 0 · 0.25 · 0.5 · 0.75 · 1 (para todo menos multiple choice).
 function q4(x){x=Math.round((x||0)*4)/4;return x<0?0:x>1?1:x;}
@@ -1710,11 +1832,11 @@ function renderDiagrams(){
     jer?dgBlock(items[sel]):((flowMode==='practicar'&&fp)?dgFlowPractice(items[sel]):dgFlowView(items[sel]));
 }
 
-// ── SOLUCIONARIO SIMULACRO 5 ─────────────────────────────────────
+// ── SOLUCIONARIO (Modelos de examen) ─────────────────────────────
 // Muestra la resolución modelo de las 10 consignas (lee los datos ya cargados en SIMULACROS).
-function renderSoluciones(){
-  const sim=getSim(5);if(!sim)return;
-  const cont=document.getElementById('soluciones-content');if(!cont)return;
+function renderSoluciones(simId,contId){
+  const sim=getSim(simId);if(!sim)return;
+  const cont=document.getElementById(contId);if(!cont)return;
   cont.innerHTML=sim.questions.map((q,i)=>{
     let body;
     if(q.type==='vf'){
@@ -1737,4 +1859,4 @@ function renderSoluciones(){
 
 // ── INIT ────────────────────────────────────────────────────────
 
-load();updateHUD();renderZones();renderSimCards();renderDiagrams();renderSoluciones();
+load();updateHUD();renderZones();renderSimCards();renderDiagrams();renderSoluciones(5,'soluciones-content');renderSoluciones(6,'soluciones2-content');
