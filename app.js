@@ -758,6 +758,12 @@ function load(){
   const valid=validCardIds();let changed=false;
   for(const id of seen){if(!valid.has(id)){seen.delete(id);changed=true;}}
   if(changed)save();
+  // Migración: pd_notas es la fuente de verdad del promedio y del conteo de exámenes.
+  // Usuarios previos a esta feature solo tenían la última nota (pd_nota) → sembramos el historial con ella.
+  if(localStorage.getItem('pd_notas')===null){
+    const ln=parseFloat(localStorage.getItem('pd_nota'));
+    if(!isNaN(ln))localStorage.setItem('pd_notas',JSON.stringify([ln]));
+  }
 }
 function save(){localStorage.setItem('pd_seen',JSON.stringify([...seen]))}
 // Respuestas MC: { "<zoneId>_<card>": {o:[...orden barajado], c:<idx elegido en ese orden>} }
@@ -768,7 +774,7 @@ function savePos(z,c){localStorage.setItem('pd_pos',JSON.stringify({z,c}))}
 function loadPos(){try{return JSON.parse(localStorage.getItem('pd_pos')||'null')}catch{return null}}
 function total(){return ZONES.reduce((s,z)=>s+z.qs.length,0)}
 function zonesDone(){return ZONES.filter(z=>z.qs.every((_,i)=>seen.has(z.id+'_'+i))).length}
-function exams(){return parseInt(localStorage.getItem('pd_exams')||'0')}
+function exams(){return notas().length}   // fuente de verdad: cada nota guardada = un examen rendido
 function lastNota(){return localStorage.getItem('pd_nota')||'—'}
 function notas(){try{const a=JSON.parse(localStorage.getItem('pd_notas')||'[]');return Array.isArray(a)?a:[]}catch{return[]}}
 function avgNota(){const a=notas();if(!a.length)return'—';return(Math.round(a.reduce((s,x)=>s+x,0)/a.length*10)/10)+'/10';}
@@ -1334,9 +1340,8 @@ async function submitExam(){
   }
   semOverlay(false);
   const score=exam.questions.length?Math.round(total/exam.questions.length*100)/10:0;
-  localStorage.setItem('pd_exams',(parseInt(localStorage.getItem('pd_exams')||'0')+1));
   localStorage.setItem('pd_nota',score+'/10');
-  {const h=notas();h.push(score);localStorage.setItem('pd_notas',JSON.stringify(h));}
+  {const h=notas();h.push(score);localStorage.setItem('pd_notas',JSON.stringify(h));}   // conteo y promedio salen de acá
   const done=simsDone();if(!done.includes(exam.simId)){done.push(exam.simId);localStorage.setItem('pd_sims',JSON.stringify(done));}
   updateHUD();renderSimCards();
   renderResults(sim,detail,score);
