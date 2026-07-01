@@ -627,10 +627,12 @@ function updateHUD(){
 }
 
 function resetAll(){
-  if(!confirm('¿Resetear todo el progreso?'))return;
-  localStorage.removeItem('pd_seen');localStorage.removeItem('pd_exams');localStorage.removeItem('pd_nota');localStorage.removeItem('pd_sims');
-  localStorage.removeItem('pd_pos');localStorage.removeItem('pd_mc');
-  seen=new Set();updateHUD();renderZones();renderSimCards();renderContinue();
+  showModal({title:'¿Resetear todo el progreso?',msg:'Se borran revisadas, respuestas y notas de todos los simulacros. No se puede deshacer.',
+    okLabel:'Resetear todo',cancelLabel:'Cancelar',danger:true,onOk:()=>{
+      localStorage.removeItem('pd_seen');localStorage.removeItem('pd_exams');localStorage.removeItem('pd_nota');localStorage.removeItem('pd_sims');
+      localStorage.removeItem('pd_pos');localStorage.removeItem('pd_mc');
+      seen=new Set();updateHUD();renderZones();renderSimCards();renderContinue();
+    }});
 }
 
 // Botón "Continuá donde quedaste" en el home (lee pd_pos)
@@ -652,6 +654,26 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+}
+
+// Modal de confirmación estilado (reemplaza al confirm() nativo).
+// opts: {title, msg, okLabel, cancelLabel, danger, onOk}
+function showModal(opts){
+  const ov=document.getElementById('modal');
+  document.getElementById('modal-title').textContent=opts.title||'¿Confirmar?';
+  document.getElementById('modal-msg').textContent=opts.msg||'';
+  const ok=document.getElementById('modal-ok'),cancel=document.getElementById('modal-cancel');
+  ok.textContent=opts.okLabel||'Confirmar';
+  ok.className='modal-btn confirm'+(opts.danger?' danger':'');
+  cancel.textContent=opts.cancelLabel||'Cancelar';
+  const close=()=>{ov.classList.remove('open');document.removeEventListener('keydown',onKey);};
+  const onKey=e=>{if(e.key==='Escape')close();};
+  ok.onclick=()=>{close();opts.onOk&&opts.onOk();};
+  cancel.onclick=close;
+  ov.onclick=e=>{if(e.target===ov)close();};   // click en el fondo cierra (cancela)
+  document.addEventListener('keydown',onKey);
+  ov.classList.add('open');
+  cancel.focus();                              // foco en Cancelar: acción destructiva no se dispara sola
 }
 
 // ── ZONES ─────────────────────────────────────────────────────────────────────
@@ -839,10 +861,12 @@ function selectMC(chosen, correct){
 
 function resetCard(){
   const z=ZONES[currentZone],id=z.id+'_'+currentCard;
-  if(!confirm('¿Resetear esta card? Se borra tu respuesta y vuelve a quedar sin responder.'))return;
-  load();seen.delete(id);save();
-  const mc=loadMC();delete mc[id];saveMC(mc);
-  renderCard();
+  showModal({title:'¿Resetear esta card?',msg:'Se borra tu respuesta y vuelve a quedar sin responder.',
+    okLabel:'Resetear card',cancelLabel:'Cancelar',danger:true,onOk:()=>{
+      load();seen.delete(id);save();
+      const mc=loadMC();delete mc[id];saveMC(mc);
+      renderCard();
+    }});
 }
 
 function prevCard(){if(currentCard>0){currentCard--;renderCard()}}
@@ -983,7 +1007,12 @@ function updateExamProg(){
 }
 
 function confirmExitExam(){
-  if(exam&&!exam.submitted&&!confirm('¿Salir del examen? Vas a perder las respuestas de este intento.'))return;
+  if(exam&&!exam.submitted){
+    showModal({title:'¿Salir del examen?',msg:'Vas a perder las respuestas de este intento.',
+      okLabel:'Salir',cancelLabel:'Seguir en el examen',danger:true,
+      onOk:()=>{exam=null;showScreen('screen-home');}});
+    return;
+  }
   exam=null;showScreen('screen-home');
 }
 
