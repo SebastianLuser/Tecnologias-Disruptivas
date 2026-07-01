@@ -224,12 +224,6 @@ const ZONES=[
   q:'¿Para qué sirven los Reticles?',
   mc:['Para representar las manos virtuales del jugador en la escena','Para comunicar visualmente si una superficie/objetivo es válido para una acción','Para marcar el punto exacto donde mira el usuario (eye gaze)','Para mostrar el rayo del control independientemente de la validez'],correct:1,
   why:'Reticles = indicadores visuales de validez (destino de teletransporte, objeto apuntado, plano de AR). Ej: Reticle Data Teleport.'},
- {tag:'Planificación',title:'Criterios de planificación del profe',
-  body:`1. Diseñar para el <strong>sistema sensorial completo</strong>, no solo los ojos. 2. Pensar en un usuario que "no entiende nada" (el profe evalúa siendo ese usuario). 3. El usuario <strong>no debe adivinar</strong>: indicaciones completas, concisas y breves. 4. Documento de desarrollo con justificación técnica.`,
-  q:'¿Cuál es uno de los criterios de planificación que exige el profe?',
-  mc:['Maximizar la cantidad de mecánicas para enriquecer la experiencia','Diseñar para el sistema sensorial completo y que el usuario no tenga que adivinar','Priorizar la fidelidad gráfica como criterio principal de calidad','Usar siempre el Meta XR SDK por sus herramientas de rendimiento'],correct:1,
-  why:'Criterios: diseñar para todos los sentidos, pensar en un usuario que no entiende nada, que no adivine, y documentar con justificación técnica.'}
-,
  {tag:'Hand Grab Glow',title:'Hand Grab Glow: brillo y color de la mano',
   body:`Para que la mano <strong>brille o tenga contorno</strong> (y cambie de color, p. ej. al acercarse a un objeto agarrable) se usa el componente <strong>Hand Grab Glow</strong>, que vive <strong>dentro del Hand Grab Interactor</strong> de la mano sintética, en la sección <strong>Visual</strong> — <em>no</em> en el OVR Controller (ese solo rastrea el joystick físico). Al lado está el Hand Grab Visual (poses). Para funcionar, el Glow necesita referenciar el modelo de la mano (Hand Mesh / Hand Renderer y su material). Permite elegir <strong>Glow</strong> (ilumina toda la mano) u <strong>Outline</strong> (contorno) y su color — un recurso de Game Feeling.`,
   q:'¿Dónde se configura el brillo/contorno de la mano para cambiarle el color?',
